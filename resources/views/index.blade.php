@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
      <link rel="icon" href="storage/image/dlc-logo1.png" type="image/png">
-    <title>E-Val</title>
+    <title>E-Va</title>
 </head>
 <body class="bg-gray-100">
     <x-messages/>
