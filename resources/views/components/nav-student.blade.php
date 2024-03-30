@@ -64,7 +64,7 @@
 
         navLinks.forEach(function(link) {
             if (link.href === currentUrl) {
-                link.classList.add('text-gray-200', 'bg-gradient-to-r', 'from-red-900', 'to-yellow-500','font-bold');
+                link.classList.add('text-gray-200', 'bg-gradient-to-r', 'from-red-900', 'to-yellow-500','font-bold',);
             }
         });
     });
