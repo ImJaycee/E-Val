@@ -32,9 +32,15 @@ Route::controller(StudentController::class)->group(function(){
 
 
     Route::group(['middleware' => 'auth:students'], function () { 
+        //Student Profile Side
         Route::get('/student-profile', function () {
             return view('student-side.student-profile');
         })->name('student.profile');
+
+
+        Route::get('/student-feedback', function () {
+            return view('student-side.student-feedback');
+        })->name('student.feedback');
     });
 
     //Student Profile
