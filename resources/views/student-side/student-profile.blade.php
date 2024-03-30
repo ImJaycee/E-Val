@@ -25,7 +25,7 @@
                 <div class="max-w-md bg-white shadow-md rounded-lg overflow-hidden mx-auto">
                     <div class="px-6 py-4">
                         <div class="flex items-center justify-center">
-                            <img class="h-16 w-16 rounded-full object-cover" src="https://via.placeholder.com/150" alt="User profile picture">
+                            <img class="h-16 w-16 rounded-full object-cover" src="storage/image/test-profile.png" alt="User profile picture">
                         </div>
                         <div class="text-center mt-2">
                             <p class="text-lg text-gray-800 font-medium">Jay Cee Cruz</p>
@@ -53,35 +53,35 @@
             <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 mt-4">
                 {{-- @foreach ($instructors as $instructor) --}}
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/150" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                                                                                                                 

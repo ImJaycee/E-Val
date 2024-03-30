@@ -11,7 +11,7 @@
 
         {{-- notification --}}
             <a href="{{route('student.profile')}}">
-                <img class="h-10 w-10 rounded-full object-cover" src="https://via.placeholder.com/100" alt="User profile picture">
+                <img class="h-10 w-10 rounded-full object-cover" src="storage/image/test-profile.png" alt="User profile picture">
             </a>
         </div>
     </div>
