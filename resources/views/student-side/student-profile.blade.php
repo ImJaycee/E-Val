@@ -45,13 +45,57 @@
             
         </div>
 
-        <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full shadow-md lg:w-[75%]">
+        <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full max-h-80 shadow-md lg:w-[75%]">
             <h3 class="text-xl font-bold text-gray-700">
                 Evaluated Instructors<i> A.Y. 2023-2024</i>
             </h3>
             {{-- @if ($instructors->count() > 0) --}}
-            <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 mt-4">
+            <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 mt-4 max-h-64 overflow-y-auto">
                 {{-- @foreach ($instructors as $instructor) --}}
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <p class="text-xs text-center text-gray-600">CAP323</p>
+                </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
                     <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
@@ -99,11 +143,11 @@
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-lg p-4 shadow-md my-4">
-        <h3 class="text-xl font-bold text-gray-700 mb-4">
+    <div class="bg-white rounded-lg p-4 shadow-md my-3" style="height: 300px;">
+        <h3 class="text-xl font-bold text-gray-700 mb-2">
             Evaluation History
         </h3>
-        <div class="overflow-x-auto mt-1">
+        <div class="overflow-x-auto mt-1 max-h-52 overflow-y-auto">
             <form action="#" method="GET" class="flex flex-col lg:flex-row justify-end mb-2">
                 <label for="academic_year" class="mr-2">A.Y.</label>
                 <select name="academic_year" id="academic_year" required class="border border-gray-300 rounded-md p-1 mb-2 lg:mb-0 lg:mr-1 text-sm">
@@ -117,7 +161,6 @@
                 </select>
                 <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-1 px-2 rounded"><i class="fas fa-search"></i></button>
             </form>
-            
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="text-sm font-medium text-gray-700 text-left">
@@ -126,6 +169,7 @@
                         <th class="px-4 py-2 bg-gray-200">Status</th>
                     </tr>
                 </thead>
+                
                 <tbody class="text-sm font-normal text-gray-700">
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
