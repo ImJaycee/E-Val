@@ -35,7 +35,7 @@
             <i class="fas fa-star"></i>
             <span>Instructors Ranking</span>
         </a>
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group">
+        <a href="{{route('student.feedback')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group">
             <i class="fas fa-comment"></i>
             <span>Feedback</span>
         </a>
