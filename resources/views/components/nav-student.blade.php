@@ -51,6 +51,10 @@
             </form>
         </a>
     </div>
+    <footer class="bg-gray-700 text-gray-200 py-3 text-center rounded-md mt-52">
+        <p class="text-sm">&copy; 2024 All Rights Reserved.</p>
+        <p class="mt-1 text-xs">Developed by <a href="#" class=""><i>Jay Cee Cruz</i></a></p>
+    </footer>
 </div>
 
 <script>
