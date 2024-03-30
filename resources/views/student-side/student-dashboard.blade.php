@@ -149,50 +149,6 @@
                     </td>
                 </tr>  
                 <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
                     <td colspan="6" class="text-center bg-gray-800 hover:bg-gray-700 text-white py-1 rounded">
                         <button class="w-full" id="addSubjectButton">
                             <i class="fas fa-add"></i> Add subject
