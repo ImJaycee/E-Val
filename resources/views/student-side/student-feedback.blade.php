@@ -59,7 +59,7 @@
             </div>
             
             <div class="mb-4">
-                <label for="comment" class="block text-gray-700 font-semibold mb-2">Comment</label>
+                <label for="comment" class="block text-gray-700 font-semibold mb-2">Comment:</label>
                 <textarea name="comment" id="comment" cols="30" rows="5" class="border border-gray-300 rounded-md px-3 py-2 w-full resize-none focus:outline-none focus:ring focus:border-blue-300"></textarea>
             </div>
             <button type="submit" class="bg-red-800 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md">Submit Feedback</button>
