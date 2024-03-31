@@ -46,6 +46,11 @@ Route::controller(StudentController::class)->group(function(){
         Route::get('/student-instructor-rank', function () {
             return view('student-side.student-instructors-rank');
         })->name('student.instructor-rank');
+
+        //Student evaluation
+        Route::get('/student-evaluation', function () {
+            return view('student-side.student-evaluation');
+        })->name('student.evaluation');
     });
 
     //Student Profile

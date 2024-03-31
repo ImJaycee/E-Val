@@ -28,7 +28,7 @@
             <span class="">Home</span>
         </a>
 
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group">
+        <a href="{{route('student.evaluation')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group">
             <i class="fas fa-poll"></i>
             <span>Evaluation</span>
         </a>
