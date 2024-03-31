@@ -37,10 +37,15 @@ Route::controller(StudentController::class)->group(function(){
             return view('student-side.student-profile');
         })->name('student.profile');
 
-
+        //Student feedback
         Route::get('/student-feedback', function () {
             return view('student-side.student-feedback');
         })->name('student.feedback');
+
+        //Student feedback
+        Route::get('/student-instructor-rank', function () {
+            return view('student-side.student-instructors-rank');
+        })->name('student.instructor-rank');
     });
 
     //Student Profile

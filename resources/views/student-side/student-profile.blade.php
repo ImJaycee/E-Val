@@ -143,11 +143,11 @@
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-lg p-4 shadow-md my-3" style="height: 300px;">
+    <div class="bg-white rounded-lg p-4 shadow-md my-3 lg:h-full">
         <h3 class="text-xl font-bold text-gray-700 mb-2">
             Evaluation History
         </h3>
-        <div class="overflow-x-auto mt-1 max-h-52 overflow-y-auto">
+        <div class="overflow-x-auto mt-1 max-h-80 lg:max-h-56 overflow-y-auto">
             <form action="#" method="GET" class="flex flex-col lg:flex-row justify-end mb-2">
                 <label for="academic_year" class="mr-2">A.Y.</label>
                 <select name="academic_year" id="academic_year" required class="border border-gray-300 rounded-md p-1 mb-2 lg:mb-0 lg:mr-1 text-sm">
