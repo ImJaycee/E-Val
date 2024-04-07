@@ -3,8 +3,15 @@
 @php
     $title = 'E-Val-Profile';
     $array = ['title' => $title];
-    // $studentID = session('studentID');
+    $student_id = session('student_id');
+    $pfp = session('pfp');
 @endphp
+
+@if(session('reload'))
+    <script>
+        location.reload();
+    </script>
+@endif
 
 @include('partials.header-student')
 
@@ -12,6 +19,8 @@
 <body class="bg-gray-200">
 
 <x-nav-student/> <!--Include nav and sidebar-->
+
+<x-messages/>
 
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
 
@@ -25,19 +34,22 @@
                 <div class="max-w-md bg-white shadow-md rounded-lg overflow-hidden mx-auto">
                     <div class="px-6 py-4">
                         <div class="flex items-center justify-center">
-                            <img class="h-16 w-16 rounded-full object-cover" src="storage/image/test-profile.png" alt="User profile picture">
+                            @if ($student->pfp)
+                                <img class="h-16 w-16 rounded-full object-cover" src="{{ Storage::url($student->pfp) }}" alt="">
+                            @else
+                                <img class="h-16 w-16 rounded-full object-cover" src="{{ asset('storage/image/test-profile.png') }}" alt="">
+                            @endif
                         </div>
                         <div class="text-center mt-2">
-                            <p class="text-lg text-gray-800 font-medium">Jay Cee Cruz</p>
-                            <p class="text-sm font-semibold text-gray-700">2021309990</p>
-                            <p class="text-sm font-normal text-gray-700">Bachelor of Science in Information Technology</p>
-                            <p class="text-sm font-normal text-gray-700">3rd Year</p>
-                            <p class="text-sm font-normal text-gray-700">Section B</p>
-                            <p class="text-sm font-normal text-gray-700">jc@gmail.com</p>
+                            <p class="text-lg text-gray-800 font-medium">{{ $student->firstname}} {{ $student->middlename}} {{ $student->lastname}}</p>
+                            <p class="text-sm font-semibold text-gray-700">{{$student_id}}</p>
+                            <p class="text-sm font-normal text-gray-700">{{$student->program}}</p>
+                            <p class="text-sm font-normal text-gray-700">Year and Section: {{ $student->year ? $student->year . ' - ' . $student->section : '--' }}</p>
+                            <p class="text-sm font-normal text-gray-700">{{$student->email}}</p>
                         </div>
                     </div>
                     <div class="px-6 py-4 flex justify-center">
-                        <button class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mr-2">Update Profile</button>
+                        <a href="{{ route('student-side.update-profile-form', ['student_id' => $student_id]) }}" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mr-2">Update Profile</a>
                         <button class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">Reset Password</button>
                     </div>
                 </div>
@@ -229,6 +241,27 @@
             sideNav.classList.toggle('hidden');
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#pfp').change(function() {
+            var input = this;
+            var image = $('#previewImage')[0];
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                    image.classList.remove('hidden');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+</script>
 
 </body>
 

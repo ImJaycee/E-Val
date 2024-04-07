@@ -41,10 +41,10 @@
     
             <div class="md:flex md:justify-between">
                 <div class="mb-4 md:w-1/3 md:mr-2">
-                    <label for="text" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
-                    <input type="text" id="first_name" name="first_name" required onfocus="clearError()"
+                    <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                    <input type="text" id="firstname" name="firstname" required onfocus="clearError()"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('first_name')}}>
-                        @error('first_name')
+                        @error('firstname')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
                            </p>
@@ -52,10 +52,10 @@
                 </div>
     
                 <div class="mb-4 md:w-1/3 md:mx-2">
-                    <label for="text" class="block text-gray-700 text-sm font-bold mb-2">Middle Name</label>
-                    <input type="text" id="middle_name" name="middle_name" required onfocus="clearError()"
+                    <label for="middlename" class="block text-gray-700 text-sm font-bold mb-2">Middle Name</label>
+                    <input type="text" id="middlename" name="middlename" required onfocus="clearError()"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('middle_name')}}>
-                        @error('middle_name')
+                        @error('middlename')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
                            </p>
@@ -63,10 +63,10 @@
                 </div>
     
                 <div class="mb-4 md:w-1/3 md:ml-2">
-                    <label for="text" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" required onfocus="clearError()"
+                    <label for="lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" required onfocus="clearError()"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('last_name')}}>
-                        @error('last_name')
+                        @error('lastname')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
                            </p>

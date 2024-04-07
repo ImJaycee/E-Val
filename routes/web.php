@@ -33,10 +33,11 @@ Route::controller(StudentController::class)->group(function(){
 
     Route::group(['middleware' => 'auth:students'], function () { 
         //Student Profile Side
-        Route::get('/student-profile', function () {
-            return view('student-side.student-profile');
-        })->name('student.profile');
-
+        //Route::get('/student-profile', function () { return view('student-side.student-profile');})->name('student.profile');
+        Route::get('/student-profile{student_id}', 'updateProfilePage')->name('student.profile');
+        // Route::get('/student-update-profile', function () { return view('student-side.update-profile'); })->name('student.update-profile');
+        Route::get('/student-update-profile{student_id}', 'updateProfileForm')->name('student-side.update-profile-form');
+        Route::post('/student-update-profile{student_id}', 'updateProfile')->name('student-side.update-profile-process');
         //Student feedback
         Route::get('/student-feedback', function () {
             return view('student-side.student-feedback');

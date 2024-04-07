@@ -1,4 +1,7 @@
-
+@php
+     $student_id = session('student_id');
+     $pfp = session('pfp');
+@endphp
 <nav class="bg-gray-700 border-b border-gray-300">
     <div class="flex justify-between items-center px-9">
         <button id="menuBtn" class="lg:hidden">
@@ -11,8 +14,8 @@
         </div>
 
         {{-- notification --}}
-            <a href="{{route('student.profile')}}">
-                <img class="h-10 w-10 rounded-full object-cover" src="storage/image/test-profile.png" alt="User profile picture">
+            <a href="{{route('student.profile', ['student_id' => $student_id])}}">
+                <img class="h-10 w-10 rounded-full object-cover" src="{{ Storage::url($pfp) }}" alt="User profile picture">
             </a>
         </div>
     </div>
@@ -40,7 +43,7 @@
             <i class="fas fa-comment"></i>
             <span>Feedback</span>
         </a>
-        <a href="{{route('student.profile')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group">
+        <a href="{{route('student.profile', ['student_id' => $student_id])}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group">
             <i class="fas fa-user"></i>
             <span>Profile</span>
         </a>
