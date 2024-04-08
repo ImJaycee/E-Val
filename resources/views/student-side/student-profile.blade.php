@@ -13,6 +13,8 @@
     </script>
 @endif
 
+{{-- @dd($student); --}}
+
 @include('partials.header-student')
 
 
@@ -34,8 +36,9 @@
                 <div class="max-w-md bg-white shadow-md rounded-lg overflow-hidden mx-auto">
                     <div class="px-6 py-4">
                         <div class="flex items-center justify-center">
+                          
                             @if ($student->pfp)
-                                <img class="h-16 w-16 rounded-full object-cover" src="{{ Storage::url($student->pfp) }}" alt="">
+                                <img src="{{Storage::url($student->pfp)}}" alt="{{ $student->pfp }}" class="h-16 w-16 rounded-full object-cover" >
                             @else
                                 <img class="h-16 w-16 rounded-full object-cover" src="{{ asset('storage/image/test-profile.png') }}" alt="">
                             @endif
@@ -50,7 +53,7 @@
                     </div>
                     <div class="px-6 py-4 flex justify-center">
                         <a href="{{ route('student-side.update-profile-form', ['student_id' => $student_id]) }}" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mr-2">Update Profile</a>
-                        <button class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">Reset Password</button>
+                        <button class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">Change Password</button>
                     </div>
                 </div>
             </div>
@@ -242,6 +245,7 @@
         });
     </script>
 
+{{-- Script for previewing image --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {

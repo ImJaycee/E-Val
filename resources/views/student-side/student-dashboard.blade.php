@@ -4,9 +4,7 @@
     $title = 'E-Val-Dashboard';
     $array = ['title' => $title];
     $student_id = session('student_id');
-    $first_name = session('firstname');
-    $last_name = session('lastname');
-    $student_name = $first_name . ' ' . $last_name;
+    $firstname = session('firstname');
 
 @endphp
 
@@ -36,7 +34,7 @@
             <!-- Small Boxes -->
             <div class="block justify-center h-full">
                 <h3 class="text-xl font-bold text-gray-700">
-                    Welcome back <i>{{$student_name}}</i>!
+                    Welcome back <i>{{$firstname}}</i>!
                 </h3>
                 <p class="text-md font-bold text-gray-500">
                     <i><b>E-val</b></i> is our evaluation tool designed to streamline and enhance 

@@ -1,7 +1,13 @@
+@if(session('reload'))
+    <script>
+        location.reload();
+    </script>
+@endif
 @php
      $student_id = session('student_id');
      $pfp = session('pfp');
 @endphp
+
 <nav class="bg-gray-700 border-b border-gray-300">
     <div class="flex justify-between items-center px-9">
         <button id="menuBtn" class="lg:hidden">
@@ -10,12 +16,12 @@
 
         <!-- Logo -->
         <div class="ml-1">
-            <img src="storage/image/dlc-logo1.png" alt="logo" class="h-14 w-15 p-1">
+            <img src="storage/images/dlc-logo1.png" alt="logo" class="h-14 w-15 p-1">
         </div>
 
         {{-- notification --}}
             <a href="{{route('student.profile', ['student_id' => $student_id])}}">
-                <img class="h-10 w-10 rounded-full object-cover" src="{{ Storage::url($pfp) }}" alt="User profile picture">
+                <img class="h-10 w-10 rounded-full object-cover"src="{{ Storage::url($pfp) }}" alt="User profile picture">
             </a>
         </div>
     </div>

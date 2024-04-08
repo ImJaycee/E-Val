@@ -11,7 +11,7 @@
 
 
 <body class="bg-gray-100">
-    <img src="{{ asset('storage/image/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-8">
+    <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-8">
     <div class="max-w-2xl mx-auto py-10 px-4">
         <form action="{{ route('student-side.update-profile-process', ['student_id' => $student_id]) }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
@@ -22,7 +22,7 @@
                     <div class="relative">
                         <input type="file" id="pfp" name="pfp" accept="image/*" onchange="previewImage(event)" class="hidden">
                         <label for="pfp" class="cursor-pointer">
-                            <img id="preview" class="h-16 w-16 rounded-full object-cover" src="{{ Storage::url($pfp) }}" alt="Preview">
+                            <img id="preview" class="ml-2 h-16 w-16 rounded-full object-cover" src="{{ Storage::url($student->pfp) }}" alt="Preview">
                             <span class="absolute inset-x-0 bottom-0 px-3 py-2 text-white flex justify-center items-center">
                                 <i class="far fa-image text-gray-500 cursor-pointer"></i>
                             </span>

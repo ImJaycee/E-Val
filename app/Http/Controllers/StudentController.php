@@ -53,6 +53,7 @@ class StudentController extends Controller
             $student = auth()->guard('students')->user();
             // session(['student_id' => $student->student_id, 'pfp' => $student->pfp]);
             session(['student_id' => $student->student_id, 
+                     'firstname' => $student->firstname,
                      'pfp' => $student->pfp, ]);
             
             return redirect("/student-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
@@ -115,7 +116,7 @@ class StudentController extends Controller
             $path = null;
         
             if (isset($validated['pfp']) && $validated['pfp'] != null) {
-                $path = $request->file('pfp')->store('public/image/pfp');
+                $path = $request->file('pfp')->store('public/images/pfp');
                 $validated['pfp'] = $path;
             }
         
