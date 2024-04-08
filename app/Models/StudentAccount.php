@@ -14,9 +14,14 @@ class StudentAccount extends Authenticatable
     protected $fillable = [
         'student_id',
         'contact',
-        'name',
+        'firstname',
+        'middlename',
+        'lastname',
         'email',
         'program',
+        'year',
+        'section',
+        'pfp', //profile picture
         'password',
     ];
 }

@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('student_id')->unique();
             $table->string('contact');
-            $table->string('name');
+            $table->string('firstname');
+            $table->string('middlename');
+            $table->string('lastname');
             $table->string('email')->unique();
             $table->string('program');
+            $table->string('year')->nullable();
+            $table->string('section')->nullable();
+            $table->string('pfp')->nullable();
             $table->string('password');
             $table->timestamps();
         });
