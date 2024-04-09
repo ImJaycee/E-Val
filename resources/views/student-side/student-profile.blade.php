@@ -53,7 +53,7 @@
                     </div>
                     <div class="px-6 py-4 flex justify-center">
                         <a href="{{ route('student-side.update-profile-form', ['student_id' => $student_id]) }}" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mr-2">Update Profile</a>
-                        <button class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">Change Password</button>
+                        <button class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded" id="changePasswordButton">Change Password</button>
                     </div>
                 </div>
             </div>
@@ -231,6 +231,142 @@
             </table>
         </div>
     </div>
+
+
+    {{-- Modal change password --}}
+<div class="fixed inset-0 overflow-y-auto hidden" id="changePasswordModal">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full md:max-w-md" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <h3 class="text-lg font-bold text-gray-700">Change Password</h3>
+                <form action="{{ route('student-side.change-password', ['student_id' => $student->student_id]) }}" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
+                    @csrf
+                    <div class="mb-4 md:w-full md:mr-2">
+                        <label for="oldpassword" class="block text-gray-700 text-sm font-bold mb-2">Current Password</label>
+                        <div class="relative">
+                            <input type="password" id="oldpassword" name="oldpassword" required onfocus="clearError()"
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i id="togglePassword_Old" class="far fa-eye-slash text-gray-500 cursor-pointer"></i>
+                            </span>
+                            @error('oldpassword')
+                                <p id="oldpassword_error" class="text-red-500 text-sm text-end p-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-4 md:w-full md:mr-2">
+                        <label for="newpassword" class="block text-gray-700 text-sm font-bold mb-2">New Password</label>
+                        <div class="relative">
+                            <input type="password" id="newpassword" name="newpassword" required onfocus="clearError()"
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i id="togglePassword_New" class="far fa-eye-slash text-gray-500 cursor-pointer"></i>
+                            </span>
+                            @error('newpassword')
+                                <p id="newpassword_error" class="text-red-500 text-sm text-end p-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-4 md:w-full md:mr-2">
+                        <label for="con_pass" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                        <div class="relative">
+                            <input type="password" id="con_pass" name="con_pass" required onfocus="clearError()"
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i id="togglePassword_Con" class="far fa-eye-slash text-gray-500 cursor-pointer"></i>
+                            </span>
+                            @error('con_pass')
+                                <p id="con_pass" class="text-red-500 text-sm text-end p-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm" >
+                        Save
+                    </button>
+                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closePasswordModal">
+                        Close
+                    </button>
+                </form>
+
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">       
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- script for show password --}}
+<script>
+        const oldpassword = document.getElementById('oldpassword');
+        const togglePassword_Old = document.getElementById('togglePassword_Old');
+        const newpassword = document.getElementById('newpassword');
+        const togglePassword_New = document.getElementById('togglePassword_New');
+        const con_pass = document.getElementById('con_pass');
+        const togglePassword_Con = document.getElementById('togglePassword_Con');
+
+        togglePassword_Old.addEventListener('click', function() {
+            if (oldpassword.type === 'password') {
+                oldpassword.type = 'text';
+                togglePassword_Old.classList.remove('fa-eye-slash');
+                togglePassword_Old.classList.add('fa-eye');
+            } else {
+                oldpassword.type = 'password';
+                togglePassword_Old.classList.remove('fa-eye');
+                togglePassword_Old.classList.add('fa-eye-slash');
+            }
+        });
+        togglePassword_New.addEventListener('click', function() {
+            if (newpassword.type === 'password') {
+                newpassword.type = 'text';
+                togglePassword_New.classList.remove('fa-eye-slash');
+                togglePassword_New.classList.add('fa-eye');
+            } else {
+                newpassword.type = 'password';
+                togglePassword_New.classList.remove('fa-eye');
+                togglePassword_New.classList.add('fa-eye-slash');
+            }
+        });
+        togglePassword_Con.addEventListener('click', function() {
+            if (con_pass.type === 'password') {
+                con_pass.type = 'text';
+                togglePassword_Con.classList.remove('fa-eye-slash');
+                togglePassword_Con.classList.add('fa-eye');
+            } else {
+                con_pass.type = 'password';
+                togglePassword_Con.classList.remove('fa-eye');
+                togglePassword_Con.classList.add('fa-eye-slash');
+            }
+        });
+
+</script>
+{{-- script for show password END --}}
+
+<!-- Script for change password modal -->
+<script>
+    const addSubjectButton = document.getElementById('changePasswordButton');
+    const addSubjectModal = document.getElementById('changePasswordModal');
+    const closeSubjectModal = document.getElementById('closePasswordModal');
+
+    addSubjectButton.addEventListener('click', () => {
+        addSubjectModal.classList.remove('hidden');
+    });
+
+    closeSubjectModal.addEventListener('click', () => {
+        addSubjectModal.classList.add('hidden');
+    });
+</script>
     
     
 

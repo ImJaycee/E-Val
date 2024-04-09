@@ -38,6 +38,10 @@ Route::controller(StudentController::class)->group(function(){
         // Route::get('/student-update-profile', function () { return view('student-side.update-profile'); })->name('student.update-profile');
         Route::get('/student-update-profile{student_id}', 'updateProfileForm')->name('student-side.update-profile-form');
         Route::post('/student-update-profile{student_id}', 'updateProfile')->name('student-side.update-profile-process');
+        Route::post('/student-change-password{student_id}', 'changePassword')->name('student-side.change-password');
+
+
+
         //Student feedback
         Route::get('/student-feedback', function () {
             return view('student-side.student-feedback');

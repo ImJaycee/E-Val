@@ -82,17 +82,17 @@ class StudentController extends Controller
         ->header('Pragma', 'no-cache');
     }
 
-    public function updateProfilePage($student_id){
+    public function updateProfilePage($student_id){ //update profile page
         $student = StudentAccount::where('student_id', $student_id)->first();
         return view('student-side.student-profile', compact('student'));
     }
 
-    public function updateProfileForm($student_id){
+    public function updateProfileForm($student_id){ //update profile form
         $student = StudentAccount::where('student_id', $student_id)->first();
         return view('student-side.update-profile', compact('student'));
     }
 
-    public function updateProfile(Request $request, $student_id){
+    public function updateProfile(Request $request, $student_id){    //update profile
         $validated = $request->validate([
             'contact' => ['required', 'digits:11'],
             "firstname" => ['required', 'string', 'min:2'],
@@ -135,6 +135,39 @@ class StudentController extends Controller
         }
         
     }
+
+    
+    public function changePassword(Request $request, $student_id) { //change password
+        $validated = $request->validate([
+            "oldpassword" => ['required', 'min:8'],
+            "newpassword" => ['required', 'min:8'],
+            "con_pass" => ['required', 'min:8'],
+        ]);
+
+        if($validated['newpassword'] !== $validated['con_pass']){
+            return redirect()->route('student.profile', ['student_id' => $student_id])->with('message', 'Passwords do not match!');
+        }
+    
+        // Find the student by ID
+        $student = StudentAccount::where('student_id', $student_id)->firstOrFail();
+    
+        // Check if the old password matches the one stored in the database
+        if (password_verify($request->input('oldpassword'), $student->password)) {
+            // Hash the new password before updating the database
+            $hashedPassword = bcrypt($request->input('newpassword'));
+    
+            // Update the password
+            $student->password = $hashedPassword;
+            $student->save();
+    
+            // Redirect with success message
+            return redirect()->route('student.profile', ['student_id' => $student_id])->with('message', 'Password changed!');
+        } else {
+            // Redirect with error message
+            return redirect()->route('student.profile', ['student_id' => $student_id])->with('message', 'Incorrect Password!');
+        }
+    }
+    
 
         
 }
