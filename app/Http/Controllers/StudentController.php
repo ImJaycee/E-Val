@@ -116,8 +116,9 @@ class StudentController extends Controller
             $path = null;
         
             if (isset($validated['pfp']) && $validated['pfp'] != null) {
+                $fileName = $request->file('pfp');
                 $path = $request->file('pfp')->store('public/images/pfp');
-                $validated['pfp'] = $path;
+                $validated['pfp'] = $fileName->hashName();
             }
         
             $student->update($validated);

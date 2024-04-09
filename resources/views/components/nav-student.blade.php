@@ -21,7 +21,7 @@
 
         {{-- notification --}}
             <a href="{{route('student.profile', ['student_id' => $student_id])}}">
-                <img class="h-10 w-10 rounded-full object-cover"src="{{ Storage::url($pfp) }}" alt="User profile picture">
+                <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
             </a>
         </div>
     </div>

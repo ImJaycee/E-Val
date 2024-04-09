@@ -22,7 +22,7 @@
                     <div class="relative">
                         <input type="file" id="pfp" name="pfp" accept="image/*" onchange="previewImage(event)" class="hidden">
                         <label for="pfp" class="cursor-pointer">
-                            <img id="preview" class="ml-2 h-16 w-16 rounded-full object-cover" src="{{ Storage::url($student->pfp) }}" alt="Preview">
+                            <img id="preview" class="ml-2 h-16 w-16 rounded-full object-cover" src="{{ asset('storage/images/pfp/'.$student->pfp) }}" alt="Preview">
                             <span class="absolute inset-x-0 bottom-0 px-3 py-2 text-white flex justify-center items-center">
                                 <i class="far fa-image text-gray-500 cursor-pointer"></i>
                             </span>

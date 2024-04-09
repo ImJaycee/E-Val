@@ -11,7 +11,7 @@
 </head>
 <body class="bg-gray-100">
     <x-messages/>
-    <img src="{{ asset('storage/image/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
+    <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
     <div class="max-w-md mx-auto py-10 px-4">
         <h1 class="text-xl text-center font-bold mb-4">Login as Student</h1>
         <form action="{{ route('Student_loginprocess')}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

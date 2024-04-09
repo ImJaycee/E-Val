@@ -38,9 +38,9 @@
                         <div class="flex items-center justify-center">
                           
                             @if ($student->pfp)
-                                <img src="{{Storage::url($student->pfp)}}" alt="{{ $student->pfp }}" class="h-16 w-16 rounded-full object-cover" >
+                                <img src="{{ asset('storage/images/pfp/'.$student->pfp) }}" alt="{{ $student->pfp }}" class="h-16 w-16 rounded-full object-cover" >
                             @else
-                                <img class="h-16 w-16 rounded-full object-cover" src="{{ asset('storage/image/test-profile.png') }}" alt="">
+                                <img class="h-16 w-16 rounded-full object-cover" src="{{ asset('storage/images/test-profile.png') }}" alt="">
                             @endif
                         </div>
                         <div class="text-center mt-2">
@@ -68,79 +68,79 @@
             <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 mt-4 max-h-64 overflow-y-auto">
                 {{-- @foreach ($instructors as $instructor) --}}
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="storage/image/test-profile.png" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
                                                                                                                 
