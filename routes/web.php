@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ForgotPasswordMail;
+use Illuminate\Http\Request;
+use App\Http\Controllers\ForgotPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +21,17 @@ Route::get('/', function () {
     return view('index');
 })->name('view.index');
 
+Route::get('/forgot-passsword-form', function () {//forgot-passsword-form
+    return view('mail.User-Email-Password');
+})->name('student.forgot-passsword-form');
 
+Route::controller(ForgotPasswordController::class)->group(function(){
+
+    Route::post('/forgot-passsword', 'sendResetLink')->name('sendResetLink');
+});
+
+
+//Student Side
 // Create student registration route
 Route::get('/register-student', function () {
     return view('student-side.register');
