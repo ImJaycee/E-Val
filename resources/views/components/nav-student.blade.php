@@ -21,7 +21,11 @@
 
         {{-- notification --}}
             <a href="{{route('student.profile', ['student_id' => $student_id])}}">
-                <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
+                @If(!empty($pfp))
+                    <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
+                @else
+                    <img class="h-10 w-10 rounded-full object-cover"src="storage/images/test-profile.png" alt="User profile picture">
+                @endif
             </a>
         </div>
     </div>

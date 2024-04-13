@@ -37,49 +37,49 @@
         <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">
             <!-- Sample instructor card, repeat this for each instructor -->
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
             </div>
             <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/image/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                 <p class="text-xs font-semibold text-gray-600">CAP323</p>
                 <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
                 <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>

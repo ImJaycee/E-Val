@@ -26,9 +26,12 @@ Route::get('/forgot-passsword-form', function () {//forgot-passsword-form
 })->name('student.forgot-passsword-form');
 
 Route::controller(ForgotPasswordController::class)->group(function(){
-
     Route::post('/forgot-passsword', 'sendResetLink')->name('sendResetLink');
+    Route::post('/reset-password', 'resetPassword')->name('resetPassword');
 });
+Route::get('/reset-password', function () {//forgot-passsword-form
+    return view('mail.Reset-Password');
+})->name('student.reset-passsword');
 
 
 //Student Side

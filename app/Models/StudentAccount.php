@@ -23,5 +23,6 @@ class StudentAccount extends Authenticatable
         'section',
         'pfp', //profile picture
         'password',
+        'password_reset_token',
     ];
 }

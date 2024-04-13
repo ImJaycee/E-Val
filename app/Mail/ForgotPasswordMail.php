@@ -9,16 +9,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
 class ForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $token; 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+
+    public function __construct($token)
     {
         //
+        $this->token = $token; // Store the token or OTP in the property
     }
 
     /**
