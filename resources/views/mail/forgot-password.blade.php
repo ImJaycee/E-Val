@@ -1,14 +1,12 @@
 
 # Reset Password<br>
 
-Click the button below to reset your password:<br>
+Your reset token: {{ $token }} {{-- or use {{ $token }} for the token --}}
 
-
-Reset Password<br>
-
-
-If you did not request a password reset, no further action is required.<br>
+<br>If you did not request a password reset, no further action is required.<br>
 
 Thanks,<br>
+
+<br>Click <a href="{{ route('student.reset-passsword') }}">here</a> to reset your password.<br>
 
 The E-Val Team

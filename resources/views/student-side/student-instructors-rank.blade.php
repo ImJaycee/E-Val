@@ -50,70 +50,70 @@
         <ul class="divide-y divide-gray-200 lg:h-96 overflow-y-auto" style="height: 28rem;">
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Aldrin Duana</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.9</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Davemm Salalila</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.3</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Aldrin Duana</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.9</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Davemm Salalila</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.3</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Aldrin Duana</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.9</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Davemm Salalila</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.3</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Aldrin Duana</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.9</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Davemm Salalila</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.3</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Aldrin Duana</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.9</span>
             </li>
             <li class="flex items-center justify-between py-2">
                 <div class="flex items-center">
-                    <img src="storage/image/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full">
                     <span class="ml-4 font-bold">Davemm Salalila</span>
                 </div>
                 <span class="text-sm text-gray-600 mr-3">Rating: 4.3</span>

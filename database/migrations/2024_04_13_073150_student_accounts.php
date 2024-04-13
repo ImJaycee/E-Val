@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('section')->nullable();
             $table->string('pfp')->nullable();
             $table->string('password');
+            $table->string('password_reset_token')->nullable();
             $table->timestamps();
         });
     }
