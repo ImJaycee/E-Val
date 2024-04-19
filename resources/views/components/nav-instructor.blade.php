@@ -20,7 +20,7 @@
         </div>
 
         {{-- notification --}}
-            <a href="#">
+            <a href="{{route('instructor.profile', ['instructor_id' => $instructor_id])}}">
                 {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}
                 @If(!empty($pfp))
                     <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
@@ -58,7 +58,7 @@
             <i class="fas fa-comment"></i>
             <span>Feedback</span>
         </a>
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group"> 
+        <a href="{{route('instructor.profile', ['instructor_id' => $instructor_id])}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-200 group"> 
             {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}
             <i class="fas fa-user"></i>
             <span>Profile</span>

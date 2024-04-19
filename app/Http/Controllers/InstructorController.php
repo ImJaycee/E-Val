@@ -81,5 +81,14 @@ class InstructorController extends Controller
         ->header('Pragma', 'no-cache');
     }
 
+    public function updateProfilePage($instructor_id){ //update profile page
+        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
+        return view('instructor-side.instructor-profile', compact('instructor'));
+    }
+    public function updateProfileForm($instructor_id){ //update profile form
+        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
+        return view('instructor-side.update-profile', compact('instructor'));
+    }
+
 
 }

@@ -1,9 +1,9 @@
-@auth('students')
+@auth('instructors')
 
 @php
     $title = 'E-Val-Profile';
     $array = ['title' => $title];
-    $student_id = session('student_id');
+    $instructor_id = session('instructor_id');
     $pfp = session('pfp');
 @endphp
 
@@ -15,12 +15,12 @@
 
 {{-- @dd($student); --}}
 
-@include('partials.header-student')
+@include('partials.header-instructor')
 
 
 <body class="bg-gray-200">
 
-<x-nav-student/> <!--Include nav and sidebar-->
+<x-nav-instructor/> <!--Include nav and sidebar-->
 
 <x-messages/>
 
@@ -37,22 +37,21 @@
                     <div class="px-6 py-4">
                         <div class="flex items-center justify-center">
                           
-                            @if ($student->pfp)
-                                <img src="{{ asset('storage/images/pfp/'.$student->pfp) }}" alt="{{ $student->pfp }}" class="h-16 w-16 rounded-full object-cover" >
+                            @if ($instructor->pfp)
+                                <img src="{{ asset('storage/images/pfp/'.$instructor->pfp) }}" alt="{{ $instructor->pfp }}" class="h-16 w-16 rounded-full object-cover" >
                             @else
                                 <img class="h-16 w-16 rounded-full object-cover" src="{{ asset('storage/images/test-profile.png') }}" alt="">
                             @endif
                         </div>
                         <div class="text-center mt-2">
-                            <p class="text-lg text-gray-800 font-medium">{{ $student->firstname}} {{ $student->middlename}} {{ $student->lastname}}</p>
-                            <p class="text-sm font-semibold text-gray-700">{{$student_id}}</p>
-                            <p class="text-sm font-normal text-gray-700">{{$student->program}}</p>
-                            <p class="text-sm font-normal text-gray-700">Year and Section: {{ $student->year ? $student->year . ' - ' . $student->section : '--' }}</p>
-                            <p class="text-sm font-normal text-gray-700">{{$student->email}}</p>
+                            <p class="text-lg text-gray-800 font-medium">{{ $instructor->firstname}} {{ $instructor->middlename}} {{ $instructor->lastname}}</p>
+                            <p class="text-sm font-semibold text-gray-700">{{$instructor_id}}</p>
+                            <p class="text-sm font-normal text-gray-700">{{$instructor->department}}</p>
+                            <p class="text-sm font-normal text-gray-700">{{$instructor->email}}</p>
                         </div>
                     </div>
                     <div class="px-6 py-4 flex justify-center">
-                        <a href="{{ route('student-side.update-profile-form', ['student_id' => $student_id]) }}" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mr-2">Update Profile</a>
+                        <a href="{{ route('instructor-side.update-profile-form', ['instructor_id' => $instructor_id]) }}" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mr-2">Update Profile</a>
                         <button class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded" id="changePasswordButton">Change Password</button>
                     </div>
                 </div>
@@ -65,7 +64,7 @@
                 Evaluated Instructors<i> A.Y. 2023-2024</i>
             </h3>
             {{-- @if ($instructors->count() > 0) --}}
-            <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 mt-4 max-h-64 overflow-y-auto">
+            <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-5 gap-3 mt-4 max-h-64 overflow-y-auto">
                 {{-- @foreach ($instructors as $instructor) --}}
                 <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
                     <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
@@ -107,44 +106,6 @@
                     <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
                     <p class="text-xs text-center text-gray-600">CAP323</p>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                                                                                                                
-                
                 {{-- @endforeach --}}
             </div>
             {{-- @else
@@ -180,7 +141,7 @@
                 <thead>
                     <tr class="text-sm font-medium text-gray-700 text-left">
                         <th class="px-4 py-2 bg-gray-200">Instructor</th>
-                        <th class="px-4 py-2 bg-gray-200">Subject</th>
+                        <th class="px-4 py-2 bg-gray-200">Department</th>
                         <th class="px-4 py-2 bg-gray-200">Status</th>
                     </tr>
                 </thead>
@@ -188,42 +149,37 @@
                 <tbody class="text-sm font-normal text-gray-700">
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
+                     <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">Web Development 2</td>
+                        <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                     <!-- Add more table rows as needed -->
@@ -243,7 +199,7 @@
         <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full md:max-w-md" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 class="text-lg font-bold text-gray-700">Change Password</h3>
-                <form action="{{ route('student-side.change-password', ['student_id' => $student->student_id]) }}" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
+                <form action="#" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
                     @csrf
                     <div class="mb-4 md:w-full md:mr-2">
                         <label for="oldpassword" class="block text-gray-700 text-sm font-bold mb-2">Current Password</label>

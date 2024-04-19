@@ -95,6 +95,13 @@ Route::controller(InstructorController::class)->group(function(){
     Route::get('/instructor-dashboard', 'Instructor_dashboard')->name('instructor.dashboard')->middleware('auth:instructors'); 
     Route::post('/instructor-logout', 'logout')->name('instructor_logout'); // Protect the logout route
 
+    Route::group(['middleware' => 'auth:instructors'], function () { 
+        Route::get('/instructor-profile{instructor_id}', 'updateProfilePage')->name('instructor.profile');
+        Route::get('/instructor-update-profile{instructor_id}', 'updateProfileForm')->name('instructor-side.update-profile-form');
+
+
+    }); //end of authenticated routes
+
 }); // end of instructor part (Controller)
 
 

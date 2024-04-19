@@ -3,7 +3,7 @@
 @php
     $title = 'E-Val-Dashboard';
     $array = ['title' => $title];
-    $student_id = session('instructor_id');
+    $instructor_id = session('instructor_id');
     $firstname = session('firstname');
 
 @endphp
@@ -135,7 +135,48 @@
                         <p><span>3-B</span></p>
                     </td>
                 </tr>  
-                
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>BSIT</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>3-B</span></p>
+                    </td>
+                </tr>  
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>BSIT</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>3-B</span></p>
+                    </td>
+                </tr>  
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>BSIT</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>3-B</span></p>
+                    </td>
+                </tr>  
                 <tr class="border-b">
                     <td colspan="6" class="text-center bg-gray-800 hover:bg-gray-700 text-white py-1 rounded">
                         <button class="w-full" id="addSubjectButton">
@@ -166,7 +207,7 @@
                         {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
                         <select id="courseCode" name="courseCode" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
-                            <option value="" disabled selected>Select Class Code</option>
+                            <option value="" disabled selected>Select Subject</option>
                             <option value="CAP323">CAP323</option>
                             <option value="CAP323">CAP323</option>
                             <option value="CAP323">CAP323</option>
@@ -178,6 +219,22 @@
                         </select>  
                     </div>
                     <!-- Add more form fields as needed -->
+                    <div class="mb-3">
+                        <label for="program" class="block text-gray-700 text-sm font-bold mb-2">Program</label>
+                        <select id="program" name="program" required onfocus="clearError()"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
+                            <option value="" disabled selected>Select your program</option>
+                            <option value="Bachelor of Science in Civil Engineering">Bachelor of Science in Civil Engineering</option>
+                            <option value="Bachelor of Science in Business Administration - Major In Marketing">Bachelor of Science in Business Administration - Major In Marketing</option>
+                            <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
+                            <option value="Bachelor of Elementary Education - Major In General Education">Bachelor of Elementary Education - Major In General Education</option>
+                            <option value="Bachelor of Science in Entrepreneurship">Bachelor of Science in Entrepreneurship</option>
+                            <option value="Bachelor of Science in Psychology">Bachelor of Science in Psychology</option>
+                            <option value="Bachelor of Science in Tourism Management">Bachelor of Science in Tourism Management</option>
+                            <!-- Add more options as needed -->
+
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="yearLevel" class="block text-gray-700 text-sm font-bold mb-2">Year Level</label>
                         {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
