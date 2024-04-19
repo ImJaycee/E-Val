@@ -44,6 +44,10 @@ return [
             'driver' => 'session', // You can use 'session' or 'token' based on your preference
             'provider' => 'students', // This should correspond to the provider defined in the 'providers' array
         ],
+        'instructors' => [
+            'driver' => 'session', // You can use 'session' or 'token' based on your preference
+            'provider' => 'instructors', // This should correspond to the provider defined in the 'providers' array
+        ],
     ],
 
     /*
@@ -71,6 +75,10 @@ return [
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\StudentAccount::class,
+        ],
+        'instructors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\InstructorAccount::class,
         ],
 
         // 'users' => [

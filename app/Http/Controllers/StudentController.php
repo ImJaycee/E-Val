@@ -58,15 +58,12 @@ class StudentController extends Controller
             return redirect("/student-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
         }else {
             // Log the input for debugging purposes
-            return back()->withErrors([ //login failed
-                'invalid' => 'Invalid Credentials'
-            ])->withInput(); //return back to login page
-            error_log($request->studentID);
+            return redirect("/")->with('message', 'Invalid Credentials!');//return redirect to dashboard
           
         }   
 
         return back()->withErrors([ //login failed
-            'studentID' => 'Invalid Credentials'
+            'student_id' => 'Invalid Credentials'
         ])->withInput(); //return back to login page
     }
 

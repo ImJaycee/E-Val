@@ -51,9 +51,9 @@
         
     </div>
 
-    <div class="max-w-md mx-auto py-10 px-4 hidden" id="InstrutorLogin">
+    <div class="max-w-md mx-auto py-10 px-4 hidden" id="InstructorLogin">
         <h1 class="text-xl text-center font-bold mb-4">Login as Instructor</h1>
-        <form action="#" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="{{ route('Instructor_loginprocess')}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             <div class="flex justify-center space-x-4">
                 <button id="studentButton" type="button" onclick="showStudentLogin()" class="bg-green-700 hover:bg-green-800 text-white font-semibold py-1 px-4 mb-2 rounded focus:outline-none focus:shadow-outline active:bg-green-700">Login as Student</button>
@@ -61,7 +61,7 @@
             </div>
             <div class="mb-4">
                 <label for="instructor_id" class="block text-gray-700 text-sm font-bold mb-2">Instructor ID</label>
-                <input type="number" id="student_id" name="student_id" required
+                <input type="number" id="instructor_id" name="instructor_id" required
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
     
@@ -81,7 +81,7 @@
                     Login
                 </button>
             </div>
-            <div class="text-center"><a href="{{route('register.student')}}" class="text-sm text-blue-500">Sign Up</a></div>
+            <div class="text-center"><a href="{{route('register.instructor')}}" class="text-sm text-blue-500">Sign Up</a></div>
             <div class="text-center"><a href="{{route('student.forgot-passsword-form')}}" class="text-sm text-blue-500">Forgot Password?</a></div>
             
         </form>
@@ -91,16 +91,16 @@
     <script>
         function showStudentLogin() {
             document.getElementById('StudentLogin').classList.remove('hidden');
-            document.getElementById('InstrutorLogin').classList.add('hidden');
+            document.getElementById('InstructorLogin').classList.add('hidden');
         }
     
         function showInstructorLogin() {
-            document.getElementById('InstrutorLogin').classList.remove('hidden');
+            document.getElementById('InstructorLogin').classList.remove('hidden');
             document.getElementById('StudentLogin').classList.add('hidden');
         }
     
         // Initially hide the instructor login form
-        document.getElementById('InstrutorLogin').classList.add('hidden');
+        document.getElementById('InstructorLogin').classList.add('hidden');
     </script>
     
 
