@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPasswordMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\InstructorController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +41,7 @@ Route::get('/reset-password', function () {//forgot-passsword-form
 Route::get('/register-student', function () {
     return view('student-side.register');
 })->name('register.student');
+
 // Student Part
 Route::controller(StudentController::class)->group(function(){
     Route::post('/register-student', 'registerStudent')->name('registerStudent'); //register process
@@ -76,8 +79,23 @@ Route::controller(StudentController::class)->group(function(){
 
     //Student Profile
    
-});
+}); // end of student part (Controller)
 
+
+//Instructor Side
+// Create student registration route
+Route::get('/register-instructor', function () {
+    return view('instructor-side.register');
+})->name('register.instructor');
+
+// Instructor Part
+Route::controller(InstructorController::class)->group(function(){
+    Route::post('/register-instructor', 'registerInstructor')->name('registerInstructor'); //register process
+    Route::post('/instructorlogin-process', 'Instructor_loginprocess')->name('Instructor_loginprocess'); //login process
+    Route::get('/instructor-dashboard', 'Instructor_dashboard')->name('instructor.dashboard')->middleware('auth:instructors'); 
+    Route::post('/instructor-logout', 'logout')->name('instructor_logout'); // Protect the logout route
+
+}); // end of instructor part (Controller)
 
 
 
