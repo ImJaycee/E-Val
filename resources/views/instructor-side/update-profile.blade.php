@@ -13,13 +13,13 @@
 <body class="bg-gray-100">
     <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-8">
     <div class="max-w-2xl mx-auto py-10 px-4">
-        <form action="#" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="{{ route('instructor-side.update-profile-process', ['instructor_id' => $instructor_id]) }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {{-- {{ route('student-side.update-profile-process', ['student_id' => $student_id]) }} --}}
             @csrf
 
             <div class="flex justify-center">
                 <div class="mb-4 flex justify-center items-center">
-                    <label for="pfp" class="block text-gray-700 text-sm font-bold mb-2">Profile Picture</label>
+                    <label for="pfp" class="block text-gray-700 text-sm font-bold mb-2">Profile Picture </label>
                     <div class="relative">
                         <input type="file" id="pfp" name="pfp" accept="image/*" onchange="previewImage(event)" class="hidden">
                         <label for="pfp" class="cursor-pointer">
@@ -37,62 +37,10 @@
                 </div>
             </div>
             <div class="md:flex md:justify-between">
-                <div class="mb-4 md:w-1/2 md:mr-2">
-                    <label for="year" class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                    <select id="year" name="year" required onfocus="clearError()"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
-                        <option value="" disabled selected>Select year</option>
-                        <option value="1st">1st</option>
-                        <option value="2nd">2nd</option>
-                        <option value="3rd">3rd</option>
-                        <option value="4th">4th</option>
-                        <!-- Add more options as needed -->
-    
-                    </select>
-                        @error('year')
-                            <p class="text-red-500 text-sm text-end p-1">
-                                {{$message}}
-                            </p>
-                        @enderror
-                </div>
-
-                <div class="mb-4 md:w-1/2 md:mr-2">
-                    <label for="section" class="block text-gray-700 text-sm font-bold mb-2">Section</label>
-                    <select id="section" name="section" required onfocus="clearError()"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
-                        <option value="" disabled selected>Select section</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <!-- Add more options as needed -->
-    
-                    </select>
-                        @error('section')
-                            <p class="text-red-500 text-sm text-end p-1">
-                                {{$message}}
-                            </p>
-                        @enderror
-                </div>
-
-                <div class="mb-4 md:w-1/2 md:ml-2">
-                    <label for="number" class="block text-gray-700 text-sm font-bold mb-2">Contact</label>
-                    <input type="number" id="contact" name="contact" required onfocus="clearError()"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
-                    @error('contact')
-                        <p class="text-red-500 text-sm text-end p-1">
-                            {{$message}}
-                        </p>
-                    @enderror
-                </div>
-
-            </div>
-    
-            <div class="md:flex md:justify-between">
                 <div class="mb-4 md:w-1/3 md:mr-2">
                     <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
                     <input type="text" id="firstname" name="firstname" required onfocus="clearError()"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$instructor->firstname}}" >
                         @error('firstname')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
@@ -103,7 +51,7 @@
                 <div class="mb-4 md:w-1/3 md:mx-2">
                     <label for="middlename" class="block text-gray-700 text-sm font-bold mb-2">Middle Name</label>
                     <input type="text" id="middlename" name="middlename" required onfocus="clearError()"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$instructor->middlename}}">
                         @error('middlename')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
@@ -114,40 +62,55 @@
                 <div class="mb-4 md:w-1/3 md:ml-2">
                     <label for="lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
                     <input type="text" id="lastname" name="lastname" required onfocus="clearError()"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$instructor->lastname}}">
                         @error('lastname')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
                            </p>
                         @enderror
                 </div>
+
+            </div>
+    
+            <div class="md:flex md:justify-between">
+                <div class="mb-4 md:w-1/2 md:mr-2">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="email" name="email" required onfocus="clearError()"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$instructor->email}}">
+                        @error('email')
+                           <p class="text-red-500 text-sm text-end p-1">
+                               {{$message}}
+                           </p>
+                       @enderror
+                </div>
+
+                <div class="mb-4 md:w-1/2 md:ml-2">
+                    <label for="number" class="block text-gray-700 text-sm font-bold mb-2">Contact</label>
+                    <input type="number" id="contact" name="contact" required onfocus="clearError()"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$instructor->contact}}">
+                    @error('contact')
+                        <p class="text-red-500 text-sm text-end p-1">
+                            {{$message}}
+                        </p>
+                    @enderror
+                </div>
+        
             </div>
 
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" id="email" name="email" required onfocus="clearError()"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
-                    @error('email')
-                       <p class="text-red-500 text-sm text-end p-1">
-                           {{$message}}
-                       </p>
-                   @enderror
-            </div>
             <div class="mb-4">
                 <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Pepartment</label>
                 <select id="department" name="department" required onfocus="clearError()"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="" disabled selected>Select your Department</option>
-                        <option value="College of Engineering and Architecture">College of Engineering and Architecture</option>
-                        <option value="College of Business Administration">College of Business Administration</option>
-                        <option value="College of Computing Studies">College of Computing Studies</option>
-                        <option value="College of Education">College of Education</option>
-                        <option value="College of Arts and Sciences">College of Arts and Sciences</option>
-                        <option value="College of Hospitality and Tourism Management">College of Hospitality and Tourism Management</option>
-                        <!-- Add more options as needed -->
-
-            </select>
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="" disabled>Select your Department</option>
+                    <option value="College of Engineering and Architecture" {{ $instructor->department == 'College of Engineering and Architecture' ? 'selected' : '' }}>College of Engineering and Architecture</option>
+                    <option value="College of Business Administration" {{ $instructor->department == 'College of Business Administration' ? 'selected' : '' }}>College of Business Administration</option>
+                    <option value="College of Computing Studies" {{ $instructor->department == 'College of Computing Studies' ? 'selected' : '' }}>College of Computing Studies</option>
+                    <option value="College of Education" {{ $instructor->department == 'College of Education' ? 'selected' : '' }}>College of Education</option>
+                    <option value="College of Arts and Sciences" {{ $instructor->department == 'College of Arts and Sciences' ? 'selected' : '' }}>College of Arts and Sciences</option>
+                    <option value="College of Hospitality and Tourism Management" {{ $instructor->department == 'College of Hospitality and Tourism Management' ? 'selected' : '' }}>College of Hospitality and Tourism Management</option>
+                    <!-- Add more options as needed -->
                 </select>
+
         
                     @error('department')
                         <p class="text-red-500 text-sm text-end p-1">
