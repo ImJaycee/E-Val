@@ -199,7 +199,7 @@
         <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full md:max-w-md" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 class="text-lg font-bold text-gray-700">Change Password</h3>
-                <form action="#" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
+                <form action="{{ route('instructor-side.change-password', ['instructor_id' => $instructor->instructor_id]) }}" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
                     @csrf
                     <div class="mb-4 md:w-full md:mr-2">
                         <label for="oldpassword" class="block text-gray-700 text-sm font-bold mb-2">Current Password</label>

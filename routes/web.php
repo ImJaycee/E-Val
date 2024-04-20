@@ -98,6 +98,8 @@ Route::controller(InstructorController::class)->group(function(){
     Route::group(['middleware' => 'auth:instructors'], function () { 
         Route::get('/instructor-profile{instructor_id}', 'updateProfilePage')->name('instructor.profile');
         Route::get('/instructor-update-profile{instructor_id}', 'updateProfileForm')->name('instructor-side.update-profile-form');
+        Route::post('/instructor-update-profile{instructor_id}', 'updateProfile')->name('instructor-side.update-profile-process');
+        Route::post('/instructor-change-password{instructor_id}', 'changePassword')->name('instructor-side.change-password');
 
 
     }); //end of authenticated routes
