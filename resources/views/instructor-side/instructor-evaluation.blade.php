@@ -1,17 +1,17 @@
-@auth('students')
+@auth('instructors')
 
 @php
     $title = 'E-Val-Evaluation';
     $array = ['title' => $title];
-    // $studentID = session('studentID');
+    // $instructor_id = session('instructor_id');
 @endphp
 
-@include('partials.header-student')
+@include('partials.header-instructor')
 
 
 <body class="bg-gray-200">
 
-<x-nav-student/> <!--Include nav and sidebar-->
+<x-nav-instructor/> <!--Include nav and sidebar-->
 
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->

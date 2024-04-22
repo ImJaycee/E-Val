@@ -59,22 +59,22 @@ Route::controller(StudentController::class)->group(function(){
         Route::post('/student-update-profile{student_id}', 'updateProfile')->name('student-side.update-profile-process');
         Route::post('/student-change-password{student_id}', 'changePassword')->name('student-side.change-password');
 
-
-
-        //Student feedback
-        Route::get('/student-feedback', function () {
-            return view('student-side.student-feedback');
-        })->name('student.feedback');
+        //Student evaluation
+        Route::get('/student-evaluation', function () {
+            return view('student-side.student-evaluation');
+        })->name('student.evaluation');
 
         //Student view instructors rank
         Route::get('/student-instructor-rank', function () {
             return view('student-side.student-instructors-rank');
         })->name('student.instructor-rank');
 
-        //Student evaluation
-        Route::get('/student-evaluation', function () {
-            return view('student-side.student-evaluation');
-        })->name('student.evaluation');
+        //Student feedback
+        Route::get('/student-feedback', function () {
+            return view('student-side.student-feedback');
+        })->name('student.feedback');
+
+        
     });
 
     //Student Profile
@@ -96,11 +96,16 @@ Route::controller(InstructorController::class)->group(function(){
     Route::post('/instructor-logout', 'logout')->name('instructor_logout'); // Protect the logout route
 
     Route::group(['middleware' => 'auth:instructors'], function () { 
+        // Instructor Profile Management
         Route::get('/instructor-profile{instructor_id}', 'updateProfilePage')->name('instructor.profile');
         Route::get('/instructor-update-profile{instructor_id}', 'updateProfileForm')->name('instructor-side.update-profile-form');
         Route::post('/instructor-update-profile{instructor_id}', 'updateProfile')->name('instructor-side.update-profile-process');
         Route::post('/instructor-change-password{instructor_id}', 'changePassword')->name('instructor-side.change-password');
 
+        //Instructor evaluation P2P Side
+        Route::get('/instructor-evaluation', function () {
+            return view('instructor-side.instructor-evaluation');
+        })->name('instructor.evaluation');
 
     }); //end of authenticated routes
 
