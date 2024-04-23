@@ -107,6 +107,11 @@ Route::controller(InstructorController::class)->group(function(){
             return view('instructor-side.instructor-evaluation');
         })->name('instructor.evaluation');
 
+        // view instructors rank
+        Route::get('/instructor-instructor-rank', function () {
+            return view('instructor-side.instructor-instructors-rank');
+        })->name('instructor.instructor-rank');
+
     }); //end of authenticated routes
 
 }); // end of instructor part (Controller)
