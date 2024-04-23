@@ -112,6 +112,17 @@ Route::controller(InstructorController::class)->group(function(){
             return view('instructor-side.instructor-instructors-rank');
         })->name('instructor.instructor-rank');
 
+        //Comments for instructor
+        Route::get('/instructor-students-comment', function () {
+            return view('instructor-side.instructor-comments');
+        })->name('instructor.comments');
+
+
+        //Instructor feedback
+        Route::get('/instructor-feedback', function () {
+            return view('instructor-side.instructor-feedback');
+        })->name('instructor.feedback');
+
     }); //end of authenticated routes
 
 }); // end of instructor part (Controller)
