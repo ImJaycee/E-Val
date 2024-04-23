@@ -50,14 +50,17 @@
             <table class="table-auto w-full" style="table-layout: fixed;">
                 <thead>
                     <tr>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 33.33%;">
+                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
                             <h2 class="text-ml font-bold text-gray-700">Subject Enrolled</h2>
                         </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 33.33%;">
+                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
                             <h2 class="text-ml font-bold text-gray-700">Code</h2>
                         </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 33.33%;">
+                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
                             <h2 class="text-ml font-bold text-gray-700">Instructor</h2>
+                        </th>
+                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width:25%;">
+                            <h2 class="text-ml font-bold text-gray-700"></h2>
                         </th>
                     </tr>
                 </thead>
@@ -72,71 +75,10 @@
                     <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
                         <p><span>Davemm Salalila</span></p>
                     </td>
-                </tr>    
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP 323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>Davemm Salalila</span></p>
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
                     </td>
                 </tr>    
                 <tr class="border-b">
@@ -149,7 +91,92 @@
                     <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
                         <p><span>Davemm Salalila</span></p>
                     </td>
-                </tr>  
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                    </td>
+                </tr>   
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP 323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>Davemm Salalila</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                    </td>
+                </tr>   
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP 323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>Davemm Salalila</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                    </td>
+                </tr>   
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP 323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>Davemm Salalila</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                    </td>
+                </tr>   
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP 323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>Davemm Salalila</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                    </td>
+                </tr>   
+                <tr class="border-b">
+                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                        <p>Capstone 1</p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>CAP 323</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                        <p><span>Davemm Salalila</span></p>
+                    </td>
+                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                    </td>
+                </tr>   
                 <tr class="border-b">
                     <td colspan="6" class="text-center bg-gray-800 hover:bg-gray-700 text-white py-1 rounded">
                         <button class="w-full" id="addSubjectButton">
