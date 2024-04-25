@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg p-4 shadow-md my-4">
+    <div class="bg-white rounded-lg p-4 shadow-md my-4 mt-6">
         <form action="/submit-feedback" method="POST" class="text-center">
             @csrf
             <div class="mb-4">
@@ -62,11 +62,11 @@
                 <label for="comment" class="block text-gray-700 font-semibold mb-2">Comment:</label>
                 <textarea name="comment" id="comment" cols="30" rows="5" class="border border-gray-300 rounded-md px-3 py-2 w-full resize-none focus:outline-none focus:ring focus:border-blue-300"></textarea>
             </div>
-            <button type="submit" class="bg-red-800 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md">Submit Feedback</button>
+            <button type="submit" class="bg-green-800 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-md">Submit Feedback</button>
         </form>
     </div>
 
-    <footer class="bg-gray-700 text-gray-200 py-2 text-center rounded-md lg:mt-10">
+    <footer class="bg-gray-700 text-gray-200 py-2 text-center rounded-md lg:mt-16">
         <p>&copy; 2024 All Rights Reserved.</p>
         <p class="mt-1 text-sm">Developed by <a href="#" class=""><i>Jay Cee Cruz</i></a></p>
     </footer>

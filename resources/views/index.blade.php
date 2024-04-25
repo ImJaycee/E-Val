@@ -82,7 +82,7 @@
                 </button>
             </div>
             <div class="text-center"><a href="{{route('register.instructor')}}" class="text-sm text-blue-500">Sign Up</a></div>
-            <div class="text-center"><a href="{{route('student.forgot-passsword-form')}}" class="text-sm text-blue-500">Forgot Password?</a></div>
+            <div class="text-center"><a href="{{route('instructor.forgot-passsword-form')}}" class="text-sm text-blue-500">Forgot Password?</a></div>
             
         </form>
 
