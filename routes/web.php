@@ -23,17 +23,28 @@ Route::get('/', function () {
     return view('index');
 })->name('view.index');
 
-Route::get('/forgot-passsword-form', function () {//forgot-passsword-form
+Route::get('/forgot-passsword-form', function () {//forgot-passsword-form for student
     return view('mail.User-Email-Password');
 })->name('student.forgot-passsword-form');
 
+Route::get('/forgot-passsword-form-instructor', function () {//forgot-passsword-form for instructor
+    return view('mail.Instructor-Email-Password');
+})->name('instructor.forgot-passsword-form');
+
 Route::controller(ForgotPasswordController::class)->group(function(){
-    Route::post('/forgot-passsword', 'sendResetLink')->name('sendResetLink');
-    Route::post('/reset-password', 'resetPassword')->name('resetPassword');
+    Route::post('/forgot-passsword', 'sendResetLink')->name('sendResetLink'); //student password reset process
+    Route::post('/reset-password', 'resetPassword')->name('resetPassword'); //student password reset process
+
+    Route::post('/forgot-passsword-instructor', 'sendResetLinkInstructor')->name('instructor.sendResetLink'); //instructor password reset process
+    Route::post('/reset-password-instructor', 'resetPasswordInstructor')->name('instructor.resetPassword'); //student password reset process
 });
-Route::get('/reset-password', function () {//forgot-passsword-form
+Route::get('/reset-password', function () {//forgot-passsword-form sor student
     return view('mail.Reset-Password');
 })->name('student.reset-passsword');
+
+Route::get('/instructor-reset-password', function () {//forgot-passsword-form for instructor
+    return view('mail.Instructor-Reset-Password');
+})->name('instructor.reset-passsword');
 
 
 //Student Side

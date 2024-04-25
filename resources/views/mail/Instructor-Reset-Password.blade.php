@@ -16,11 +16,11 @@
     <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
     <div class="max-w-md mx-auto py-10 px-4">
         <h1 class="text-xl text-center font-bold mb-4">Reset Password</h1>
-        <form action="{{ route('resetPassword') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="{{ route('instructor.resetPassword') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             <div class="mb-4">
-                <label for="student_id" class="block text-gray-700 text-sm font-bold mb-2">Student ID</label>
-                <input type="number" id="student_id" name="student_id" required
+                <label for="instructor_id" class="block text-gray-700 text-sm font-bold mb-2">Instructor ID</label>
+                <input type="number" id="instructor_id" name="instructor_id" required
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
             <div class="mb-4">

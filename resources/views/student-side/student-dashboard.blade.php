@@ -23,7 +23,7 @@
             <div class="flex justify-left items-right space-x-5 h-full">
                 <div>
                     <p class="text-xl font-bold text-gray-700">Current Semester</p>
-                    <h2 class="text-4xl font-bold text-gray-600">1st <i class="fas fa-calendar-alt"></i></h2>
+                    <h2 class="text-4xl font-bold text-gray-600">2nd <i class="fas fa-calendar-alt"></i></h2>
                     <h2 class="text-md text-gray-600" id="datetime"></h2>
                 </div>
             </div>
@@ -178,8 +178,8 @@
                     </td>
                 </tr>   
                 <tr class="border-b">
-                    <td colspan="6" class="text-center bg-gray-800 hover:bg-gray-700 text-white py-1 rounded">
-                        <button class="w-full" id="addSubjectButton">
+                    <td colspan="6" class="text-center text-sm font-semibold py-1 rounded">
+                        <button class="w-full py-1 bg-green-800 text-white border-2 border-green-900 rounded" id="addSubjectButton">
                             <i class="fas fa-add"></i> Add subject
                         </button>
                     </td>

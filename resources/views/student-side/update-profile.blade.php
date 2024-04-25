@@ -41,10 +41,10 @@
                     <select id="year" name="year" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                         <option value="" disabled selected>Select year</option>
-                        <option value="1st">1st</option>
-                        <option value="2nd">2nd</option>
-                        <option value="3rd">3rd</option>
-                        <option value="4th">4th</option>
+                        <option value="1st" {{ $student->year == '1st' ? 'selected' : '' }}>1st</option>
+                        <option value="2nd" {{ $student->year == '2nd' ? 'selected' : '' }}>2nd</option>
+                        <option value="3rd" {{ $student->year == '3rd' ? 'selected' : '' }}>3rd</option>
+                        <option value="4th" {{ $student->year == '4th' ? 'selected' : '' }}>4th</option>
                         <!-- Add more options as needed -->
     
                     </select>
@@ -60,10 +60,10 @@
                     <select id="section" name="section" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                         <option value="" disabled selected>Select section</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
+                        <option value="A"{{ $student->section == 'A' ? 'selected' : '' }}>A</option>
+                        <option value="B"{{ $student->section == 'B' ? 'selected' : '' }}>B</option>
+                        <option value="C"{{ $student->section == 'C' ? 'selected' : '' }}>C</option>
+                        <option value="D"{{ $student->section == 'D' ? 'selected' : '' }}>D</option>
                         <!-- Add more options as needed -->
     
                     </select>
