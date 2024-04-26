@@ -57,11 +57,15 @@ Route::get('/register-student', function () {
 Route::controller(StudentController::class)->group(function(){
     Route::post('/register-student', 'registerStudent')->name('registerStudent'); //register process
     Route::post('/studentlogin-process', 'Student_loginprocess')->name('Student_loginprocess'); //login process
-    Route::get('/student-dashboard', 'Student_dashboard')->name('student.dashboard')->middleware('auth:students'); 
+    Route::get('/student-dashboard{student_id}', 'Student_dashboard')->name('student.dashboard')->middleware('auth:students'); 
     Route::post('/student-logout', 'logout')->name('logout'); // Protect the logout route
 
 
     Route::group(['middleware' => 'auth:students'], function () { 
+        //Adding subject
+        Route::post('/student-add-subject{student_id}', 'AddSubject')->name('student.addSubject');
+
+
         //Student Profile Side
         //Route::get('/student-profile', function () { return view('student-side.student-profile');})->name('student.profile');
         Route::get('/student-profile{student_id}', 'updateProfilePage')->name('student.profile');
