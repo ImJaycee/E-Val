@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentAccount;
+use App\Models\SubjectEnrolled;
+use App\Models\SubjectAssigned;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -50,12 +53,13 @@ class StudentController extends Controller
             $request->session()->regenerate(); //create session
             
             $student = auth()->guard('students')->user();
+            $student_id = $student->student_id;
             // session(['student_id' => $student->student_id, 'pfp' => $student->pfp]);
             session(['student_id' => $student->student_id, 
                      'firstname' => $student->firstname,
                      'pfp' => $student->pfp, ]);
             
-            return redirect("/student-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
+                     return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Welcome back!');//return redirect to dashboard
         }else {
             // Log the input for debugging purposes
             return redirect("/")->with('message', 'Invalid Credentials!');//return redirect to dashboard
@@ -67,9 +71,40 @@ class StudentController extends Controller
         ])->withInput(); //return back to login page
     }
 
-    public function Student_dashboard(){ //student dashboard
-        return view('student-side.student-dashboard');
+    public function Student_dashboard($student_id){
+        // Get the student details
+        $student = StudentAccount::where('student_id', $student_id)->first();
+
+        // Get the subjects enrolled by the student
+        $studentSubjects = SubjectEnrolled::where('student_id', $student_id)->get();
+
+        // Initialize an empty array to store the combined data
+        $allSubjectsEnrolled = [];
+
+        // Loop through each enrolled subject to get the assigned instructor
+         foreach ($studentSubjects as $subject) {
+            $subjectDescription = Subject::where('subject_code', $subject->subject_code)->first();
+           $assignedInstructor = SubjectAssigned::where('subject_code', $subject->subject_code)
+         ->where('section', $subject->section)
+         ->first();
+
+            
+        //     // Combine the subject and instructor data
+        $allSubjectsEnrolled[] = [
+
+             'subject_code' => $subject->subject_code,
+            'description' => $subjectDescription->description,
+            'instructor_name' => $assignedInstructor ? $assignedInstructor->instructor_name : 'Not assigned',
+
+            ];
+            
+         }
+
+        // Pass the student details and combined data to the view
+        //return view('student-side.student-dashboard', compact('student'));
+         return view('student-side.student-dashboard', compact('student', 'allSubjectsEnrolled'));
     }
+
 
     public function logout(Request $request){//logout
         auth()->guard('students')->logout(); 
@@ -79,6 +114,43 @@ class StudentController extends Controller
         ->with('message', 'Logged out')
         ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
         ->header('Pragma', 'no-cache');
+    }
+
+    public function AddSubject(Request $request, $student_id){ //add subject
+        $validated = $request->validate([
+            'student_id' => ['required'],
+            'program' => ['required', 'string'],
+            'subject_code' => ['required', 'string'],
+            'year' => ['required', 'string'],
+            'section' => ['required', 'string'],
+        ]);        
+        //dd($validated);
+
+        $student = StudentAccount::where('student_id', $student_id)->first();
+        $subject = SubjectEnrolled::where('subject_code', $validated['subject_code'])
+        ->where('student_id', $student_id)
+        ->first();
+    
+        if ($subject) {
+            //return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Subject added already!')->with('reload', true);
+            return back()->with('message', 'Subject added already!');
+        }
+
+        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
+
+        $subjectEnrolled = SubjectEnrolled::create([
+            'student_id' => $student_id,
+            'subject_code' => $validated['subject_code'],
+            'section' => $section,
+        ]);
+
+
+        if ($subjectEnrolled) {
+            return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Subject added successfully!')->with('reload', true);
+           
+        } else {
+            return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Failed to add subject!')->with('reload', true);
+        }
     }
 
     public function updateProfilePage($student_id){ //update profile page

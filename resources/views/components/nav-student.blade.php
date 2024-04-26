@@ -20,7 +20,7 @@
             <h1 class="text-sm md:text-xl mt-4 md:mt-3 text-gray-200 font-bold">E-VAL</h1>
         </div>
 
-        {{-- notification --}}
+        {{-- profile --}}
             <a href="{{route('student.profile', ['student_id' => $student_id])}}">
                 @If(!empty($pfp))
                     <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
@@ -37,7 +37,7 @@
     <!-- Items -->
     <div class="py-4 space-y-0">
         <!-- Home -->
-        <a href="{{ route('student.dashboard') }}" aria-label="dashboard" class="relative px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200">
+        <a href="{{route('student.dashboard', ['student_id' => $student_id])}}" aria-label="dashboard" class="relative px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200">
             <i class="fas fa-home"></i>
             <span class="">Home</span>
         </a>

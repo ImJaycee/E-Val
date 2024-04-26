@@ -90,13 +90,13 @@
                 <select id="program" name="program" required onfocus="clearError()"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                     <option value="" disabled selected>Select your program</option>
-                    <option value="Bachelor of Science in Civil Engineering">Bachelor of Science in Civil Engineering</option>
-                    <option value="Bachelor of Science in Business Administration - Major In Marketing">Bachelor of Science in Business Administration - Major In Marketing</option>
-                    <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
-                    <option value="Bachelor of Elementary Education - Major In General Education">Bachelor of Elementary Education - Major In General Education</option>
-                    <option value="Bachelor of Science in Entrepreneurship">Bachelor of Science in Entrepreneurship</option>
-                    <option value="Bachelor of Science in Psychology">Bachelor of Science in Psychology</option>
-                    <option value="Bachelor of Science in Tourism Management">Bachelor of Science in Tourism Management</option>
+                        <option value="BSCE">Bachelor of Science in Civil Engineering</option>
+                        <option value="BSBA">Bachelor of Science in Business Administration - Major In Marketing</option>
+                        <option value="BSIT">Bachelor of Science in Information Technology</option>
+                        <option value="BEED">Bachelor of Elementary Education - Major In General Education</option>
+                        <option value="BSE">Bachelor of Science in Entrepreneurship</option>
+                        <option value="BScPsych">Bachelor of Science in Psychology</option>
+                        <option value="BSTM">Bachelor of Science in Tourism Management</option>
                     <!-- Add more options as needed -->
 
                 </select>
