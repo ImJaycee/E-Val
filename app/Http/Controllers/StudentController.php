@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InstructorAccount;
 use App\Models\StudentAccount;
 use App\Models\SubjectEnrolled;
 use App\Models\SubjectAssigned;
@@ -87,7 +88,6 @@ class StudentController extends Controller
            $assignedInstructor = SubjectAssigned::where('subject_code', $subject->subject_code)
          ->where('section', $subject->section)
          ->first();
-
             
         //     // Combine the subject and instructor data
         $allSubjectsEnrolled[] = [
@@ -152,6 +152,56 @@ class StudentController extends Controller
             return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Failed to add subject!')->with('reload', true);
         }
     }
+
+    public function RemoveSubject($student_id, $subject_code){ //remove subject
+        $subject = SubjectEnrolled::where('student_id', $student_id)
+        ->where('subject_code', $subject_code)
+        ->first();
+        //dd($subject);
+    
+        if ($subject) {
+            $subject->delete();
+            return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Subject removed successfully!')->with('reload', true);
+        } else {
+            return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Failed to remove subject!')->with('reload', true);
+        }
+    }
+
+    public function Student_evaluation($student_id){ // student evaluation side
+
+        $studentSubjects = SubjectEnrolled::where('student_id', $student_id)->get();
+        $allSubjectsEnrolled = [];
+    
+        // Loop through each enrolled subject to get the assigned instructor
+        foreach ($studentSubjects as $subject) {
+            $assignedInstructor = SubjectAssigned::where('subject_code', $subject->subject_code)
+                ->where('section', $subject->section)
+                ->first();
+    
+            if ($assignedInstructor) {
+                $InstructorPFP = InstructorAccount::where('instructor_id', $assignedInstructor->instructor_id)->first();
+    
+                // Combine the subject and instructor data
+                $allSubjectsEnrolled[] = [
+                    'instructor_id' => $assignedInstructor->instructor_id,
+                    'subject_code' => $subject->subject_code,
+                    'pfp' => $InstructorPFP ? $InstructorPFP->pfp : null,
+                    'instructor_name' => $assignedInstructor->instructor_name,
+                ];
+            } else {
+                // If no instructor is assigned, add the subject with default values
+                $allSubjectsEnrolled[] = [
+                    'instructor_id' => null,
+                    'subject_code' => $subject->subject_code,
+                    'pfp' => null,
+                    'instructor_name' => 'Not assigned',
+                ];
+            }
+        }
+    
+        return view('student-side.student-evaluation', compact('allSubjectsEnrolled'));
+    }
+    
 
     public function updateProfilePage($student_id){ //update profile page
         $student = StudentAccount::where('student_id', $student_id)->first();

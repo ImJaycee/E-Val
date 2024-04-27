@@ -42,7 +42,7 @@
             <span class="">Home</span>
         </a>
 
-        <a href="{{route('student.evaluation')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
+        <a href="{{route('student.evaluation', ['student_id' => $student_id])}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-poll"></i>
             <span>Evaluation</span>
         </a>
