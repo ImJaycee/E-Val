@@ -62,9 +62,10 @@ Route::controller(StudentController::class)->group(function(){
 
 
     Route::group(['middleware' => 'auth:students'], function () { 
-        //Adding subject
-        Route::post('/student-add-subject{student_id}', 'AddSubject')->name('student.addSubject');
-
+        //Student Dashboard
+        Route::post('/student-add-subject{student_id}', 'AddSubject')->name('student.addSubject');//Adding subject
+        Route::match(['post', 'delete'], '/student-remove-subject/{student_id}/{subject_code}', 'RemoveSubject')->name('student.removeSubject');//Removing subject
+        
 
         //Student Profile Side
         //Route::get('/student-profile', function () { return view('student-side.student-profile');})->name('student.profile');
@@ -75,9 +76,10 @@ Route::controller(StudentController::class)->group(function(){
         Route::post('/student-change-password{student_id}', 'changePassword')->name('student-side.change-password');
 
         //Student evaluation
-        Route::get('/student-evaluation', function () {
-            return view('student-side.student-evaluation');
-        })->name('student.evaluation');
+        Route::get('student-evaluation{student_id}', 'Student_evaluation')->name('student.evaluation');
+        // Route::get('/student-evaluation', function () {
+        //     return view('student-side.student-evaluation');
+        // })->name('student.evaluation');
 
         //Student view instructors rank
         Route::get('/student-instructor-rank', function () {

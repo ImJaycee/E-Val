@@ -46,54 +46,25 @@
        
         <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">
             <!-- Sample instructor card, repeat this for each instructor -->
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
-            <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
-                <p class="text-xs font-semibold text-gray-600">CAP323</p>
-                <p class="text-sm font-semibold text-gray-700">Davemm Salalila</p>
-                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" id="evaluateInstructor">Evaluate</button>
-            </div>
+            @foreach ($allSubjectsEnrolled as $subject)
+                <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
+                    @if ($subject['pfp'])
+                    <img src="{{ asset('storage/images/pfp/'.$subject['pfp']) }}" alt="" class="w-16 h-16 rounded-full mb-1">
+                    @else
+                    <img src="{{'storage/images/test-profile.png' }}" alt="{{ $subject['instructor_name'] }}" class="w-16 h-16 rounded-full mb-1">
+                    @endif
+                    <p class="text-xs font-semibold text-gray-600">{{ $subject['subject_code'] }}</p>
+                    <p class="text-sm font-semibold text-gray-700 mt-1">{{ $subject['instructor_name'] }}</p>
+                    @if ($subject['instructor_id'])
+                    <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" data-instructor-id="{{ $subject['instructor_id'] }}">Evaluate</button>
+                    @else
+                    <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" disabled>Evaluate</button>
+                    @endif
+                    
+                </div>
+            @endforeach
+
+            
             <!-- Sample instructor card, repeat this for each instructor -->
         </div>
 
@@ -398,15 +369,19 @@
 
     <!-- Script  -->
     <script>
-        const evaluateInstructor = document.getElementById('evaluateInstructor');
-        const evaluationFormModal = document.getElementById('evaluationFormModal');
-        const closeFormModal = document.getElementById('closeFormModal');
-    
-        evaluateInstructor.addEventListener('click', () => {
-            evaluationFormModal.classList.remove('hidden');
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('evaluate-button')) {
+                const instructorId = event.target.getAttribute('data-instructor-id');
+                if (instructorId) {
+                    const evaluationFormModal = document.getElementById('evaluationFormModal');
+                    evaluationFormModal.classList.remove('hidden');
+                }
+            }
         });
     
+        const closeFormModal = document.getElementById('closeFormModal');
         closeFormModal.addEventListener('click', () => {
+            const evaluationFormModal = document.getElementById('evaluationFormModal');
             evaluationFormModal.classList.add('hidden');
         });
     </script>

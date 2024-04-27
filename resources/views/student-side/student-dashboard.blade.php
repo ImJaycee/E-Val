@@ -77,7 +77,7 @@
                                 <p><span>{{ $subject['instructor_name'] ?? 'Not assigned' }}</span></p>
                             </td>
                             <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                                <form action="#" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
+                                <form action="{{ route('student.removeSubject', ['student_id' => $student->student_id, 'subject_code' => $subject['subject_code'] ]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 px-3 py-1 rounded">
