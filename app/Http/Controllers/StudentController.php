@@ -260,12 +260,16 @@ class StudentController extends Controller
     
     public function changePassword(Request $request, $student_id) { //change password
         $validated = $request->validate([
-            "oldpassword" => ['required', 'min:8'],
-            "newpassword" => ['required', 'min:8'],
-            "con_pass" => ['required', 'min:8'],
+            "oldpassword" => ['required',],
+            "newpassword" => ['required'],
+            "con_pass" => ['required'],
         ]);
+        if(strlen($request->input('newpassword')) < 8 ){
+            return redirect()->route('student.profile', ['student_id' => $student_id])->with('message', 'Password must be at least 8 characters long');
+        }
+        
 
-        if($validated['newpassword'] !== $validated['con_pass']){
+        if($request->input('newpassword') !== $request->input('con_pass')){
             return redirect()->route('student.profile', ['student_id' => $student_id])->with('message', 'Passwords do not match!');
         }
     

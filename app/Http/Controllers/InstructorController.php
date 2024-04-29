@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\InstructorAccount;
+use App\Models\SubjectAssigned;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -49,12 +51,14 @@ class InstructorController extends Controller
             $request->session()->regenerate(); //create session
             
             $instructor = auth()->guard('instructors')->user();
+            $instructor_id = $instructor->instructor_id;
             
             session(['instructor_id' => $instructor->instructor_id, 
                      'firstname' => $instructor->firstname,
                      'pfp' => $instructor->pfp, ]);
             
-            return redirect("/instructor-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
+            //return redirect("/instructor-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
+            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Welcome back!');
         }else {
           
             return redirect("/")->with('message', 'Invalid Credentials!');//return redirect to dashboard
@@ -67,8 +71,28 @@ class InstructorController extends Controller
             
     } // end login process
 
-    public function Instructor_dashboard(){ //Instructor dashboard
-        return view('instructor-side.instructor-dashboard');
+    public function Instructor_dashboard($instructor_id){ //Instructor dashboard
+        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
+
+        // Get the subjects assigned for instructor
+        $assignedSubjects = SubjectAssigned::where('instructor_id', $instructor_id)->get();
+
+        $allSubjectsAssigned = [];
+
+        // Loop through each enrolled subject to get the assigned instructor
+        foreach ($assignedSubjects as $subject) {
+            $subjectDescription = Subject::where('subject_code', $subject->subject_code)->first();
+            
+            // Combine the subject and instructor data
+            $allSubjectsAssigned[] = [
+                'description' => $subjectDescription->description,
+                'subject_code' => $subject->subject_code,
+                'section' => $subject->section, // Access section property on $subject, not $assignedSubjects
+            ];
+        }
+
+
+        return view('instructor-side.instructor-dashboard', compact('instructor', 'allSubjectsAssigned'));
     }
 
     public function logout(Request $request){//logout
@@ -79,6 +103,57 @@ class InstructorController extends Controller
         ->with('message', 'Logged out')
         ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
         ->header('Pragma', 'no-cache');
+    }
+
+    public function AddSubject(Request $request, $instructor_id){ //add subject
+        $validated = $request->validate([
+            'instructor_id' => ['required'],
+            'subject_code' => ['required', 'string'],
+            'program' => ['required', 'string'],
+            'year' => ['required', 'string'],
+            'section' => ['required', 'string'],
+        ]);        
+        //dd($validated);
+
+        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
+        $subject = SubjectAssigned::where('subject_code', $validated['subject_code'])
+        ->where('instructor_id', $instructor_id)
+        ->first();
+    
+        if ($subject) {
+             return back()->with('message', 'Subject added already!');
+        }
+
+        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
+
+        $subjectAssigned = SubjectAssigned::create([
+            'instructor_id' => $instructor_id,
+            'instructor_name' => $instructor->firstname . ' ' . $instructor->lastname,
+            'subject_code' => $validated['subject_code'],
+            'section' => $section,
+        ]);
+
+
+        if ($subjectAssigned) {
+            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Subject added successfully!')->with('reload', true);
+           
+        } else {
+            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Failed to add subject!')->with('reload', true);
+        }
+    }
+
+    public function RemoveSubject($instructor_id, $subject_code){ //remove subject
+        $subject = SubjectAssigned::where('instructor_id', $instructor_id)
+        ->where('subject_code', $subject_code)
+        ->first();
+        //dd($subject);
+    
+        if ($subject) {
+            $subject->delete();
+            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Subject removed successfully!')->with('reload', true);
+        } else {
+            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Failed to remove subject!')->with('reload', true);
+        }
     }
 
     public function updateProfilePage($instructor_id){ //update profile page
@@ -134,13 +209,17 @@ class InstructorController extends Controller
 
     public function changePassword(Request $request, $instructor_id) { //change password
         $validated = $request->validate([
-            "oldpassword" => ['required', 'min:8'],
-            "newpassword" => ['required', 'min:8'],
-            "con_pass" => ['required', 'min:8'],
+            "oldpassword" => ['required'],
+            "newpassword" => ['required'],
+            "con_pass" => ['required'],
         ]);
         // dd($validated);
+        if(strlen($request->input('newpassword')) < 8 ){
+            return redirect()->route('instructor.profile', ['instructor_id' => $instructor_id])->with('message', 'Password must be at least 8 characters long');
+        }
+        
 
-        if($validated['newpassword'] !== $validated['con_pass']){
+        if($request->input('newpassword') !== $request->input('con_pass')){
             return redirect()->route('instructor.profile', ['instructor_id' => $instructor_id])->with('message', 'Passwords do not match!');
         }
     

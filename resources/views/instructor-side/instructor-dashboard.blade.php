@@ -14,7 +14,7 @@
 <body class="bg-gray-200">
 
 <x-nav-instructor/> <!--Include nav and sidebar-->
-
+<x-messages/>
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->
     <div class="lg:flex gap-4 items-stretch">
@@ -34,7 +34,7 @@
             <!-- Small Boxes -->
             <div class="block justify-center h-full">
                 <h3 class="text-xl font-bold text-gray-700">
-                    Welcome back <i>{{$firstname}}</i>!
+                    Welcome back <i>{{$instructor->firstname}}</i>!
                 </h3>
                 <p class="text-md font-bold text-gray-500">
                     <i><b>E-val</b></i> is our evaluation tool designed to streamline and enhance 
@@ -65,102 +65,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>BSIT</span>  <span>3-B</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </a>
-                    </td>
-                </tr>  
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>BSIT</span>  <span>3-B</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </a>
-                    </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>BSIT</span>  <span>3-B</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </a>
-                    </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>BSIT</span>  <span>3-B</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </a>
-                    </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>BSIT</span>  <span>3-B</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </a>
-                    </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                        <p>Capstone 1</p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>CAP323</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                        <p><span>BSIT</span>  <span>3-B</span></p>
-                    </td>
-                    <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
-                        <a href="#" class="bg-red-500 px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </a>
-                    </td>
-                </tr>
+                    @foreach($allSubjectsAssigned as $subject)
+                    <tr class="border-b">
+                        <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
+                            <p>{{ $subject['description'] }}</p>
+                        </td>
+                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                            <p><span>{{ $subject['subject_code'] }}</span></p>
+                        </td>
+                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
+                            <p><span>{{ $subject['section'] }}</span></p>
+                        </td>
+                        <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+                            <form action="{{ route('instructor.removeSubject', ['instructor_id' => $instructor->instructor_id, 'subject_code' => $subject['subject_code'] ]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 px-3 py-1 rounded">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                
                 <tr class="border-b">
                     <td colspan="6" class="text-center bg-gray-800 hover:bg-gray-700 text-white py-1 rounded">
                         <button class="w-full" id="addSubjectButton">
@@ -184,21 +111,22 @@
         <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full md:max-w-md" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 class="text-lg font-bold text-gray-700">Add Subject</h3>
-                <form action="#" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
+                <form action="{{ route('instructor.addSubject', ['instructor_id' => $instructor_id]) }}" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
                     @csrf
+                    <input type="number" id="instructor_id" name="instructor_id" class="hidden" value="{{$instructor->instructor_id}}">
                     <div class="mb-3">
-                        <label for="courseCode" class="block text-gray-700 text-sm font-bold mb-2">Course Code</label>
+                        <label for="subject_code" class="block text-gray-700 text-sm font-bold mb-2">Course Code</label>
                         {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
-                        <select id="courseCode" name="courseCode" required onfocus="clearError()"
+                        <select id="subject_code" name="subject_code" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Select Subject</option>
-                            <option value="CAP323">CAP323</option>
-                            <option value="CAP323">CAP323</option>
-                            <option value="CAP323">CAP323</option>
-                            <option value="CAP323">CAP323</option>
-                            <option value="CAP323">CAP323</option>
-                            <option value="CAP323">CAP323</option>
-                            <option value="CAP323">CAP323</option>
+                            <option value="IAS 323">IAS 323</option>
+                            <option value="ITELEC 4">ITELEC 4</option>
+                            <option value="HCI 323">HCI 323</option>
+                            <option value="MS 323">MS 323</option>
+                            <option value="CIS 323">CIS 323</option>
+                            <option value="SIA 323">SIA 323</option>
+                            <option value="CAP 323">CAP 323</option>
                             <!-- Add more options as needed -->
                         </select>  
                     </div>
@@ -220,9 +148,9 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="yearLevel" class="block text-gray-700 text-sm font-bold mb-2">Year Level</label>
+                        <label for="year" class="block text-gray-700 text-sm font-bold mb-2">Year Level</label>
                         {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
-                        <select id="yearLevel" name="yearLevel" required onfocus="clearError()"
+                        <select id="year" name="year" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Year Level</option>
                             <option value="1">1</option>
@@ -244,16 +172,17 @@
                             <!-- Add more options as needed -->
                         </select>  
                     </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm" id="saveSubjectButton">
+                            Save
+                        </button>
+                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closeSubjectModal">
+                            Close
+                        </button>
+                    </div>
                 </form>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm" id="saveSubjectButton">
-                    Save
-                </button>
-                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closeSubjectModal">
-                    Close
-                </button>
-            </div>
+            
         </div>
     </div>
 </div>

@@ -37,7 +37,7 @@
     <!-- Items -->
     <div class="p-4 space-y-4">
         <!-- Home -->
-        <a href="{{ route('instructor.dashboard') }}" aria-label="dashboard" class="relative px-4 py-3 flex items-center space-x-4 rounded-lg text-gray-200 ">
+        <a href="{{route('instructor.dashboard', ['instructor_id' => $instructor_id])}}" aria-label="dashboard" class="relative px-4 py-3 flex items-center space-x-4 rounded-lg text-gray-200 ">
             <i class="fas fa-home text-white"></i>
             <span class="">Home</span>
         </a>
