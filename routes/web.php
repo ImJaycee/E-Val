@@ -109,10 +109,14 @@ Route::get('/register-instructor', function () {
 Route::controller(InstructorController::class)->group(function(){
     Route::post('/register-instructor', 'registerInstructor')->name('registerInstructor'); //register process
     Route::post('/instructorlogin-process', 'Instructor_loginprocess')->name('Instructor_loginprocess'); //login process
-    Route::get('/instructor-dashboard', 'Instructor_dashboard')->name('instructor.dashboard')->middleware('auth:instructors'); 
+    Route::get('/instructor-dashboard{instructor_id}', 'Instructor_dashboard')->name('instructor.dashboard')->middleware('auth:instructors'); 
     Route::post('/instructor-logout', 'logout')->name('instructor_logout'); // Protect the logout route
 
     Route::group(['middleware' => 'auth:instructors'], function () { 
+        // Dashboard routes
+        Route::post('/instructor-add-subject{instructor_id}', 'AddSubject')->name('instructor.addSubject');//Adding subject
+        Route::match(['post', 'delete'], '/instructor-remove-subject/{instructor_id}/{subject_code}', 'RemoveSubject')->name('instructor.removeSubject');//Removing subject
+
         // Instructor Profile Management
         Route::get('/instructor-profile{instructor_id}', 'updateProfilePage')->name('instructor.profile');
         Route::get('/instructor-update-profile{instructor_id}', 'updateProfileForm')->name('instructor-side.update-profile-form');
