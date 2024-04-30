@@ -88,6 +88,7 @@ class StudentController extends Controller
            $assignedInstructor = SubjectAssigned::where('subject_code', $subject->subject_code)
          ->where('section', $subject->section)
          ->first();
+
             
         //     // Combine the subject and instructor data
         $allSubjectsEnrolled[] = [
@@ -169,6 +170,8 @@ class StudentController extends Controller
 
     public function Student_evaluation($student_id){ // student evaluation side
 
+        $student = StudentAccount::where('student_id', $student_id)->first();
+
         $studentSubjects = SubjectEnrolled::where('student_id', $student_id)->get();
         $allSubjectsEnrolled = [];
     
@@ -199,7 +202,7 @@ class StudentController extends Controller
             }
         }
     
-        return view('student-side.student-evaluation', compact('allSubjectsEnrolled'));
+        return view('student-side.student-evaluation', compact('student','allSubjectsEnrolled'));
     }
     
 

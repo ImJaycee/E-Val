@@ -41,10 +41,10 @@
                     <select id="year" name="year" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                         <option value="" disabled selected>Select year</option>
-                        <option value="1st" {{ $student->year == '1st' ? 'selected' : '' }}>1st</option>
-                        <option value="2nd" {{ $student->year == '2nd' ? 'selected' : '' }}>2nd</option>
-                        <option value="3rd" {{ $student->year == '3rd' ? 'selected' : '' }}>3rd</option>
-                        <option value="4th" {{ $student->year == '4th' ? 'selected' : '' }}>4th</option>
+                        <option value="1" {{ $student->year == '1st' ? 'selected' : '' }}>1st</option>
+                        <option value="2" {{ $student->year == '2nd' ? 'selected' : '' }}>2nd</option>
+                        <option value="3" {{ $student->year == '3rd' ? 'selected' : '' }}>3rd</option>
+                        <option value="4" {{ $student->year == '4th' ? 'selected' : '' }}>4th</option>
                         <!-- Add more options as needed -->
     
                     </select>
@@ -137,13 +137,13 @@
                 <select id="program" name="program" required onfocus="clearError()"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     <option value="" disabled>Select your program</option>
-                    <option value="Bachelor of Science in Civil Engineering" {{ $student->program == 'Bachelor of Science in Civil Engineering' ? 'selected' : '' }}>Bachelor of Science in Civil Engineering</option>
-                    <option value="Bachelor of Science in Business Administration - Major In Marketing" {{ $student->program == 'Bachelor of Science in Business Administration - Major In Marketing' ? 'selected' : '' }}>Bachelor of Science in Business Administration - Major In Marketing</option>
-                    <option value="Bachelor of Science in Information Technology" {{ $student->program == 'Bachelor of Science in Information Technology' ? 'selected' : '' }}>Bachelor of Science in Information Technology</option>
-                    <option value="Bachelor of Elementary Education - Major In General Education" {{ $student->program == 'Bachelor of Elementary Education - Major In General Education' ? 'selected' : '' }}>Bachelor of Elementary Education - Major In General Education</option>
-                    <option value="Bachelor of Science in Entrepreneurship" {{ $student->program == 'Bachelor of Science in Entrepreneurship' ? 'selected' : '' }}>Bachelor of Science in Entrepreneurship</option>
-                    <option value="Bachelor of Science in Psychology" {{ $student->program == 'Bachelor of Science in Psychology' ? 'selected' : '' }}>Bachelor of Science in Psychology</option>
-                    <option value="Bachelor of Science in Tourism Management" {{ $student->program == 'Bachelor of Science in Tourism Management' ? 'selected' : '' }}>Bachelor of Science in Tourism Management</option>
+                    <option value="BSCE" {{ $student->program == 'BSCE' ? 'selected' : '' }}>Bachelor of Science in Civil Engineering</option>
+                    <option value="BSBA" {{ $student->program == 'BSBA' ? 'selected' : '' }}>Bachelor of Science in Business Administration - Major In Marketing</option>
+                    <option value="BSIT" {{ $student->program == 'BSIT' ? 'selected' : '' }}>Bachelor of Science in Information Technology</option>
+                    <option value="BEED" {{ $student->program == 'BEED' ? 'selected' : '' }}>Bachelor of Elementary Education - Major In General Education</option>
+                    <option value="BSE" {{ $student->program == 'BSE' ? 'selected' : '' }}>Bachelor of Science in Entrepreneurship</option>
+                    <option value="BScPsych" {{ $student->program == 'BScPsych' ? 'selected' : '' }}>Bachelor of Science in Psychology</option>
+                    <option value="BSTM" {{ $student->program == 'BSTM' ? 'selected' : '' }}>Bachelor of Science in Tourism Management</option>
                     <!-- Add more options as needed -->
                 </select>
         
