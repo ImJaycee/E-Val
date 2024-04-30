@@ -46,7 +46,24 @@
                         <div class="text-center mt-2">
                             <p class="text-lg text-gray-800 font-medium">{{ $student->firstname}} {{ $student->middlename}} {{ $student->lastname}}</p>
                             <p class="text-sm font-semibold text-gray-700">{{$student_id}}</p>
-                            <p class="text-sm font-normal text-gray-700">{{$student->program}}</p>
+                            <p class="text-sm font-normal text-gray-700">
+                                @if($student->program == 'BSCE')
+                                    Bachelor of Science in Civil Engineering
+                                @elseif($student->program == 'BSBA')
+                                    Bachelor of Science in Business Administration - Major In Marketing
+                                @elseif($student->program == 'BSIT')
+                                    Bachelor of Science in Information Technology
+                                @elseif($student->program == 'BEED')
+                                    Bachelor of Elementary Education - Major In General Education
+                                @elseif($student->program == 'BSE')
+                                    Bachelor of Science in Entrepreneurship
+                                @elseif($student->program == 'BScPsych')
+                                    Bachelor of Science in Psychology
+                                @elseif($student->program == 'BSTM')
+                                    Bachelor of Science in Tourism Management
+                                @endif
+                            </p>
+                            
                             <p class="text-sm font-normal text-gray-700">Year and Section: {{ $student->year ? $student->year . ' - ' . $student->section : '--' }}</p>
                             <p class="text-sm font-normal text-gray-700">{{$student->email}}</p>
                         </div>
