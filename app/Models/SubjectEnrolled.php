@@ -13,5 +13,7 @@ class SubjectEnrolled extends Model
         'student_id', //student_id
         'subject_code',
         'section',
+        'semester',
+        'A_Y',
     ];
 }

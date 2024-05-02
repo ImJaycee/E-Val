@@ -6,6 +6,7 @@ use App\Models\InstructorAccount;
 use App\Models\StudentAccount;
 use App\Models\SubjectEnrolled;
 use App\Models\SubjectAssigned;
+use App\Models\StudentEvaluation;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -124,12 +125,15 @@ class StudentController extends Controller
             'subject_code' => ['required', 'string'],
             'year' => ['required', 'string'],
             'section' => ['required', 'string'],
+            'semester' => ['required', 'string'],
+            'A_Y' => ['required', 'string'],
         ]);        
         //dd($validated);
 
         $student = StudentAccount::where('student_id', $student_id)->first();
         $subject = SubjectEnrolled::where('subject_code', $validated['subject_code'])
         ->where('student_id', $student_id)
+        ->where('A_Y', $validated['A_Y'])
         ->first();
     
         if ($subject) {
@@ -143,7 +147,10 @@ class StudentController extends Controller
             'student_id' => $student_id,
             'subject_code' => $validated['subject_code'],
             'section' => $section,
+            'semester' => $validated['semester'],
+            'A_Y' => $validated['A_Y'],
         ]);
+
 
 
         if ($subjectEnrolled) {
@@ -295,7 +302,54 @@ class StudentController extends Controller
             return redirect()->route('student.profile', ['student_id' => $student_id])->with('message', 'Incorrect Password!');
         }
     }
-    
+
+
+    // Evaluation Side -----------------------------
+    public function StudentEvaluationProcess(Request $request,){
+        $validated = $request->validate([
+            'instructor_id' => ['required', 'string'],
+            'student_id' => ['required', 'string'],
+            'subject_code' => ['required', 'string'],
+            'section' => ['required', 'string'],
+            'semester' => ['required', 'string'],
+            'A_Y' => ['required', 'string'],
+            'I-1' => ['required', 'string'],
+            'I-2' => ['required', 'string'],
+            'I-3' => ['required', 'string'],
+            'II-1' => ['required', 'string'],
+            'II-2' => ['required', 'string'],
+            'II-3' => ['required', 'string'],
+            'II-4' => ['required', 'string'],
+            'III-1' => ['required', 'string'],
+            'III-2' => ['required', 'string'],
+            'IV-1' => ['required', 'string'],
+            'IV-2' => ['required', 'string'],
+            'V-1' => ['required', 'string'],
+            'V-2' => ['required', 'string'],
+            'V-3' => ['required', 'string'],
+            'comments' => ['required', 'string'],
+        ]);
+        
+        //dd($validated);
+        $evaluationStatus = StudentEvaluation::where('instructor_id', $validated['instructor_id'])
+        ->where('student_id', $validated['student_id'])
+        ->where('subject_code', $validated['subject_code'])
+        ->where('section', $validated['section'])
+        ->where('A_Y', $validated['A_Y']);
+
+        if ($evaluationStatus)
+        {
+            return back()->with('message', 'Evaluation submitted already!')->with('reload', true);
+        }
+
+        $studentEvaluation = StudentEvaluation::create($validated);
+        if ($studentEvaluation) {
+            return redirect()->route('student.evaluation', ['student_id' => $validated['student_id']])->with('message', 'Evaluation submitted successfully!')->with('reload', true);
+        } else {
+            return back()->with('message', 'Evaluation submitted already!')->with('reload', true);
+        }
+        
+    }
 
         
 }

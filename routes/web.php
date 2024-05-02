@@ -77,6 +77,7 @@ Route::controller(StudentController::class)->group(function(){
 
         //Student evaluation
         Route::get('student-evaluation{student_id}', 'Student_evaluation')->name('student.evaluation');
+        Route::post('student-submit-eval', 'StudentEvaluationProcess')->name('student.SubmitEvaluation');
         // Route::get('/student-evaluation', function () {
         //     return view('student-side.student-evaluation');
         // })->name('student.evaluation');
