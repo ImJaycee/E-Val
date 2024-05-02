@@ -22,9 +22,11 @@
         <div class="bg-white md:p-2 p-6 rounded-lg border border-gray-200 mb-4 lg:mb-0 shadow-md lg:w-[25%]">
             <div class="flex justify-left items-right space-x-5 h-full">
                 <div>
-                    <p class="text-xl font-bold text-gray-700">Current Semester</p>
-                    <h2 class="text-4xl font-bold text-gray-600">2nd <i class="fas fa-calendar-alt"></i></h2>
-                    <h2 class="text-md text-gray-600" id="datetime"></h2>
+                    @include('partials.semester')
+                    <p class="text-md font-bold text-gray-700">Current Semester</p>
+                    <h2 class="text-3xl font-bold text-gray-600">{{ getCurrentSemester() }} <i class="fas fa-calendar-alt"></i></h2>
+                    <h2 class="text-md font-bold text-gray-600"> <span>A.Y </span>{{ getCurrentAcademicYear() }} </h2>
+                    <h2 class="text-sm text-gray-600" id="datetime"></h2>
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 31.25rem;">
+    <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 31.20rem;">
         <div class="overflow-y-auto" style="max-height: 440px;">
             <table class="table-auto w-full" style="table-layout: fixed;">
                 <thead>
@@ -117,6 +119,8 @@
                     <div class="mb-3">
                         <input type="number" id="student_id" name="student_id" class="hidden" value="{{$student->student_id}}">
                         <input type="text" id="program" name="program" class="hidden" value="{{$student->program}}">
+                        <input type="text" id="semester" name="semester" class="hidden" value="{{ getCurrentSemester() }}">
+                        <input type="text" id="A_Y" name="A_Y" class="hidden" value="{{ getCurrentAcademicYear()}}">
                         <label for="subject_code" class="block text-gray-700 text-sm font-bold mb-2">Course Code</label>
                         {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
                         <select id="subject_code" name="subject_code" required onfocus="clearError()"
@@ -172,12 +176,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
 
 
     <!-- Script  -->

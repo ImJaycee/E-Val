@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('student_id');
             $table->string('subject_code');
             $table->string('section');
+            $table->string('semester');
+            $table->string('A_Y');
             $table->timestamps();
         });
     }

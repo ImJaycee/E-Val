@@ -12,7 +12,7 @@
 <body class="bg-gray-200">
 
 <x-nav-student/> <!--Include nav and sidebar-->
-
+<x-messages/>
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->
     <div class="lg:flex gap-4 items-stretch">
@@ -65,6 +65,7 @@
                         @else
                         <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" disabled>Evaluate</button>
                         @endif     
+                        <x-errors/>
                     </div>
 
 
@@ -88,12 +89,16 @@
                                 1 – Unsatisfactory
                             </p>
                             <!-- Form -->
-                            <form action="#" method="POST" class="mt-4">
+                            <form action="{{ route('student.SubmitEvaluation') }}" method="POST" class="mt-4">
                                 <!-- Questions (replace with actual questions) -->
-                                <input type="text" name="instructor_id" value="{{ $subject['instructor_id'] }}" class="">
-                                <input type="text" name="student_id" value="{{$student_id}}" class="">
-                                <input type="text" name="section" value="{{ $student->program }} {{ $student->year }}{{ $student->section }}" class="">
-                                <input type="text" name="subject_code" value="{{ $subject['subject_code'] }}" class="">
+                                @csrf
+                                @include('partials.semester')
+                                <input type="text" name="instructor_id" value="{{ $subject['instructor_id'] }}" class="hidden">
+                                <input type="text" name="student_id" value="{{$student_id}}" class="hidden">
+                                <input type="text" name="section" value="{{ $student->program }} {{ $student->year }}{{ $student->section }}" class="hidden">
+                                <input type="text" name="subject_code" value="{{ $subject['subject_code'] }}" class="hidden">
+                                <input type="text" name="semester" value="{{ getCurrentSemester() }}" class="hidden">
+                                <input type="text" name="A_Y" value="{{ getCurrentAcademicYear() }}" class="hidden">
                                 <h3 class="text-gray-600 font-bold">I.   Course Planning/Preparation</h3>
                                 <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">
                                     <!-- Question -->
@@ -101,15 +106,15 @@
                                         <label class="block text-sm font-semibold">1. Provides each student a copy of the syllabus and clearly explains its content</label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question1" id="1_q1" value="1" class="mr-1">
+                                            <input type="radio" name="I-1" id="1_q1" value="1" class="mr-1">
                                             <label for="1_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question1" id="1_q2" value="2" class="mr-1">
+                                            <input type="radio" name="I-1" id="1_q2" value="2" class="mr-1">
                                             <label for="1_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question1" id="1_q3" value="3" class="mr-1">
+                                            <input type="radio" name="I-1" id="1_q3" value="3" class="mr-1">
                                             <label for="1_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question1" id="1_q4" value="4" class="mr-1">
+                                            <input type="radio" name="I-1" id="1_q4" value="4" class="mr-1">
                                             <label for="1_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question1" id="1_q5" value="5" class="mr-1">
+                                            <input type="radio" name="I-1" id="1_q5" value="5" class="mr-1">
                                             <label for="1_q5">5</label>
                                         </div>
                                     </div>
@@ -117,15 +122,15 @@
                                         <label class="block text-sm font-semibold">2. Plans lessons effectively according to the objectives of the course</label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question2" id="2_q1" value="1" class="mr-1">
+                                            <input type="radio" name="I-2" id="2_q1" value="1" class="mr-1">
                                             <label for="2_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question2" id="2_q2" value="2" class="mr-1">
+                                            <input type="radio" name="I-2" id="2_q2" value="2" class="mr-1">
                                             <label for="2_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question2" id="2_q3" value="3" class="mr-1">
+                                            <input type="radio" name="I-2" id="2_q3" value="3" class="mr-1">
                                             <label for="2_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question2" id="2_q4" value="4" class="mr-1">
+                                            <input type="radio" name="I-2" id="2_q4" value="4" class="mr-1">
                                             <label for="2_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question2" id="2_q5" value="5" class="mr-1">
+                                            <input type="radio" name="I-2" id="2_q5" value="5" class="mr-1">
                                             <label for="2_q5">5</label>
                                         </div>
                                     </div>
@@ -133,15 +138,15 @@
                                         <label class="block text-sm font-semibold">3. Explains subject requirements properly and provides reasonable time for their completion</label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question3" id="3_q1" value="1" class="mr-1">
+                                            <input type="radio" name="I-3" id="3_q1" value="1" class="mr-1">
                                             <label for="3_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question3" id="3_q2" value="2" class="mr-1">
+                                            <input type="radio" name="I-3" id="3_q2" value="2" class="mr-1">
                                             <label for="3_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question3" id="3_q3" value="3" class="mr-1">
+                                            <input type="radio" name="I-3" id="3_q3" value="3" class="mr-1">
                                             <label for="3_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question3" id="3_q4" value="4" class="mr-1">
+                                            <input type="radio" name="I-3" id="3_q4" value="4" class="mr-1">
                                             <label for="3_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question3" id="3_q5" value="5" class="mr-1">
+                                            <input type="radio" name="I-3" id="3_q5" value="5" class="mr-1">
                                             <label for="3_q5">5</label>
                                         </div>
                                     </div>
@@ -154,15 +159,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question4" id="4_q1" value="1" class="mr-1">
+                                            <input type="radio" name="II-1" id="4_q1" value="1" class="mr-1">
                                             <label for="4_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question4" id="4_q2" value="2" class="mr-1">
+                                            <input type="radio" name="II-1" id="4_q2" value="2" class="mr-1">
                                             <label for="4_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question4" id="4_q3" value="3" class="mr-1">
+                                            <input type="radio" name="II-1" id="4_q3" value="3" class="mr-1">
                                             <label for="4_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question4" id="4_q4" value="4" class="mr-1">
+                                            <input type="radio" name="II-1" id="4_q4" value="4" class="mr-1">
                                             <label for="4_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question4" id="4_q5" value="5" class="mr-1">
+                                            <input type="radio" name="II-1" id="4_q5" value="5" class="mr-1">
                                             <label for="4_q5">5</label>
                                         </div>
                                     </div>
@@ -171,15 +176,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question5" id="5_q1" value="1" class="mr-1">
+                                            <input type="radio" name="II-2" id="5_q1" value="1" class="mr-1">
                                             <label for="5_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question5" id="5_q2" value="2" class="mr-1">
+                                            <input type="radio" name="II-2" id="5_q2" value="2" class="mr-1">
                                             <label for="5_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question5" id="5_q3" value="3" class="mr-1">
+                                            <input type="radio" name="II-2" id="5_q3" value="3" class="mr-1">
                                             <label for="5_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question5" id="5_q4" value="4" class="mr-1">
+                                            <input type="radio" name="II-2" id="5_q4" value="4" class="mr-1">
                                             <label for="5_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question5" id="5_q5" value="5" class="mr-1">
+                                            <input type="radio" name="II-2" id="5_q5" value="5" class="mr-1">
                                             <label for="5_q5">5</label>
                                         </div>
                                     </div>
@@ -188,15 +193,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question6" id="6_q1" value="1" class="mr-1">
+                                            <input type="radio" name="II-3" id="6_q1" value="1" class="mr-1">
                                             <label for="6_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question6" id="6_q2" value="2" class="mr-1">
+                                            <input type="radio" name="II-3" id="6_q2" value="2" class="mr-1">
                                             <label for="6_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question6" id="6_q3" value="3" class="mr-1">
+                                            <input type="radio" name="II-3" id="6_q3" value="3" class="mr-1">
                                             <label for="6_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question6" id="6_q4" value="4" class="mr-1">
+                                            <input type="radio" name="II-3" id="6_q4" value="4" class="mr-1">
                                             <label for="6_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question6" id="6_q5" value="5" class="mr-1">
+                                            <input type="radio" name="II-3" id="6_q5" value="5" class="mr-1">
                                             <label for="6_q5">5</label>
                                         </div>
                                     </div>
@@ -205,15 +210,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question7" id="7_q1" value="1" class="mr-1">
+                                            <input type="radio" name="II-4" id="7_q1" value="1" class="mr-1">
                                             <label for="7_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question7" id="7_q2" value="2" class="mr-1">
+                                            <input type="radio" name="II-4" id="7_q2" value="2" class="mr-1">
                                             <label for="7_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question7" id="7_q3" value="3" class="mr-1">
+                                            <input type="radio" name="II-4" id="7_q3" value="3" class="mr-1">
                                             <label for="7_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question7" id="7_q4" value="4" class="mr-1">
+                                            <input type="radio" name="II-4" id="7_q4" value="4" class="mr-1">
                                             <label for="7_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question7" id="7_q5" value="5" class="mr-1">
+                                            <input type="radio" name="II-4" id="7_q5" value="5" class="mr-1">
                                             <label for="7_q5">5</label>
                                         </div>
                                     </div>
@@ -225,15 +230,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question8" id="8_q1" value="1" class="mr-1">
+                                            <input type="radio" name="III-1" id="8_q1" value="1" class="mr-1">
                                             <label for="8_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question8" id="8_q2" value="2" class="mr-1">
+                                            <input type="radio" name="III-1" id="8_q2" value="2" class="mr-1">
                                             <label for="8_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question8" id="8_q3" value="3" class="mr-1">
+                                            <input type="radio" name="III-1" id="8_q3" value="3" class="mr-1">
                                             <label for="8_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question8" id="8_q4" value="4" class="mr-1">
+                                            <input type="radio" name="III-1" id="8_q4" value="4" class="mr-1">
                                             <label for="8_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question8" id="8_q5" value="5" class="mr-1">
+                                            <input type="radio" name="III-1" id="8_q5" value="5" class="mr-1">
                                             <label for="8_q5">5</label>
                                         </div>
                                     </div>
@@ -242,15 +247,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question9" id="9_q1" value="1" class="mr-1">
+                                            <input type="radio" name="III-2" id="9_q1" value="1" class="mr-1">
                                             <label for="9_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question9" id="9_q2" value="2" class="mr-1">
+                                            <input type="radio" name="III-2" id="9_q2" value="2" class="mr-1">
                                             <label for="9_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question9" id="9_q3" value="3" class="mr-1">
+                                            <input type="radio" name="III-2" id="9_q3" value="3" class="mr-1">
                                             <label for="9_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question9" id="9_q4" value="4" class="mr-1">
+                                            <input type="radio" name="III-2" id="9_q4" value="4" class="mr-1">
                                             <label for="9_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question9" id="9_q5" value="5" class="mr-1">
+                                            <input type="radio" name="III-2" id="9_q5" value="5" class="mr-1">
                                             <label for="9_q5">5</label>
                                         </div>
                                     </div>
@@ -263,15 +268,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question10" id="10_q1" value="1" class="mr-1">
+                                            <input type="radio" name="IV-1" id="10_q1" value="1" class="mr-1">
                                             <label for="10_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question10" id="10_q2" value="2" class="mr-1">
+                                            <input type="radio" name="IV-1" id="10_q2" value="2" class="mr-1">
                                             <label for="10_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question10" id="10_q3" value="3" class="mr-1">
+                                            <input type="radio" name="IV-1" id="10_q3" value="3" class="mr-1">
                                             <label for="10_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question10" id="10_q4" value="4" class="mr-1">
+                                            <input type="radio" name="IV-1" id="10_q4" value="4" class="mr-1">
                                             <label for="10_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question10" id="10_q5" value="5" class="mr-1">
+                                            <input type="radio" name="IV-1" id="10_q5" value="5" class="mr-1">
                                             <label for="10_q5">5</label>
                                         </div>
                                     </div>
@@ -280,15 +285,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question11" id="11_q1" value="1" class="mr-1">
+                                            <input type="radio" name="IV-2" id="11_q1" value="1" class="mr-1">
                                             <label for="11_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question11" id="11_q2" value="2" class="mr-1">
+                                            <input type="radio" name="IV-2" id="11_q2" value="2" class="mr-1">
                                             <label for="11_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question11" id="11_q3" value="3" class="mr-1">
+                                            <input type="radio" name="IV-2" id="11_q3" value="3" class="mr-1">
                                             <label for="11_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question11" id="11_q4" value="4" class="mr-1">
+                                            <input type="radio" name="IV-2" id="11_q4" value="4" class="mr-1">
                                             <label for="11_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question11" id="11_q5" value="5" class="mr-1">
+                                            <input type="radio" name="IV-2" id="11_q5" value="5" class="mr-1">
                                             <label for="11_q5">5</label>
                                         </div>
                                     </div>
@@ -301,15 +306,15 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question12" id="12_q1" value="1" class="mr-1">
+                                            <input type="radio" name="V-1" id="12_q1" value="1" class="mr-1">
                                             <label for="12_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question12" id="12_q2" value="2" class="mr-1">
+                                            <input type="radio" name="V-1" id="12_q2" value="2" class="mr-1">
                                             <label for="12_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question12" id="12_q3" value="3" class="mr-1">
+                                            <input type="radio" name="V-1" id="12_q3" value="3" class="mr-1">
                                             <label for="12_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question12" id="12_q4" value="4" class="mr-1">
+                                            <input type="radio" name="V-1" id="12_q4" value="4" class="mr-1">
                                             <label for="12_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question12" id="12_q5" value="5" class="mr-1">
+                                            <input type="radio" name="V-1" id="12_q5" value="5" class="mr-1">
                                             <label for="12_q5">5</label>
                                         </div>
                                     </div>
@@ -318,32 +323,32 @@
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question13" id="13_q1" value="1" class="mr-1">
+                                            <input type="radio" name="V-2" id="13_q1" value="1" class="mr-1">
                                             <label for="13_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question13" id="13_q2" value="2" class="mr-1">
+                                            <input type="radio" name="V-2" id="13_q2" value="2" class="mr-1">
                                             <label for="13_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question13" id="13_q3" value="3" class="mr-1">
+                                            <input type="radio" name="V-2" id="13_q3" value="3" class="mr-1">
                                             <label for="13_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question13" id="13_q4" value="4" class="mr-1">
+                                            <input type="radio" name="V-2" id="13_q4" value="4" class="mr-1">
                                             <label for="13_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question13" id="13_q5" value="5" class="mr-1">
+                                            <input type="radio" name="V-2" id="13_q5" value="5" class="mr-1">
                                             <label for="13_q5">5</label>
                                         </div>
                                     </div>
                                     <div class="bg-gray-100 rounded p-2 shadow-xl">
-                                        <label class="block text-sm font-semibold">2.	Wears the prescribed uniform
+                                        <label class="block text-sm font-semibold">3.	Has self-confidence and commands respect
                                         </label>
                                         <!-- Radio inputs -->
                                         <div class="flex items-center justify-center space-x-5">
-                                            <input type="radio" name="question14" id="14_q1" value="1" class="mr-1">
+                                            <input type="radio" name="V-3" id="14_q1" value="1" class="mr-1">
                                             <label for="14_q1" class="mr-2">1</label>
-                                            <input type="radio" name="question14" id="14_q2" value="2" class="mr-1">
+                                            <input type="radio" name="V-3" id="14_q2" value="2" class="mr-1">
                                             <label for="14_q2" class="mr-2">2</label>
-                                            <input type="radio" name="question14" id="14_q3" value="3" class="mr-1">
+                                            <input type="radio" name="V-3" id="14_q3" value="3" class="mr-1">
                                             <label for="14_q3" class="mr-2">3</label>
-                                            <input type="radio" name="question14" id="14_q4" value="4" class="mr-1">
+                                            <input type="radio" name="V-3" id="14_q4" value="4" class="mr-1">
                                             <label for="14_q4" class="mr-2">4</label>
-                                            <input type="radio" name="question14" id="14_q5" value="5" class="mr-1">
+                                            <input type="radio" name="V-3" id="14_q5" value="5" class="mr-1">
                                             <label for="14_q5">5</label>
                                         </div>
                                     </div>
@@ -353,12 +358,12 @@
                                 <!-- Comments -->
                                 <div class="mb-4">
                                     <label class="block text-sm font-semibold">Comments</label>
-                                    <textarea name="comments" class="w-full border border-gray-300 rounded-md p-2"></textarea>
+                                    <textarea name="comments" class="w-full border border-gray-300 rounded-md p-2" required></textarea>
                                 </div>
                                 
                                 <!-- Submit and close buttons -->
                                 <div class="flex justify-end">
-                                    <button type="button" class="px-4 py-2 mr-2 bg-green-500 text-white rounded-md hover:bg-green-600" id="submitEvaluation">Submit</button>
+                                    <button type="submit" class="px-4 py-2 mr-2 bg-green-500 text-white rounded-md hover:bg-green-600" >Submit</button>
                                     <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400" id="closeFormModal">Close</button>
                                 </div>
                             </form>
