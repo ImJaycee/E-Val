@@ -174,43 +174,6 @@ class StudentController extends Controller
             return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Failed to remove subject!')->with('reload', true);
         }
     }
-
-    public function Student_evaluation($student_id){ // student evaluation side
-
-        $student = StudentAccount::where('student_id', $student_id)->first();
-
-        $studentSubjects = SubjectEnrolled::where('student_id', $student_id)->get();
-        $allSubjectsEnrolled = [];
-    
-        // Loop through each enrolled subject to get the assigned instructor
-        foreach ($studentSubjects as $subject) {
-            $assignedInstructor = SubjectAssigned::where('subject_code', $subject->subject_code)
-                ->where('section', $subject->section)
-                ->first();
-    
-            if ($assignedInstructor) {
-                $InstructorPFP = InstructorAccount::where('instructor_id', $assignedInstructor->instructor_id)->first();
-    
-                // Combine the subject and instructor data
-                $allSubjectsEnrolled[] = [
-                    'instructor_id' => $assignedInstructor->instructor_id,
-                    'subject_code' => $subject->subject_code,
-                    'pfp' => $InstructorPFP ? $InstructorPFP->pfp : null,
-                    'instructor_name' => $assignedInstructor->instructor_name,
-                ];
-            } else {
-                // If no instructor is assigned, add the subject with default values
-                $allSubjectsEnrolled[] = [
-                    'instructor_id' => null,
-                    'subject_code' => $subject->subject_code,
-                    'pfp' => null,
-                    'instructor_name' => 'Not assigned',
-                ];
-            }
-        }
-    
-        return view('student-side.student-evaluation', compact('student','allSubjectsEnrolled'));
-    }
     
 
     public function updateProfilePage($student_id){ //update profile page
@@ -305,7 +268,54 @@ class StudentController extends Controller
 
 
     // Evaluation Side -----------------------------
+    public function Student_evaluation($student_id){ // student evaluation side
+
+        $student = StudentAccount::where('student_id', $student_id)->first();
+
+        $studentSubjects = SubjectEnrolled::where('student_id', $student_id)->get();
+        $allSubjectsEnrolled = [];
+    
+        // Loop through each enrolled subject to get the assigned instructor
+        foreach ($studentSubjects as $subject) {
+            $assignedInstructor = SubjectAssigned::where('subject_code', $subject->subject_code)
+                ->where('section', $subject->section)
+                ->first();
+    
+            if ($assignedInstructor) {
+                $InstructorPFP = InstructorAccount::where('instructor_id', $assignedInstructor->instructor_id)->first();
+
+                $status = StudentEvaluation::where('instructor_id', $assignedInstructor->instructor_id)
+                ->where('student_id', $student_id)
+                ->where('subject_code', $subject->subject_code)
+                ->where('section', $subject->section)
+                ->where('A_Y', $subject->A_Y);
+    
+                // Combine the subject and instructor data
+                $allSubjectsEnrolled[] = [
+                    'instructor_id' => $assignedInstructor->instructor_id,
+                    'subject_code' => $subject->subject_code,
+                    'pfp' => $InstructorPFP ? $InstructorPFP->pfp : null,
+                    'instructor_name' => $assignedInstructor->instructor_name,
+                    'status' => $status->exists() ? 'Submitted' : 'Not submitted',
+
+                ];
+            } else {
+                // If no instructor is assigned, add the subject with default values
+                $allSubjectsEnrolled[] = [
+                    'instructor_id' => null,
+                    'subject_code' => $subject->subject_code,
+                    'pfp' => null,
+                    'instructor_name' => 'Not assigned',
+                ];
+            }
+            
+        }
+    
+        return view('student-side.student-evaluation', compact('student','allSubjectsEnrolled'));
+    }
+
     public function StudentEvaluationProcess(Request $request,){
+       
         $validated = $request->validate([
             'instructor_id' => ['required', 'string'],
             'student_id' => ['required', 'string'],
@@ -330,12 +340,13 @@ class StudentController extends Controller
             'comments' => ['required', 'string'],
         ]);
         
-        //dd($validated);
+        
         $evaluationStatus = StudentEvaluation::where('instructor_id', $validated['instructor_id'])
         ->where('student_id', $validated['student_id'])
         ->where('subject_code', $validated['subject_code'])
         ->where('section', $validated['section'])
-        ->where('A_Y', $validated['A_Y']);
+        ->where('A_Y', $validated['A_Y'])
+        ->exists();
 
         if ($evaluationStatus)
         {
