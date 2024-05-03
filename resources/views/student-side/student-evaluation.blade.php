@@ -7,7 +7,7 @@
 @endphp
 
 @include('partials.header-student')
-
+@include('partials.semester')
 
 <body class="bg-gray-200">
 
@@ -52,7 +52,8 @@
        
         <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">     
             @foreach ($allSubjectsEnrolled as $subject)
-                    <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
+            
+                    <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center" >
                         @if ($subject['pfp'])
                         <img src="{{ asset('storage/images/pfp/'.$subject['pfp']) }}" alt="" class="w-16 h-16 rounded-full mb-1">
                         @else
@@ -60,17 +61,16 @@
                         @endif
                         <p class="text-xs font-semibold text-gray-600">{{ $subject['subject_code'] }}</p>
                         <p class="text-sm font-semibold text-gray-700 mt-1">{{ $subject['instructor_name'] }}</p>
-                        @if ($subject['instructor_id'])
-                        <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" data-instructor-id="{{ $subject['instructor_id'] }}">Evaluate</button>
+                        @if ($subject['instructor_id'] && $subject['status'] == 'Not submitted')
+                        <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" onclick="openModal('{{ $subject['subject_code'] }}')">Evaluate</button>
                         @else
-                        <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" disabled>Evaluate</button>
+                        <button class="bg-green-700 text-white px-2 py-1 rounded-md mt-1 evaluate-button min-w-20" disabled><i class="fas fa-check"></i></button>
                         @endif     
-                        <x-errors/>
+                        <x-errors/> 
                     </div>
 
-
             <!-- Modal -->
-            <div id="evaluationFormModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+            <div id="evaluationFormModal{{$subject['subject_code']}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-center justify-center min-h-screen p-4 text-center sm:block sm:p-0">
                     <!-- Background overlay -->
                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -92,11 +92,10 @@
                             <form action="{{ route('student.SubmitEvaluation') }}" method="POST" class="mt-4">
                                 <!-- Questions (replace with actual questions) -->
                                 @csrf
-                                @include('partials.semester')
                                 <input type="text" name="instructor_id" value="{{ $subject['instructor_id'] }}" class="hidden">
                                 <input type="text" name="student_id" value="{{$student_id}}" class="hidden">
                                 <input type="text" name="section" value="{{ $student->program }} {{ $student->year }}{{ $student->section }}" class="hidden">
-                                <input type="text" name="subject_code" value="{{ $subject['subject_code'] }}" class="hidden">
+                                <input type="text" name="subject_code" value="{{ $subject['subject_code'] }}" class="hidden" >
                                 <input type="text" name="semester" value="{{ getCurrentSemester() }}" class="hidden">
                                 <input type="text" name="A_Y" value="{{ getCurrentAcademicYear() }}" class="hidden">
                                 <h3 class="text-gray-600 font-bold">I.   Course Planning/Preparation</h3>
@@ -364,7 +363,7 @@
                                 <!-- Submit and close buttons -->
                                 <div class="flex justify-end">
                                     <button type="submit" class="px-4 py-2 mr-2 bg-green-500 text-white rounded-md hover:bg-green-600" >Submit</button>
-                                    <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400" id="closeFormModal">Close</button>
+                                    <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400" id="closeFormModal" onclick="closeModal('{{ $subject['subject_code'] }}')">Close</button>
                                 </div>
                             </form>
                         </div>
@@ -381,16 +380,29 @@
 
 </div>
 
+<script>
+    function openModal(subject_code) {
+        var modal = document.getElementById('evaluationFormModal' + subject_code);
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal(subject_code) {
+        var modal = document.getElementById('evaluationFormModal' + subject_code);
+        modal.classList.add('hidden');
+    }
+</script>
 
 
-
-    <!-- Script  -->
-    <script>
+    <!-- Script For modal too  -->
+    {{-- <script>
+        let subject_code_in;
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('evaluate-button')) {
-                const instructorId = event.target.getAttribute('data-instructor-id');
-                if (instructorId) {
-                    const evaluationFormModal = document.getElementById('evaluationFormModal');
+                const subject_code = event.target.getAttribute('data-subject-code');
+                subject_code_in = event.target.getAttribute('data-subject-code');
+                if (subject_code) {
+                    subject_code_in = subject_code;
+                    const evaluationFormModal = document.getElementById('evaluationFormModal' + subject_code);
                     evaluationFormModal.classList.remove('hidden');
                 }
             }
@@ -398,10 +410,10 @@
     
         const closeFormModal = document.getElementById('closeFormModal');
         closeFormModal.addEventListener('click', () => {
-            const evaluationFormModal = document.getElementById('evaluationFormModal');
+            const evaluationFormModal = document.getElementById('evaluationFormModal'  + subject_code);
             evaluationFormModal.classList.add('hidden');
         });
-    </script>
+    </script> --}}
 
 
 <script>
