@@ -88,10 +88,8 @@ Route::controller(StudentController::class)->group(function(){
         })->name('student.instructor-rank');
 
         //Student feedback
-        Route::get('/student-feedback', function () {
-            return view('student-side.student-feedback');
-        })->name('student.feedback');
-
+        Route::get('/student-feedback', function () { return view('student-side.student-feedback');})->name('student.feedback');
+        Route::post('/student-submit-feedback', 'SubmitFeedback')->name('student-side.submit-feedback');
         
     });
 

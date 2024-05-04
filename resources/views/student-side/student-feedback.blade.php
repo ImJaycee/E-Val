@@ -3,7 +3,7 @@
 @php
     $title = 'E-Val-Feedback';
     $array = ['title' => $title];
-    // $studentID = session('studentID');
+    $student_id = session('student_id');
 @endphp
 
 @include('partials.header-student')
@@ -12,7 +12,7 @@
 <body class="bg-gray-200">
 
 <x-nav-student/> <!--Include nav and sidebar-->
-
+<x-messages/>
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->
     <div class="lg:flex gap-4 items-stretch">
@@ -36,25 +36,27 @@
     </div>
 
     <div class="bg-white rounded-lg p-4 shadow-md my-4 mt-6">
-        <form action="/submit-feedback" method="POST" class="text-center">
+        <form action="{{ route('student-side.submit-feedback') }}" method="POST" class="text-center">
             @csrf
+            <input type="text" name="users_id" value="{{$student_id}}" class="hidden">
+            <input type="text" name="current_date" id="current_date" value="{{ \Carbon\Carbon::now()->format('Y-m-d H:i:s') }}" class="hidden">
             <div class="mb-4">
                 <label for="rating" class="block text-gray-700 font-semibold mb-2">Rating:</label>
                 <div class="flex justify-center items-center text-gray-200">
-                    <input type="radio" id="star5" name="rating" value="5" class="hidden" />
-                    <label for="star5" class="text-3xl cursor-pointer">&#9733;</label>
-                    <span class="mx-1"> </span>
-                    <input type="radio" id="star4" name="rating" value="4" class="hidden" />
-                    <label for="star4" class="text-3xl cursor-pointer">&#9733;</label>
-                    <span class="mx-1"> </span>
-                    <input type="radio" id="star3" name="rating" value="3" class="hidden" />
-                    <label for="star3" class="text-3xl cursor-pointer">&#9733;</label>
+                    <input type="radio" id="star1" name="rating" value="1" class="hidden" />
+                    <label for="star1" class="text-3xl cursor-pointer">&#9733;</label>
                     <span class="mx-1"> </span>
                     <input type="radio" id="star2" name="rating" value="2" class="hidden" />
                     <label for="star2" class="text-3xl cursor-pointer">&#9733;</label>
                     <span class="mx-1"> </span>
-                    <input type="radio" id="star1" name="rating" value="1" class="hidden" />
-                    <label for="star1" class="text-3xl cursor-pointer">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3" class="hidden" />
+                    <label for="star3" class="text-3xl cursor-pointer">&#9733;</label>
+                    <span class="mx-1"> </span>
+                    <input type="radio" id="star4" name="rating" value="4" class="hidden" />
+                    <label for="star4" class="text-3xl cursor-pointer">&#9733;</label>
+                    <span class="mx-1"> </span>
+                    <input type="radio" id="star5" name="rating" value="5" class="hidden" />
+                    <label for="star5" class="text-3xl cursor-pointer">&#9733;</label>
                 </div>
             </div>
             
@@ -74,6 +76,22 @@
 
 </div>
 
+
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const date = now.toISOString().slice(0, 10);
+        const time = now.toTimeString().slice(0, 8);
+        const datetime = `${date} ${time}`;
+        document.getElementById('current_date').value = datetime;
+    }
+
+    // Update date and time every second
+    setInterval(updateDateTime, 1000);
+
+    // Initial update
+    updateDateTime();
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

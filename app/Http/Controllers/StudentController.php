@@ -7,6 +7,7 @@ use App\Models\StudentAccount;
 use App\Models\SubjectEnrolled;
 use App\Models\SubjectAssigned;
 use App\Models\StudentEvaluation;
+use App\Models\UsersFeedback;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -360,6 +361,45 @@ class StudentController extends Controller
             return back()->with('message', 'Evaluation submitted already!')->with('reload', true);
         }
         
+    }
+
+
+
+    // Student Feedback Side -----------------------------
+    public function SubmitFeedback(Request $request){ // student feedback side
+        $validated = $request->validate([
+            'users_id' => ['required', 'string'],
+            'current_date' => ['required', 'date'],
+            'rating' => ['required', 'integer'],
+            'comment' => ['required', 'string'],
+        ]);
+        //dd($validated);
+
+        // Additional validation logic to check if the created_at timestamp is older than a month
+        $userFeedback = UsersFeedback::where('users_id', $validated['users_id'])
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+        if ($userFeedback) {
+            $currentDate = date_create($validated['current_date']);
+            $lastFeedbackDate = date_create($userFeedback->created_at);
+            $interval = date_diff($lastFeedbackDate, $currentDate);
+            $days = $interval->format('%a');
+
+            if ($days < 30) {
+                return back()->with('message', 'Feedback can only be submitted once a month.');
+            }
+        }
+
+
+        $feedback = UsersFeedback::create($validated);
+        if ($feedback) {
+            return back()->with('message', 'Feedback submitted successfully, Thank you!');
+        } else {
+            return back()->with('message', 'Failed to submit feedback!');
+        }
+        
+
     }
 
         
