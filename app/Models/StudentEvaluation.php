@@ -30,6 +30,8 @@ class StudentEvaluation extends Model
         'V-1',
         'V-2',
         'V-3',
-        'comments'
+        'comments',
+        'sentiment',
+        'total_score'
     ];
 }

@@ -9,9 +9,12 @@ use App\Models\SubjectAssigned;
 use App\Models\StudentEvaluation;
 use App\Models\UsersFeedback;
 use App\Models\Subject;
+use Carbon\Translator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+Use Sentiment\Analyzer;
+use App\Helpers\TranslateTextHelper;
 
 
 class StudentController extends Controller
@@ -317,31 +320,54 @@ class StudentController extends Controller
 
     public function StudentEvaluationProcess(Request $request,){
        
-        $validated = $request->validate([
-            'instructor_id' => ['required', 'string'],
-            'student_id' => ['required', 'string'],
-            'subject_code' => ['required', 'string'],
-            'section' => ['required', 'string'],
-            'semester' => ['required', 'string'],
-            'A_Y' => ['required', 'string'],
-            'I-1' => ['required', 'string'],
-            'I-2' => ['required', 'string'],
-            'I-3' => ['required', 'string'],
-            'II-1' => ['required', 'string'],
-            'II-2' => ['required', 'string'],
-            'II-3' => ['required', 'string'],
-            'II-4' => ['required', 'string'],
-            'III-1' => ['required', 'string'],
-            'III-2' => ['required', 'string'],
-            'IV-1' => ['required', 'string'],
-            'IV-2' => ['required', 'string'],
-            'V-1' => ['required', 'string'],
-            'V-2' => ['required', 'string'],
-            'V-3' => ['required', 'string'],
-            'comments' => ['required', 'string'],
-        ]);
+          $validated = $request->validate([
+              'instructor_id' => ['required', 'string'],
+              'student_id' => ['required', 'string'],
+              'subject_code' => ['required', 'string'],
+              'section' => ['required', 'string'],
+              'semester' => ['required', 'string'],
+              'A_Y' => ['required', 'string'],
+              'I-1' => ['required', 'string'],
+              'I-2' => ['required', 'string'],
+              'I-3' => ['required', 'string'],
+              'II-1' => ['required', 'string'],
+              'II-2' => ['required', 'string'],
+              'II-3' => ['required', 'string'],
+              'II-4' => ['required', 'string'],
+              'III-1' => ['required', 'string'],
+              'III-2' => ['required', 'string'],
+              'IV-1' => ['required', 'string'],
+              'IV-2' => ['required', 'string'],
+              'V-1' => ['required', 'string'],
+              'V-2' => ['required', 'string'],
+              'V-3' => ['required', 'string'],
+              'comments' => ['required', 'string'],
+          ]);
+        $comments = $request->input('comments');
+        $analyzer = new Analyzer(); // the analyzer
+        // Set the source and target languages
+        TranslateTextHelper::setSource('fil')->setTarget('en');
+
+        // Translate the text
+        $translatedComment = TranslateTextHelper::translate($comments);
+
+        $sentiment = $analyzer->getSentiment($translatedComment); // get the sentiment of the comments
+        $compound = $sentiment['compound']; // Get the compound score from the sentiment
+
+        $threshold = 0; // Set your threshold value here
         
-        
+        if ($compound > $threshold) {
+            $sentimentLabel = 'Positive';
+        } elseif ($compound < $threshold) {
+            $sentimentLabel = 'Negative';
+        } else {
+            $sentimentLabel = 'Neutral';
+        }
+        $validated['sentiment'] = $sentimentLabel;
+
+        $totalScore = $validated['I-1'] + $validated['I-2'] + $validated['I-3'] + $validated['II-1'] + $validated['II-2'] + $validated['II-3'] + $validated['II-4'] + $validated['III-1'] + $validated['III-2'] + $validated['IV-1'] + $validated['IV-2'] + $validated['V-1'] + $validated['V-2'] + $validated['V-3'];
+        $validated['total_score'] = $totalScore;
+        //dd($validated);
         $evaluationStatus = StudentEvaluation::where('instructor_id', $validated['instructor_id'])
         ->where('student_id', $validated['student_id'])
         ->where('subject_code', $validated['subject_code'])

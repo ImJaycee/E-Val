@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-   /**
+    /**
      * Run the migrations.
      */
     public function up(): void
@@ -34,6 +34,8 @@ return new class extends Migration
             $table->string('V-2');
             $table->string('V-3');
             $table->string('comments');
+            $table->string('sentiment');
+            $table->string('total_score');
             $table->timestamps();
         });
     }
