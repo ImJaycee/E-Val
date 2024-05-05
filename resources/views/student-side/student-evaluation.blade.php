@@ -360,7 +360,7 @@
                                 <!-- Comments -->
                                 <div class="mb-4">
                                     <label class="block text-sm font-semibold">Comments</label>
-                                    <textarea name="comments" class="w-full border border-gray-300 rounded-md p-2" required></textarea>
+                                    <textarea name="comments" class="w-full border border-gray-300 rounded-md p-2" required autocorrect="off" autocomplete="off" spellcheck="false"></textarea>
                                 </div>
                                 
                                 <!-- Submit and close buttons -->
