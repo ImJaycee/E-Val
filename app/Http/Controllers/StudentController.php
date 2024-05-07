@@ -8,6 +8,7 @@ use App\Models\SubjectEnrolled;
 use App\Models\SubjectAssigned;
 use App\Models\StudentEvaluation;
 use App\Models\UsersFeedback;
+use App\Models\EnrolledStudents;
 use App\Models\Subject;
 use Carbon\Translator;
 use Illuminate\Http\Request;
@@ -32,7 +33,11 @@ class StudentController extends Controller
             "program" => ['required', 'string'],
             "password" => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-               
+        $enrolledStudent = EnrolledStudents::where('student_id', $validated['student_id'])->first();
+
+        if (!$enrolledStudent) {
+            return redirect('/')->with('message', 'Invalid ID');
+        }  
 
         //  dd($validated);
         $validated['password'] = bcrypt($validated['password']); //validate password and bcrypt password
@@ -52,7 +57,7 @@ class StudentController extends Controller
 
     public function Student_loginprocess(Request $request){ // login process
         $validated = $request->validate([
-            "student_id" => ['required', 'min:3','numeric'],
+            "student_id" => ['required', 'min:9','numeric'],
             "password" => ['required', 'min:8'],
         ]);
         if(auth()->guard('students')->attempt($validated)){ //login successful
@@ -357,11 +362,11 @@ class StudentController extends Controller
         $threshold = 0; // Set your threshold value here
         
         if ($compound > $threshold) {
-            $sentimentLabel = 'Positive';
+            $sentimentLabel = 'Best';
         } elseif ($compound < $threshold) {
-            $sentimentLabel = 'Negative';
+            $sentimentLabel = 'Good';
         } else {
-            $sentimentLabel = 'Neutral';
+            $sentimentLabel = 'Better';
         }
         $validated['sentiment'] = $sentimentLabel;
 

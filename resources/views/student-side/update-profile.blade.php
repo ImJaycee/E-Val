@@ -41,10 +41,10 @@
                     <select id="year" name="year" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                         <option value="" disabled selected>Select year</option>
-                        <option value="1" {{ $student->year == '1st' ? 'selected' : '' }}>1st</option>
-                        <option value="2" {{ $student->year == '2nd' ? 'selected' : '' }}>2nd</option>
-                        <option value="3" {{ $student->year == '3rd' ? 'selected' : '' }}>3rd</option>
-                        <option value="4" {{ $student->year == '4th' ? 'selected' : '' }}>4th</option>
+                        <option value="1" {{ $student->year == '1' ? 'selected' : '' }}>1st</option>
+                        <option value="2" {{ $student->year == '2' ? 'selected' : '' }}>2nd</option>
+                        <option value="3" {{ $student->year == '3' ? 'selected' : '' }}>3rd</option>
+                        <option value="4" {{ $student->year == '4' ? 'selected' : '' }}>4th</option>
                         <!-- Add more options as needed -->
     
                     </select>

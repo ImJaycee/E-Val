@@ -139,10 +139,8 @@ Route::controller(InstructorController::class)->group(function(){
 
 
         //Instructor feedback
-        Route::get('/instructor-feedback', function () {
-            return view('instructor-side.instructor-feedback');
-        })->name('instructor.feedback');
-
+        Route::get('/instructor-feedback', function () { return view('instructor-side.instructor-feedback');})->name('instructor.feedback');
+        Route::post('/instructor-submit-feedback', 'SubmitFeedback')->name('instructor-side.submit-feedback');
     }); //end of authenticated routes
 
 }); // end of instructor part (Controller)
