@@ -44,7 +44,7 @@
                 <div class="mb-4 md:w-1/3 md:mr-2">
                     <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
                     <input type="text" id="firstname" name="firstname" required onfocus="clearError()"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('first_name')}}>
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('firstname')}}>
                         @error('firstname')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
@@ -55,7 +55,7 @@
                 <div class="mb-4 md:w-1/3 md:mx-2">
                     <label for="middlename" class="block text-gray-700 text-sm font-bold mb-2">Middle Name</label>
                     <input type="text" id="middlename" name="middlename" required onfocus="clearError()"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('middle_name')}}>
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('middlename')}}>
                         @error('middlename')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}
@@ -66,7 +66,7 @@
                 <div class="mb-4 md:w-1/3 md:ml-2">
                     <label for="lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
                     <input type="text" id="lastname" name="lastname" required onfocus="clearError()"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('last_name')}}>
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('lastname')}}>
                         @error('lastname')
                            <p class="text-red-500 text-sm text-end p-1">
                                {{$message}}

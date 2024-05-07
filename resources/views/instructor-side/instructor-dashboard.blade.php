@@ -22,9 +22,11 @@
         <div class="bg-white md:p-2 p-6 rounded-lg border border-gray-200 mb-4 lg:mb-0 shadow-md lg:w-[25%]">
             <div class="flex justify-left items-right space-x-5 h-full">
                 <div>
-                    <p class="text-xl font-bold text-gray-700">Current Semester</p>
-                    <h2 class="text-4xl font-bold text-gray-600">1st <i class="fas fa-calendar-alt"></i></h2>
-                    <h2 class="text-md text-gray-600" id="datetime"></h2>
+                    @include('partials.semester')
+                    <p class="text-md font-bold text-gray-700">Current Semester</p>
+                    <h2 class="text-3xl font-bold text-gray-600">{{ getCurrentSemester() }} <i class="fas fa-calendar-alt"></i></h2>
+                    <h2 class="text-md font-bold text-gray-600"> <span>A.Y </span>{{ getCurrentAcademicYear() }} </h2>
+                    <h2 class="text-sm text-gray-600" id="datetime"></h2>
                 </div>
             </div>
         </div>
@@ -88,9 +90,9 @@
                     </tr>
                 @endforeach
                 
-                <tr class="border-b">
-                    <td colspan="6" class="text-center bg-gray-800 hover:bg-gray-700 text-white py-1 rounded">
-                        <button class="w-full" id="addSubjectButton">
+                <tr class="">
+                    <td colspan="6" class="text-center text-sm font-semibold py-1 rounded">
+                        <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
                             <i class="fas fa-add"></i> Add subject
                         </button>
                     </td>

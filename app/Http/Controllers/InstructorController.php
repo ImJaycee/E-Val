@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\InstructorAccount;
 use App\Models\SubjectAssigned;
+use App\Models\DlcInstructors;
 use App\Models\Subject;
+use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,8 +25,13 @@ class InstructorController extends Controller
             "department" => ['required', 'string'],
             "password" => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-               
 
+        $dlcInstructor = DlcInstructors::where('instructor_id', $validated['instructor_id'])->first();
+
+        if (!$dlcInstructor) {
+            return redirect('/')->with('message', 'Invalid ID');
+        }
+            
         
         $validated['password'] = bcrypt($validated['password']); //validate password and bcrypt password
          // Check if the email and ID already exists
@@ -241,6 +248,43 @@ class InstructorController extends Controller
             // Redirect with error message
             return redirect()->route('instructor.profile', ['instructor_id' => $instructor_id])->with('message', 'Incorrect Password!');
         }
+    }
+
+     // Instructor Feedback Side -----------------------------
+     public function SubmitFeedback(Request $request){ // Instructor feedback side
+        $validated = $request->validate([
+            'users_id' => ['required', 'string'],
+            'current_date' => ['required', 'date'],
+            'rating' => ['required', 'integer'],
+            'comment' => ['required', 'string'],
+        ]);
+            //dd($validated);
+
+        // Additional validation logic to check if the created_at timestamp is older than a month
+        $userFeedback = UsersFeedback::where('users_id', $validated['users_id'])
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+        if ($userFeedback) {
+            $currentDate = date_create($validated['current_date']);
+            $lastFeedbackDate = date_create($userFeedback->created_at);
+            $interval = date_diff($lastFeedbackDate, $currentDate);
+            $days = $interval->format('%a');
+
+            if ($days < 30) {
+                return back()->with('message', 'Feedback can only be submitted once a month.');
+            }
+        }
+
+
+        $feedback = UsersFeedback::create($validated);
+        if ($feedback) {
+            return back()->with('message', 'Feedback submitted successfully, Thank you!');
+        } else {
+            return back()->with('message', 'Failed to submit feedback!');
+        }
+        
+
     }
 
 

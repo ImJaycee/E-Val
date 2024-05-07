@@ -48,7 +48,7 @@
                         However, I would appreciate more real-world examples to better understand the practical 
                         application of the material.</p>
                     <p class="text-sm font-semibold mt-1">
-                        Sentiment: Positive
+                        Sentiment: Best
                     </p>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         However, I would appreciate more real-world examples to better understand the practical 
                         application of the material.</p>
                     <p class="text-sm font-semibold mt-1">
-                        Sentiment: Positive
+                        Sentiment: Best
                     </p>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                         However, I would appreciate more real-world examples to better understand the practical 
                         application of the material.</p>
                     <p class="text-sm font-semibold mt-1">
-                        Sentiment: Positive
+                        Sentiment: Best
                     </p>
                 </div>
             </div>
