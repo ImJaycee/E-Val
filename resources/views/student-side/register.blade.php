@@ -10,10 +10,36 @@
     @vite('resources/css/app.css')
     <title>Create Account</title>
 </head>
-<body class="bg-gray-100">
-    <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-8">
+<style>
+     body {
+        position: relative; /* Required for the ::before pseudo-element */
+        overflow: hidden; /* Prevents scrollbars when the blur is applied */
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('storage/images/index-bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px); /* Adjust the blur amount as needed */
+        z-index: -1; /* Ensures the pseudo-element is behind all other content */
+        opacity: 0.5; /* Adjust the background image opacity as needed */
+    }
+    form {
+        background-color: rgba(255, 255, 255, 0.7); /* Adjust the opacity by changing the last parameter */
+    }
+</style>
+<body class="">
+    
     <div class="max-w-2xl mx-auto py-10 px-4">
-        <form action="{{route('registerStudent')}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto rounded-full mb-2">
+        <form action="{{route('registerStudent')}}" method="POST" class=" shadow-md rounded px-8 pt-5 pb-8 mb-4">
             @csrf
             <div class="md:flex md:justify-between">
                 <div class="mb-4 md:w-1/2 md:mr-2">
