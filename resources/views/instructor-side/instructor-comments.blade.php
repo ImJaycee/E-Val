@@ -3,7 +3,7 @@
 @php
     $title = 'E-Val-comments';
     $array = ['title' => $title];
-    // $instructor_id = session('instructor_id');
+    $instructor_id = session('instructor_id');
 @endphp
 
 @include('partials.header-instructor')
@@ -37,81 +37,29 @@
     <div class="bg-white rounded-lg p-4 shadow-md my-4">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Anonymous Student Comments</h1>
         <div class="overflow-y-auto" style="max-height: 360px">
-            <div class="flex items-center mb-2">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
+            @foreach($comments as $comment)
+                <div class="flex items-center mb-2">
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
+                        <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
+                    </div>
+                    <div class="ml-3">
+                        <p class="font-semibold">Anonymous Student</p>
+                        <p class="text-sm text-gray-600">Date: {{$comment->created_at}}</p>
+                        <p class="text-gray-900 p-2">{{$comment->comments}}</p>
+                        <p class="text-sm font-semibold text-gray-600">
+                            Sentiment:
+                            @if($comment->sentiment == 'Good')
+                                <span class="text-green-600">{{$comment->sentiment}}</span>
+                            @elseif($comment->sentiment == 'Better')
+                                <span class="text-blue-600">{{$comment->sentiment}}</span>
+                            @elseif($comment->sentiment == 'Best')
+                                <span class="text-purple-600">{{$comment->sentiment}}</span>
+                            @endif
+                        </p>
+                        
+                    </div>
                 </div>
-                <div class="ml-3">
-                    <p class="font-semibold">Anonymous Student</p>
-                    <p class="text-sm text-gray-600">Date: April 25, 2024  |  Time: 12:30 PM</p>
-                    <p class="text-gray-700">He explained concepts clearly and was approachable for questions. 
-                        However, I would appreciate more real-world examples to better understand the practical 
-                        application of the material.</p>
-                    <p class="text-sm font-semibold mt-1">
-                        Sentiment: Best
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-center mb-2">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
-                </div>
-                <div class="ml-3">
-                    <p class="font-semibold">Anonymous Student</p>
-                    <p class="text-sm text-gray-600">Date: April 25, 2024  |  Time: 12:30 PM</p>
-                    <p class="text-gray-700">He explained concepts clearly and was approachable for questions. 
-                        However, I would appreciate more real-world examples to better understand the practical 
-                        application of the material.</p>
-                    <p class="text-sm font-semibold mt-1">
-                        Sentiment: Best
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-center mb-2">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
-                </div>
-                <div class="ml-3">
-                    <p class="font-semibold">Anonymous Student</p>
-                    <p class="text-sm text-gray-600">Date: April 25, 2024  |  Time: 12:30 PM</p>
-                    <p class="text-gray-700">He explained concepts clearly and was approachable for questions. 
-                        However, I would appreciate more real-world examples to better understand the practical 
-                        application of the material.</p>
-                    <p class="text-sm font-semibold mt-1">
-                        Sentiment: Best
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-center mb-2">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
-                </div>
-                <div class="ml-3">
-                    <p class="font-semibold">Anonymous Student</p>
-                    <p class="text-sm text-gray-600">Date: April 25, 2024  |  Time: 12:30 PM</p>
-                    <p class="text-gray-700">He explained concepts clearly and was approachable for questions. 
-                        However, I would appreciate more real-world examples to better understand the practical 
-                        application of the material.</p>
-                    <p class="text-sm font-semibold mt-1">
-                        Sentiment: Positive
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-center mb-2">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
-                </div>
-                <div class="ml-3">
-                    <p class="font-semibold">Anonymous Student</p>
-                    <p class="text-sm text-gray-600">Date: April 25, 2024  |  Time: 12:30 PM</p>
-                    <p class="text-gray-700">He explained concepts clearly and was approachable for questions. 
-                        However, I would appreciate more real-world examples to better understand the practical 
-                        application of the material.</p>
-                    <p class="text-sm font-semibold mt-1">
-                        Sentiment: Positive
-                    </p>
-                </div>
-            </div>
+            @endforeach
             <!-- Add more comments here -->
         </div>
     </div>
