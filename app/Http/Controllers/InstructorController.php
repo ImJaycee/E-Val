@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InstructorAccount;
 use App\Models\SubjectAssigned;
 use App\Models\DlcInstructors;
+use App\Models\StudentEvaluation;
 use App\Models\Subject;
 use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
@@ -121,14 +122,24 @@ class InstructorController extends Controller
             'section' => ['required', 'string'],
         ]);        
         //dd($validated);
+        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
 
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
         $subject = SubjectAssigned::where('subject_code', $validated['subject_code'])
         ->where('instructor_id', $instructor_id)
+        ->where('section', $section)
+        ->first();
+
+        $subjectTaken = SubjectAssigned::where('subject_code', $validated['subject_code'])
+        ->where('section', $validated['section'])
         ->first();
     
         if ($subject) {
              return back()->with('message', 'Subject added already!');
+        }
+
+        if ($subjectTaken) {
+            return back()->with('message', 'Subject already taken!');
         }
 
         $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
@@ -287,5 +298,14 @@ class InstructorController extends Controller
 
     }
 
+    // Display Comments for Instructor
+    public function viewComments($instructor_id){
+        $comments = StudentEvaluation::where('instructor_id', $instructor_id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+        //dd($comments);
+        return view('instructor-side.instructor-comments', compact( 'comments'));
+    }
 
 }

@@ -133,9 +133,7 @@ Route::controller(InstructorController::class)->group(function(){
         })->name('instructor.instructor-rank');
 
         //Comments for instructor
-        Route::get('/instructor-students-comment', function () {
-            return view('instructor-side.instructor-comments');
-        })->name('instructor.comments');
+        Route::get('/instructor-students-comment{instructor_id}', 'viewComments')->name('instructor.comments');
 
 
         //Instructor feedback

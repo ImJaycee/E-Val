@@ -51,7 +51,7 @@
             <i class="fas fa-star"></i>
             <span>Instructor Ranking</span>
         </a>
-        <a href="{{route('instructor.comments')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+        <a href="{{route('instructor.comments', ['instructor_id' => $instructor_id])}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-comment"></i>
             <span>Comments</span>
         </a>
