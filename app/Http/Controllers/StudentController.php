@@ -126,6 +126,15 @@ class StudentController extends Controller
         ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
         ->header('Pragma', 'no-cache');
     }
+    public function logout_inactive(){//logout
+        auth()->guard('students')->logout(); 
+        session()->invalidate(); //invalidate session
+        session()->regenerateToken(); //regenerate token
+        return redirect('/')
+        ->with('message', 'Logged out')
+        ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        ->header('Pragma', 'no-cache');
+    }
 
     public function AddSubject(Request $request, $student_id){ //add subject
         $validated = $request->validate([

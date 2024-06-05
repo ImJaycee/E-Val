@@ -11,6 +11,7 @@
      <link rel="icon" href="storage/image/dlc-logo1.png" type="image/png">
     <title>E-Val</title>
 </head>
+
 <body class="bg-gray-100">
     <x-messages/>
     <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
