@@ -8,6 +8,7 @@
      $pfp = session('pfp');
 @endphp
 
+
 <nav class="bg-red-900 border-b border-gray-300">
     <div class="flex justify-between items-center px-9">
         <button id="menuBtn" class="lg:hidden">
@@ -58,18 +59,20 @@
             <i class="fas fa-user"></i>
             <span>Profile</span>
         </a>
-        <a href="#" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+            @csrf
+        </form>
+        
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-sign-out-alt"></i>
-            <form action="{{ route('logout') }}" method="post">
-                @csrf
-                <button type="submit">Log out</button>
-            </form>
+            <span>Log out</span>
         </a>
+        
     </div>
-    <footer class="bg-gray-900 text-gray-200 py-2 text-center rounded-sm mt-60">
+    {{-- <footer class="bg-gray-900 text-gray-200 py-2 text-center rounded-sm mt-60">
         <p class="text-xs">&copy; 2024 All Rights Reserved.</p>
         <p class="mt-1 text-xs">Developed by <a href="#" class=""><i>Jay Cee Cruz</i></a></p>
-    </footer>
+    </footer> --}}
 </div>
 
 <script>

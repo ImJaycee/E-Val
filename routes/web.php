@@ -59,6 +59,7 @@ Route::controller(StudentController::class)->group(function(){
     Route::post('/studentlogin-process', 'Student_loginprocess')->name('Student_loginprocess'); //login process
     Route::get('/student-dashboard{student_id}', 'Student_dashboard')->name('student.dashboard')->middleware('auth:students'); 
     Route::post('/student-logout', 'logout')->name('logout'); // Protect the logout route
+    Route::get('/logout-inactive','logout_inactive')->name('logout-inactive'); // inactive logout route
 
 
     Route::group(['middleware' => 'auth:students'], function () { 

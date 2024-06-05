@@ -10,7 +10,33 @@
      <link rel="icon" href="storage/image/dlc-logo1.png" type="image/png">
     <title>E-Val</title>
 </head>
-<body class="bg-gray-100">
+<style>
+    body {
+        position: relative; /* Required for the ::before pseudo-element */
+        overflow: hidden; /* Prevents scrollbars when the blur is applied */
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('storage/images/index-bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px); /* Adjust the blur amount as needed */
+        z-index: -1; /* Ensures the pseudo-element is behind all other content */
+        opacity: 0.5; /* Adjust the background image opacity as needed */
+    }
+    form {
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the opacity by changing the last parameter */
+}
+
+</style>
+<body class="">
     <x-messages/>
     <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
     <div class="max-w-md mx-auto py-10 px-4">
