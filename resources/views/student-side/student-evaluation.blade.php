@@ -4,6 +4,7 @@
     $title = 'E-Val-Evaluation';
     $array = ['title' => $title];
     $student_id = session('student_id');
+    $eval_token = session('eval_token');
 @endphp
 
 @include('partials.header-student')
@@ -96,8 +97,8 @@
                                 <!-- Questions (replace with actual questions) -->
                                 @csrf
                                 <input type="text" name="instructor_id" value="{{ $subject['instructor_id'] }}" class="hidden">
-                                <input type="text" name="student_id" value="{{$student_id}}" class="hidden">
-                                <input type="text" name="section" value="{{ $student->program }} {{ $student->year }}{{ $student->section }}" class="hidden">
+                                <input type="text" name="eval_token" value="{{$eval_token}}" class="hidden">
+                                {{-- <input type="text" name="section" value="{{ $student->program }} {{ $student->year }}{{ $student->section }}" class=""> --}}
                                 <input type="text" name="subject_code" value="{{ $subject['subject_code'] }}" class="hidden" >
                                 <input type="text" name="semester" value="{{ getCurrentSemester() }}" class="hidden">
                                 <input type="text" name="A_Y" value="{{ getCurrentAcademicYear() }}" class="hidden">

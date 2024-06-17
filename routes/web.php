@@ -77,7 +77,7 @@ Route::controller(StudentController::class)->group(function(){
         Route::post('/student-change-password{student_id}', 'changePassword')->name('student-side.change-password');
 
         //Student evaluation
-        Route::get('student-evaluation{student_id}', 'Student_evaluation')->name('student.evaluation');
+        Route::get('student-evaluation{eval_token}', 'Student_evaluation')->name('student.evaluation');
         Route::post('student-submit-eval', 'StudentEvaluationProcess')->name('student.SubmitEvaluation');
         // Route::get('/student-evaluation', function () {
         //     return view('student-side.student-evaluation');

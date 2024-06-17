@@ -43,7 +43,7 @@
                         <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
                     </div>
                     <div class="ml-3">
-                        <p class="font-semibold">Anonymous Student</p>
+                        <p class="font-semibold">-</p>
                         <p class="text-sm text-gray-600">Date: {{$comment->created_at}}</p>
                         <p class="text-gray-900 p-2">{{$comment->comments}}</p>
                         <p class="text-sm font-semibold text-gray-600">

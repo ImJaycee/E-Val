@@ -50,13 +50,18 @@
             </div>
             
             <div class="mb-4">
-                <label for="student_id" class="block text-gray-900 text-sm font-bold mb-2">Student ID</label>
-                <input type="number" id="student_id" name="student_id" required
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+                <label for="eval_token" class="block text-gray-900 text-sm font-bold mb-2">Enter Token</label>
+                <input type="text" id="eval_token" name="eval_token" required
+                       class="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    @error('invalid')
+                       <p class="text-red-500 text-sm text-end p-1">
+                           {{$message}}
+                       </p>
+                   @enderror
+                </div>
     
-            <div class="mb-6">
-                <label for="password" class="block text-gray-900 text-sm font-bold mb-2">Password</label>
+            {{-- <div class="mb-6">
+                <label for="password" class="block text-gray-900 text-sm font-bold mb-2">Enter Token</label>
                 <input type="password" id="password" name="password" required
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 @error('invalid')
@@ -64,15 +69,15 @@
                         {{$message}}
                     </p>
                 @enderror
-            </div>
+            </div> --}}
     
             <div class="flex items-center justify-between">
                 <button type="submit" class="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 mx-auto rounded focus:outline-none focus:shadow-outline w-full">
                     Login
                 </button>
             </div>
-            <div class="text-center"><a href="{{route('register.student')}}" class="text-sm text-blue-500">Sign Up</a></div>
-            <div class="text-center"><a href="{{route('student.forgot-passsword-form')}}" class="text-sm text-blue-500">Forgot Password?</a></div>
+            {{-- <div class="text-center"><a href="{{route('register.student')}}" class="text-sm text-blue-500">Sign Up</a></div>
+            <div class="text-center"><a href="{{route('student.forgot-passsword-form')}}" class="text-sm text-blue-500">Forgot Password?</a></div> --}}
             
         </form>
         
