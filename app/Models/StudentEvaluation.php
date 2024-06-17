@@ -11,9 +11,9 @@ class StudentEvaluation extends Model
     protected $table = 'student_evaluation';
     protected $fillable = [
         'instructor_id',
-        'student_id',
+        'eval_token',
         'subject_code',
-        'section',
+        //'section',
         'semester',
         'A_Y',
         'I-1',
@@ -32,6 +32,11 @@ class StudentEvaluation extends Model
         'V-3',
         'comments',
         'sentiment',
+        'I_Total',
+        'II_Total',
+        'III_Total',
+        'IV_Total',
+        'V_Total',
         'total_score'
     ];
 }

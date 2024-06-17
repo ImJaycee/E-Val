@@ -128,11 +128,9 @@
                 <label for="academic_year" class="mr-2">A.Y.</label>
                 <select name="academic_year" id="academic_year" required class="border border-gray-300 rounded-md p-1 mb-2 lg:mb-0 lg:mr-1 text-sm">
                     <option value="" disabled selected class="text-sm">Select academic year</option>
-                    <option value="2021-2022-1">2021-2022 - 1st sem</option>
-                    <option value="2021-2022-2">2021-2022 - 2nd sem</option>
-                    <option value="2022-2023-1">2022-2023 - 1st sem</option>
-                    <option value="2022-2023-2">2022-2023 - 2nd sem</option>
-                    <option value="2023-2024-1">2023-2024 - 1st sem</option>
+                    <option value="2021-2022-">2021-2022</option>
+                    <option value="2022-2023">2022-2023</option>
+                    <option value="2023-2024">2023-2024</option>
                     <!-- Add more options as needed -->
                 </select>
                 <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-1 px-2 rounded"><i class="fas fa-search"></i></button>
@@ -178,6 +176,21 @@
                         <td class="px-4 py-2">Completed</td>
                     </tr>
                      <tr class="hover:bg-gray-100 border-b border-gray-200">
+                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
+                        <td class="px-4 py-2">CCS</td>
+                        <td class="px-4 py-2">Completed</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-b border-gray-200">
+                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
+                        <td class="px-4 py-2">CCS</td>
+                        <td class="px-4 py-2">Completed</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-b border-gray-200">
+                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
+                        <td class="px-4 py-2">CCS</td>
+                        <td class="px-4 py-2">Completed</td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 border-b border-gray-200">
                         <td class="px-4 py-2">Mr. Davemm Salalila</td>
                         <td class="px-4 py-2">CCS</td>
                         <td class="px-4 py-2">Completed</td>

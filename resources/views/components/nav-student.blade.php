@@ -5,7 +5,8 @@
 @endif
 @php
      $student_id = session('student_id');
-     $pfp = session('pfp');
+     $eval_token = session('eval_token');
+     //$pfp = session('pfp');
 @endphp
 
 
@@ -22,7 +23,7 @@
         </div>
 
         {{-- profile --}}
-            <a href="{{route('student.profile', ['student_id' => $student_id])}}">
+            <a href="#">
                 @If(!empty($pfp))
                     <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
                 @else
@@ -38,27 +39,27 @@
     <!-- Items -->
     <div class="py-4 space-y-0">
         <!-- Home -->
-        <a href="{{route('student.dashboard', ['student_id' => $student_id])}}" aria-label="dashboard" class="relative px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200">
+        {{-- <a href="{{route('student.dashboard', ['student_id' => $student_id])}}" aria-label="dashboard" class="relative px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200">
             <i class="fas fa-home"></i>
             <span class="">Home</span>
-        </a>
+        </a> --}}
 
-        <a href="{{route('student.evaluation', ['student_id' => $student_id])}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
+        <a href="{{route('student.evaluation', ['eval_token' => $eval_token])}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-poll"></i>
             <span>Evaluation</span>
         </a>
-        <a href="{{route('student.instructor-rank')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
+        {{-- <a href="{{route('student.instructor-rank')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-star"></i>
             <span>Instructors Ranking</span>
-        </a>
-        <a href="{{route('student.feedback')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
+        </a> --}}
+        {{-- <a href="{{route('student.feedback')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-comment"></i>
             <span>Feedback</span>
-        </a>
-        <a href="{{route('student.profile', ['student_id' => $student_id])}}" class="px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200 group">
+        </a> --}}
+        {{-- <a href="{{route('student.profile', ['student_id' => $student_id])}}" class="px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-user"></i>
             <span>Profile</span>
-        </a>
+        </a> --}}
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
             @csrf
         </form>

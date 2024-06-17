@@ -74,7 +74,8 @@ return [
         ],
         'students' => [
             'driver' => 'eloquent',
-            'model' => App\Models\StudentAccount::class,
+            // 'model' => App\Models\StudentAccount::class,
+            'model' => App\Models\StudentsTokenAccounts::class,
         ],
         'instructors' => [
             'driver' => 'eloquent',

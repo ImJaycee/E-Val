@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('student_evaluation', function (Blueprint $table) {
             $table->id();
             $table->string('instructor_id');
-            $table->string('student_id');
+            $table->string('eval_token');
             $table->string('subject_code');
-            $table->string('section');
             $table->string('semester');
             $table->string('A_Y');
             $table->string('I-1'); // Part 1 Question1
@@ -35,6 +34,11 @@ return new class extends Migration
             $table->string('V-3');
             $table->string('comments');
             $table->string('sentiment');
+            $table->string('I_Total');
+            $table->string('II_Total');
+            $table->string('III_Total');
+            $table->string('IV_Total');
+            $table->string('V_Total');
             $table->string('total_score');
             $table->timestamps();
         });
