@@ -16,16 +16,16 @@ return new class extends Migration
             $table->string('student_id')->unique();
             $table->string('email')->unique();;
             $table->string('eval_token')->unique();
-            $table->string('subjet1')->nullable();
-            $table->string('subjet2')->nullable();
-            $table->string('subjet3')->nullable();
-            $table->string('subjet4')->nullable();
-            $table->string('subjet5')->nullable();
-            $table->string('subjet6')->nullable();
-            $table->string('subjet7')->nullable();
-            $table->string('subjet8')->nullable();
-            $table->string('subjet9')->nullable();
-            $table->string('subjet10')->nullable();
+            $table->string('subject1')->nullable();
+            $table->string('subject2')->nullable();
+            $table->string('subject3')->nullable();
+            $table->string('subject4')->nullable();
+            $table->string('subject5')->nullable();
+            $table->string('subject6')->nullable();
+            $table->string('subject7')->nullable();
+            $table->string('subject8')->nullable();
+            $table->string('subject9')->nullable();
+            $table->string('subject10')->nullable();
             $table->timestamps();
         });
     }

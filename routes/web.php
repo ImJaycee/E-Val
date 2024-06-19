@@ -7,6 +7,7 @@ use App\Mail\ForgotPasswordMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ use App\Http\Controllers\InstructorController;
 Route::get('/', function () {
     return view('index');
 })->name('view.index');
+
+Route::get('/admin/login', function () {
+    return view('admin-side.index-admin');
+})->name('admin.login');
 
 Route::get('/forgot-passsword-form', function () {//forgot-passsword-form for student
     return view('mail.User-Email-Password');
@@ -145,6 +150,27 @@ Route::controller(InstructorController::class)->group(function(){
 }); // end of instructor part (Controller)
 
 
+// Admin routes
 
+Route::get('/register-admin', function () {
+    return view('admin-side.register-admin');
+})->name('register.admin');
+
+Route::controller(AdminController::class)->group(function(){
+    Route::post('/register-admin', 'registerAdmin')->name('registerAdmin'); //register process
+    Route::post('/adminlogin-process', 'Admin_loginprocess')->name('Admin_loginprocess'); //login process
+    Route::post('/admin-logout', 'logout')->name('admin_logout'); // Protect the logout route
+    Route::get('/admin-dashboard{admin_id}', 'Admin_dashboard')->name('admin.dashboard')->middleware('auth:admins');
+    
+    Route::group(['middleware' => 'auth:admins'], function () { 
+        // Student management
+        Route::get('/admin-student-management{admin_id}', 'Admin_manageStudent')->name('admin.manageStudent');
+
+        //upload student
+        Route::post('/admin-upload-student', 'uploadStudents')->name('admin.uploadStudent');
+       
+    }); //end of authenticated routes
+
+});
 
 
