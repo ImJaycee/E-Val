@@ -137,7 +137,18 @@ class AdminController extends Controller
     // Admin student management
     public function Admin_manageStudent($admin_id){
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
-        return view('admin-side.admin-students', compact('admin'));
+        $totalCount = StudentsTokenAccounts::all()->count();
+        $completedCount = StudentEvaluation::all()->count();
+        
+        // Check if $totalCount is zero to avoid division by zero
+        if ($totalCount > 0) {
+            $completionPercentage = number_format(($completedCount / $totalCount) * 100, 2);
+        } else {
+            $completionPercentage = 0; // or any default value
+        }
+        
+        session(['eval_status' => 'close', ]);
+        return view('admin-side.admin-students', compact('admin', 'completionPercentage','completedCount','totalCount'));
     }
     
 

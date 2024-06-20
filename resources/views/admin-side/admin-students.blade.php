@@ -38,124 +38,105 @@
             <!-- Small Boxes -->
             <div class="block justify-center h-full">
                 <h3 class="text-xl font-bold text-gray-700">
-                    Welcome back <i>{{$admin->firstname}}</i>!
+                    Upload Student Records
                 </h3>
                 <p class="text-md font-bold text-gray-500">
-                    <i><b>E-val</b></i> is our evaluation tool designed to streamline and enhance 
-                    your evaluation processes. Explore its features to simplify evaluations and improve efficiency.
+                    Use this feature to easily upload and manage student records. 
+                    <i><b>E-val</b></i> simplifies the process, making it efficient and hassle-free.
                 </p>
-            </div>
+            </div>            
         </div>
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 31.25rem;">
-        <div class="overflow-y-auto" style="max-height: 440px;">
-            <table class="table-auto w-full" style="table-layout: fixed;">
-                <thead>
-                    <tr>
-                        <th colspan="4" class="bg-white px-2 py-2 text-left">
-                            <form action="{{ route('admin.uploadStudent') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-1 gap-4">
-                                @csrf
-                                <div class="flex items-center space-x-4">
-                                    <div class="items-center">
-                                        <label for="students_csv" class="text-gray-700 font-bold mb-2">Upload Students (.csv)</label>
-                                        <input type="file" name="students_csv" accept=".csv" class="w-full border-2 border-gray-300 rounded-lg p-2" required>
-                                    </div>
-                                    <div class="mt-5">
-                                        <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">Upload</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </th>
-                    </tr>
-                    
-                    
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Name</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Section</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2 text-center" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Program</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-center border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Status</h2>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr class="border-b">
-                        <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                            <p>Jay Cee Cruz</p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                            <p><span>3B</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>BSIT</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>Pending</span></p>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                            <p>Jay Cee Cruz</p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                            <p><span>3B</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>BSIT</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>Pending</span></p>
-                        </td>
-                    </tr>
-                    <tr class="">
-                        <td colspan="4" class="text-center text-sm font-semibold py-1 rounded">
-                            <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
-                                <i class="fas fa-file-alt"></i> Open Evaluation
+    <div class="bg-white rounded-lg p-4 shadow-md my-4 h-auto md:h-4/5">
+        <div class="overflow-x-auto overflow-y-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+                <!-- Upload Form -->
+                <form action="{{ route('admin.uploadStudent') }}" method="POST" enctype="multipart/form-data" class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
+                    @csrf
+                    <div class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
+                        <div class="flex flex-col items-start">
+                            <label for="students_csv" class="text-gray-700 font-bold mb-1 text-sm md:text-base">Upload Students (.csv)</label>
+                            <input type="file" name="students_csv" accept=".csv" class="w-full md:w-auto border-2 border-gray-300 rounded-md p-1 md:p-2" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6">
+                                <i class="fas fa-upload"></i>
+                                 Upload
                             </button>
-                        </td>
-                    </tr>                   
-                
-                    {{-- @foreach($allInstructorsData as $instructors)
-                    <tr class="border-b">
-                        <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                            <p>{{ $instructors['name'] }}</p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                            <p><span>{{ $instructors['department'] }}</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>{{ $instructors['total_evaluators'] }}</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>{{ $instructors['completed_evaluations'] }}</span></p>
-                        </td>
-                    </tr>
-                @endforeach --}}
-                
-                {{-- <tr class="">
-                    <td colspan="6" class="text-center text-sm font-semibold py-1 rounded">
-                        <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
-                            <i class="fas fa-file-alt"></i> Open Evaluation
-                        </button>
-                    </td>
-                </tr>                --}}
-            </tbody>
-        </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="flex flex-col items-center justify-center h-full mt-4">
+                <h2 class="text-xl font-bold text-gray-700 mb-4">Overall Student Evaluation Progress</h2>
+                <div class="relative flex items-center justify-center">
+                    <svg class="w-40 h-40">
+                        <circle class="text-gray-300" stroke-width="5" stroke="currentColor" fill="transparent" r="60" cx="80" cy="80"/>
+                        <circle id="progressCircle" class="text-green-800" stroke-width="5" stroke-dasharray="377" stroke-dashoffset="0" stroke-linecap="round" stroke="currentColor" fill="transparent" r="60" cx="80" cy="80"/>
+                    </svg>
+                    <div class="absolute flex flex-col items-center justify-center">
+                        <span id="progressText" class="text-2xl font-bold text-green-800">0%</span>
+                        <span class="text-sm font-semibold text-gray-600">Completed</span>
+                        {{-- <span id="completionCount" class="text-sm font-semibold text-gray-600">0/0</span> --}}
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <p id="completionCount" class="text-lg font-semibold text-gray-700">0/0</p>
+                </div>
+                <div class="flex justify-center mt-4 mb-4">
+                    @if(session('eval_status') == 'close')
+                        <form action="#" method="POST" class="flex items-center">
+                            @csrf
+                            <input type="text" class="hidden" value="Eval-start">
+                            <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-unlock"></i>
+                                Start Evaluation
+                            </button>
+                        </form>
+                    @elseif(session('eval_status') == 'open')
+                        <form action="#" method="POST" class="flex items-center">
+                            @csrf
+                            <input type="text" class="hidden" value="Eval-End">
+                            <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-lock"></i>
+                                Close Evaluation
+                            </button>
+                        </form>
+                    @else
+                        <form action="#" method="POST" class="flex items-center">
+                            @csrf
+                            <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg" disabled>
+                                <i class="fas fa-finish"></i>
+                                Evaluation Closed
+                            </button>
+                        </form>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
+    
+    
 </div>
 
 {{-- Modal for add subject --}}
 
-
+<script>
+    let percentage = {{ $completionPercentage }}; // Assuming $completionPercentage is passed from the controller
+    let completedCount = {{ $completedCount }}; // Assuming $completedCount is passed from the controller
+    let totalCount = {{ $totalCount }}; // Assuming $totalCount is passed from the controller
+    let circle = document.getElementById('progressCircle');
+    let text = document.getElementById('progressText');
+    let countText = document.getElementById('completionCount');
+    let circumference = 2 * Math.PI * circle.getAttribute('r');
+    let offset = circumference - (percentage / 100) * circumference;
+    
+    circle.style.strokeDashoffset = offset;
+    text.textContent = percentage + '%';
+    countText.textContent = completedCount + '/' + totalCount;
+</script>
     <!-- Script  -->
     <script>
         const addSubjectButton = document.getElementById('addSubjectButton');
