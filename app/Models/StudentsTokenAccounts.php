@@ -11,20 +11,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class StudentsTokenAccounts extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    
     protected $fillable = [
         'student_id',
         'email',
         'eval_token',
-        'subjet1',
-        'subjet2',
-        'subjet3',
-        'subjet4',
-        'subjet5',
-        'subjet6',
-        'subjet7',
-        'subjet8',
-        'subjet9',
-        'subjet10',
+        'subject1',
+        'subject2',
+        'subject3',
+        'subject4',
+        'subject5',
+        'subject6',
+        'subject7',
+        'subject8',
+        'subject9',
+        'subject10',
     ];
   
 

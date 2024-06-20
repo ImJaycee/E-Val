@@ -15,8 +15,9 @@
 <body class="bg-gray-200">
 
 <x-nav-admin/> <!--Include nav and sidebar-->
-<x-messages/>
+
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
+    <x-messages/>
     <!-- Main Container -->
     <div class="lg:flex gap-4 items-stretch">
         <!-- Large Box -->

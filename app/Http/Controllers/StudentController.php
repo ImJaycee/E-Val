@@ -129,17 +129,18 @@ class StudentController extends Controller
     
         // Get the student's subjects from the student account
         $studentSubjects = [
-            $student->subjet1,
-            $student->subjet2,
-            $student->subjet3,
-            $student->subjet4,
-            $student->subjet5,
-            $student->subjet6,
-            $student->subjet7,
-            $student->subjet8,
-            $student->subjet9,
-            $student->subjet10
+            $student->subject1,
+            $student->subject2,
+            $student->subject3,
+            $student->subject4,
+            $student->subject5,
+            $student->subject6,
+            $student->subject7,
+            $student->subject8,
+            $student->subject9,
+            $student->subject10
         ];
+
     
         $allSubjectsEnrolled = [];
     
