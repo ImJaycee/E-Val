@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('students_token_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('student_id')->unique();
-            $table->string('email')->unique();;
+            $table->string('email');
             $table->string('eval_token')->unique();
             $table->string('subject1')->nullable();
             $table->string('subject2')->nullable();

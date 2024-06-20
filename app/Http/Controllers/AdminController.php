@@ -142,48 +142,75 @@ class AdminController extends Controller
     
 
     //upload student
-    public function uploadStudents(Request $request)
-{
-    $request->validate([
-        'students_csv' => 'required|file|mimes:csv,txt',
-    ]);
+    public function uploadStudents(Request $request){
+        $request->validate([
+            'students_csv' => 'required|file|mimes:csv,txt',
+        ]);
+        
+        $file = $request->file('students_csv');
+        $filePath = $file->getRealPath();
+        
+        $csvData = array_map('str_getcsv', file($filePath));
+        
+        // Set row 9 as the header (array index 8 since indexing starts at 0)
+        $headerRowIndex = 8; // This corresponds to the 9th row
+        
+        // Get the header from the specified row
+        $header = $csvData[$headerRowIndex];
+        
+        // Skip rows up to the specified header row
+        $csvData = array_slice($csvData, $headerRowIndex + 1);
 
-    $file = $request->file('students_csv');
-    $filePath = $file->getRealPath();
+        
+       // Insert or update student records within a transaction
+        DB::transaction(function () use ($csvData, $header) {
+            foreach ($csvData as $row) {
+                $rowData = array_combine($header, $row);
+                //dd($rowData);
+                // Generate a random token
 
-    $csvData = array_map('str_getcsv', file($filePath));
-    $header = array_shift($csvData);
+                
+                $randomToken = bin2hex(random_bytes(10));
 
-    dd($csvData);
+                // Check if the token is unique
+                while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
+                    $randomToken = bin2hex(random_bytes(10));
+                }
 
-    DB::transaction(function () use ($csvData, $header) {
-        foreach ($csvData as $row) {
-            $rowData = array_combine($header, $row);
+                // Insert or update student record
+                try {
+                    // Insert or update student record
+                   
+                    StudentsTokenAccounts::updateOrCreate(
+                        ['student_id' => $rowData['student_id']],
+                        [
+                            'email' => $rowData['email'], // Generate a random email address if email is empty
+                            'eval_token' => $randomToken, // Use the generated random token'test' => $rowData['email'],
+                            'subject1' => $rowData['subject1'] ?? 'empty',
+                            'subject2' => $rowData['subject2'] ?? null,
+                            'subject3' => $rowData['subject3'] ?? null,
+                            'subject4' => $rowData['subject4'] ?? null,
+                            'subject5' => $rowData['subject5'] ?? null,
+                            'subject6' => $rowData['subject6'] ?? null,
+                            'subject7' => $rowData['subject7'] ?? null,
+                            'subject8' => $rowData['subject8'] ?? null,
+                            'subject9' => $rowData['subject9'] ?? null,
+                            'subject10' => $rowData['subject10'] ?? null,
+                            
+                        ]
+                     
+                    );
+                
+                } catch (\Exception $e) {
+                    dd($e->getMessage()); // Output any exception message
+                }
+            }
+        });
 
-            // Assuming the CSV columns are: student_number, email, subject1, subject2, ..., subject10
 
-            // Insert or update student record
-            StudentsTokenAccounts::updateOrCreate(
-                ['student_number' => $rowData['student_number']],
-                [
-                    'email' => $rowData['email'],
-                    'subject1' => $rowData['subject1'] ?? null,
-                    'subject2' => $rowData['subject2'] ?? null,
-                    'subject3' => $rowData['subject3'] ?? null,
-                    'subject4' => $rowData['subject4'] ?? null,
-                    'subject5' => $rowData['subject5'] ?? null,
-                    'subject6' => $rowData['subject6'] ?? null,
-                    'subject7' => $rowData['subject7'] ?? null,
-                    'subject8' => $rowData['subject8'] ?? null,
-                    'subject9' => $rowData['subject9'] ?? null,
-                    'subject10' => $rowData['subject10'] ?? null,
-                ]
-            );
-        }
-    });
-
-    return back()->with('success', 'Students uploaded successfully');
-}
+        return redirect()->route('admin.manageStudent', ['admin_id' => session('admin_id')])->with('message', 'Record added successfuly!');
+    
+    }
     
 
 }
