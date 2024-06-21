@@ -10,6 +10,7 @@ use App\Models\SubjectEnrolled;
 use App\Models\SubjectAssigned;
 use App\Models\StudentEvaluation;
 use App\Models\UsersFeedback;
+use App\Models\EvaluationStatus;
 use App\Models\EnrolledStudents;
 use App\Models\Subject;
 use Carbon\Translator;
@@ -43,11 +44,12 @@ class StudentController extends Controller
     
             // Regenerate the session to prevent fixation
             $request->session()->regenerate();
-    
+            $evaluation_status = EvaluationStatus::first();
             // Store the token and student ID in the session
             session([
                 'eval_token' => $student->eval_token,
                 'student_id' => $student->student_id,
+                'eval_status' => $evaluation_status->eval_status,
             ]);
     
             // // Debugging: Check session data

@@ -60,7 +60,7 @@
                             <h2 class="text-ml font-bold text-gray-700">Department</h2>
                         </th>
                         <th class="bg-white px-4 py-2 text-left border-b-2 text-center" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Total Evaluators</h2>
+                            <h2 class="text-ml font-bold text-gray-700">Total Evaluations</h2>
                         </th>
                         <th class="bg-white px-4 py-2 text-center border-b-2" style="width: 25%;">
                             <h2 class="text-ml font-bold text-gray-700">Completed Evaluations</h2>

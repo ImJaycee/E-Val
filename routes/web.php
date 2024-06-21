@@ -168,6 +168,9 @@ Route::controller(AdminController::class)->group(function(){
 
         //upload student
         Route::post('/admin-upload-student', 'uploadStudents')->name('admin.uploadStudent');
+
+        //Evaluation controll
+        Route::post('/admin-evaluation-management', 'Admin_EvalControl')->name('admin.EvalControl');
        
     }); //end of authenticated routes
 

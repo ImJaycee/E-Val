@@ -63,11 +63,15 @@
                         <p class="text-xs font-semibold text-gray-600">{{ $subject['subject_code'] }}</p>
                         <p class="text-sm font-semibold text-gray-700 mt-1">{{ $subject['instructor_name'] }}</p>
                         @if ($subject['instructor_id'] && $subject['status'] == 'Not submitted')
-                            <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" onclick="openModal('{{ $subject['subject_code'] }}')">Evaluate</button>
+                            @if(session('eval_status') == 'open')
+                                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" onclick="openModal('{{ $subject['subject_code'] }}')">Evaluate</button>
+                            @elseif(session('eval_status') == 'close')
+                                <button class="bg-red-900 text-white px-2 py-1 rounded-md mt-1 evaluate-button" disabled><i class="fas fa-lock"></i> Close</button>
+                            @endif
                         @elseif ($subject['instructor_id'] == null)
-                            <button class="bg-green-700 text-white px-2 py-1 rounded-md mt-1 evaluate-button min-w-20" disabled><i class="fas fa-question"></i></button>
+                            <button class="bg-blue-900 text-white px-2 py-1 rounded-md mt-1 evaluate-button min-w-20" disabled><i class="fas fa-question"></i></button>
                         @else
-                            <button class="bg-green-700 text-white px-2 py-1 rounded-md mt-1 evaluate-button min-w-20" disabled><i class="fas fa-check"></i></button>
+                            <button class="bg-green-800 text-white px-2 py-1 rounded-md mt-1 evaluate-button min-w-20" disabled><i class="fas fa-check"></i></button>
                         @endif
    
                         <x-errors/> 
