@@ -7,9 +7,15 @@ use App\Models\InstructorAccount;
 use App\Models\StudentEvaluation;
 use App\Models\SubjectAssigned; // Add this line
 use App\Models\StudentsTokenAccounts; // Add this line
+use App\Models\EvaluationStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
+use App\Mail\EvaluationTokenMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class AdminController extends Controller
 {
@@ -48,15 +54,19 @@ class AdminController extends Controller
         
         if(auth()->guard('admins')->attempt($validated)){ //login successful
             $request->session()->regenerate(); //create session
-            
             $admin = auth()->guard('admins')->user();
             $admin_id = $admin->admin_id;
+
+            $evaluation_status = EvaluationStatus::first();
+
             
             session(['admin_id' => $admin->admin_id, 
                      'firstname' => $admin->firstname,
-                     'lastname' => $admin->lastname,]);
+                     'lastname' => $admin->lastname,
+                     'eval_status' => $evaluation_status->eval_status,]);
             
             //return redirect("/instructor-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
+
             return redirect()->route('admin.dashboard', ['admin_id' => $admin_id])->with('message', 'Welcome back!');
         }else {
           
@@ -147,7 +157,6 @@ class AdminController extends Controller
             $completionPercentage = 0; // or any default value
         }
         
-        session(['eval_status' => 'close', ]);
         return view('admin-side.admin-students', compact('admin', 'completionPercentage','completedCount','totalCount'));
     }
     
@@ -181,11 +190,11 @@ class AdminController extends Controller
                 // Generate a random token
 
                 
-                $randomToken = bin2hex(random_bytes(10));
+                $randomToken = bin2hex(random_bytes(5));
 
                 // Check if the token is unique
                 while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
-                    $randomToken = bin2hex(random_bytes(10));
+                    $randomToken = bin2hex(random_bytes(5));
                 }
 
                 // Insert or update student record
@@ -221,6 +230,71 @@ class AdminController extends Controller
 
         return redirect()->route('admin.manageStudent', ['admin_id' => session('admin_id')])->with('message', 'Record added successfuly!');
     
+    }
+
+    // Evaluation control
+    public function Admin_EvalControl(Request $request){
+        $validated = $request->validate([
+            'eval_status' => ['required'],
+        ]);
+
+        $status = $validated['eval_status'];
+        $evalStatus = EvaluationStatus::first();
+        $evalStatus->eval_status = $status;
+        $evalStatus->save();
+
+                if ($status == 'open') {
+
+                        $students = StudentsTokenAccounts::all();
+
+                        foreach ($students as $student) {
+                            $email = $student->email;
+                            $token = $student->eval_token;
+
+                            //send token via email
+                            // Assuming $students is a collection of student objects
+                            foreach ($students as $student) {
+                                $email = $student->email;
+                                $token = $student->eval_token;
+                            
+                                $attempts = 0;
+                                $maxAttempts = 3;
+                                $sent = false;
+                            
+                                while (!$sent && $attempts < $maxAttempts) {
+                                    try {
+                                        // Send token via email
+                                        Mail::to($email)->send(new EvaluationTokenMail($token));
+                                        echo "Email sent to: $email\n";
+                                        $sent = true;
+                                    } catch (Exception $e) {
+                                        $attempts++;
+                                        Log::error("Failed to send email to $email (Attempt $attempts): " . $e->getMessage());
+                            
+                                        if ($attempts >= $maxAttempts) {
+                                            // Notify admin or take necessary actions
+                                            echo "Failed to send email to: $email after $attempts attempts. Error: " . $e->getMessage() . "\n";
+                                        } else {
+                                            // Wait before retrying (e.g., wait for 5 seconds)
+                                            sleep(5);
+                                        }
+                                    }
+                                }
+                            }
+                            
+
+                        }
+                }
+
+        session(['eval_status' => $status]);
+
+        if ($status == 'open') {
+            return redirect()->route('admin.manageStudent', ['admin_id' => session('admin_id')])->with('message', 'Evaluation Started!');
+        }else{
+            return redirect()->route('admin.manageStudent', ['admin_id' => session('admin_id')])->with('message', 'Evaluation Closed!');
+        }
+        
+        
     }
     
 

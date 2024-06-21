@@ -1,0 +1,22 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class EvaluationStatusSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        DB::table('evaluation_status')->insert([
+            'eval_status' => 'close',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+}

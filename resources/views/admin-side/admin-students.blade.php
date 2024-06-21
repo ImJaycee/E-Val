@@ -87,18 +87,18 @@
                 </div>
                 <div class="flex justify-center mt-4 mb-4">
                     @if(session('eval_status') == 'close')
-                        <form action="#" method="POST" class="flex items-center">
+                        <form action="{{route('admin.EvalControl')}}" method="POST" class="flex items-center">
                             @csrf
-                            <input type="text" class="hidden" value="Eval-start">
+                            <input type="text" name="eval_status" class="hidden" value="open">
                             <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">
                                 <i class="fas fa-unlock"></i>
                                 Start Evaluation
                             </button>
                         </form>
                     @elseif(session('eval_status') == 'open')
-                        <form action="#" method="POST" class="flex items-center">
+                        <form action="{{route('admin.EvalControl')}}" method="POST" class="flex items-center">
                             @csrf
-                            <input type="text" class="hidden" value="Eval-End">
+                            <input type="text" name="eval_status" class="hidden" value="close">
                             <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">
                                 <i class="fas fa-lock"></i>
                                 Close Evaluation
