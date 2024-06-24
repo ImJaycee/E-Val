@@ -106,259 +106,319 @@
                 <form action="#" method="POST" class="mt-4">
                     <!-- Questions (replace with actual questions) -->
                     
-                    <h3 class="text-gray-600 font-bold">I.   Course Planning/Preparation</h3>
+                    <h3 class="text-gray-600 font-bold">A.   Personal Qualities</h3>
                     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">
                         <!-- Question -->
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">1. Provides each student a copy of the syllabus and clearly explains its content</label>
+                            <label class="block text-sm font-semibold">1. Enthusiastic to work</label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question1" id="q1_1" value="1" class="mr-1">
-                                <label for="q1_1" class="mr-2">1</label>
-                                <input type="radio" name="question1" id="q1_2" value="2" class="mr-1">
-                                <label for="q1_2" class="mr-2">2</label>
-                                <input type="radio" name="question1" id="q1_3" value="3" class="mr-1">
-                                <label for="q1_3" class="mr-2">3</label>
-                                <input type="radio" name="question1" id="q1_4" value="4" class="mr-1">
-                                <label for="q1_4" class="mr-2">4</label>
-                                <input type="radio" name="question1" id="q1_5" value="5" class="mr-1">
-                                <label for="q1_5">5</label>
+                                <input type="radio" name="question1" id="a1_1" value="1" class="mr-1">
+                                <label for="a1_1" class="mr-2">1</label>
+                                <input type="radio" name="question1" id="a1_2" value="2" class="mr-1">
+                                <label for="a1_2" class="mr-2">2</label>
+                                <input type="radio" name="question1" id="a1_3" value="3" class="mr-1">
+                                <label for="a1_3" class="mr-2">3</label>
+                                <input type="radio" name="question1" id="a1_4" value="4" class="mr-1">
+                                <label for="a1_4" class="mr-2">4</label>
+                                <input type="radio" name="question1" id="a1_5" value="5" class="mr-1">
+                                <label for="a1_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">2. Plans lessons effectively according to the objectives of the course</label>
+                            <label class="block text-sm font-semibold">2. Well-groomed and properly dressed</label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question2" id="q2_1" value="1" class="mr-1">
-                                <label for="q2_1" class="mr-2">1</label>
-                                <input type="radio" name="question2" id="q2_2" value="2" class="mr-1">
-                                <label for="q2_2" class="mr-2">2</label>
-                                <input type="radio" name="question2" id="q2_3" value="3" class="mr-1">
-                                <label for="q2_3" class="mr-2">3</label>
-                                <input type="radio" name="question2" id="q2_4" value="4" class="mr-1">
-                                <label for="q2_4" class="mr-2">4</label>
-                                <input type="radio" name="question2" id="q2_5" value="5" class="mr-1">
-                                <label for="q2_5">5</label>
+                                <input type="radio" name="question2" id="a2_1" value="1" class="mr-1">
+                                <label for="a2_1" class="mr-2">1</label>
+                                <input type="radio" name="question2" id="a2_2" value="2" class="mr-1">
+                                <label for="a2_2" class="mr-2">2</label>
+                                <input type="radio" name="question2" id="a2_3" value="3" class="mr-1">
+                                <label for="a2_3" class="mr-2">3</label>
+                                <input type="radio" name="question2" id="a2_4" value="4" class="mr-1">
+                                <label for="a2_4" class="mr-2">4</label>
+                                <input type="radio" name="question2" id="a2_5" value="5" class="mr-1">
+                                <label for="a2_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">3. Explains subject requirements properly and provides reasonable time for their completion</label>
+                            <label class="block text-sm font-semibold">3. Resourceful and has initiative</label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question3" id="q3_1" value="1" class="mr-1">
-                                <label for="q3_1" class="mr-2">1</label>
-                                <input type="radio" name="question3" id="q3_2" value="2" class="mr-1">
-                                <label for="q3_2" class="mr-2">2</label>
-                                <input type="radio" name="question3" id="q3_3" value="3" class="mr-1">
-                                <label for="q3_3" class="mr-2">3</label>
-                                <input type="radio" name="question3" id="q3_4" value="4" class="mr-1">
-                                <label for="q3_4" class="mr-2">4</label>
-                                <input type="radio" name="question3" id="q3_5" value="5" class="mr-1">
-                                <label for="q3_5">5</label>
+                                <input type="radio" name="question3" id="a3_1" value="1" class="mr-1">
+                                <label for="a3_1" class="mr-2">1</label>
+                                <input type="radio" name="question3" id="a3_2" value="2" class="mr-1">
+                                <label for="a3_2" class="mr-2">2</label>
+                                <input type="radio" name="question3" id="a3_3" value="3" class="mr-1">
+                                <label for="a3_3" class="mr-2">3</label>
+                                <input type="radio" name="question3" id="a3_4" value="4" class="mr-1">
+                                <label for="a3_4" class="mr-2">4</label>
+                                <input type="radio" name="question3" id="a3_5" value="5" class="mr-1">
+                                <label for="a3_5">5</label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-100 rounded p-2 shadow-xl">
+                            <label class="block text-sm font-semibold">4. Productive and output oriented</label>
+                            <!-- Radio inputs -->
+                            <div class="flex items-center justify-center space-x-5">
+                                <input type="radio" name="question4" id="a4_1" value="1" class="mr-1">
+                                <label for="a4_1" class="mr-2">1</label>
+                                <input type="radio" name="question4" id="a4_2" value="2" class="mr-1">
+                                <label for="a4_2" class="mr-2">2</label>
+                                <input type="radio" name="question4" id="a4_3" value="3" class="mr-1">
+                                <label for="a4_3" class="mr-2">3</label>
+                                <input type="radio" name="question4" id="a4_4" value="4" class="mr-1">
+                                <label for="a4_4" class="mr-2">4</label>
+                                <input type="radio" name="question4" id="a4_5" value="5" class="mr-1">
+                                <label for="a4_5">5</label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-100 rounded p-2 shadow-xl">
+                            <label class="block text-sm font-semibold">5.  Fair and firm in decision making
+                            </label>
+                            <!-- Radio inputs -->
+                            <div class="flex items-center justify-center space-x-5">
+                                <input type="radio" name="question5" id="a5_1" value="1" class="mr-1">
+                                <label for="a5_1" class="mr-2">1</label>
+                                <input type="radio" name="question5" id="a5_2" value="2" class="mr-1">
+                                <label for="a5_2" class="mr-2">2</label>
+                                <input type="radio" name="question5" id="a5_3" value="3" class="mr-1">
+                                <label for="a5_3" class="mr-2">3</label>
+                                <input type="radio" name="question5" id="a5_4" value="4" class="mr-1">
+                                <label for="a5_4" class="mr-2">4</label>
+                                <input type="radio" name="question5" id="a5_5" value="5" class="mr-1">
+                                <label for="a5_5">5</label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-100 rounded p-2 shadow-xl">
+                            <label class="block text-sm font-semibold">6.	Honest and trustworthy
+                            </label>
+                            <!-- Radio inputs -->
+                            <div class="flex items-center justify-center space-x-5">
+                                <input type="radio" name="question6" id="a6_1" value="1" class="mr-1">
+                                <label for="a6_1" class="mr-2">1</label>
+                                <input type="radio" name="question6" id="a6_2" value="2" class="mr-1">
+                                <label for="a6_2" class="mr-2">2</label>
+                                <input type="radio" name="question6" id="a6_3" value="3" class="mr-1">
+                                <label for="a6_3" class="mr-2">3</label>
+                                <input type="radio" name="question6" id="a6_4" value="4" class="mr-1">
+                                <label for="a6_4" class="mr-2">4</label>
+                                <input type="radio" name="question6" id="a6_5" value="5" class="mr-1">
+                                <label for="a6_5">5</label>
                             </div>
                         </div>
                     </div>
-                    <h3 class="text-gray-600 font-bold">II.	Instructional Delivery</h3>
+                    <h3 class="text-gray-600 font-bold">B. Interpersonal Relationship</h3>
                     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">
-                        
+                        <!-- Question -->
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">1.	Demonstrates mastery of the subject matter
+                            <label class="block text-sm font-semibold">1.	Shows interest to co-workers and flexible in different situations
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question4" id="q4_1" value="1" class="mr-1">
-                                <label for="q4_1" class="mr-2">1</label>
-                                <input type="radio" name="question4" id="q4_2" value="2" class="mr-1">
-                                <label for="q4_2" class="mr-2">2</label>
-                                <input type="radio" name="question4" id="q4_3" value="3" class="mr-1">
-                                <label for="q4_3" class="mr-2">3</label>
-                                <input type="radio" name="question4" id="q4_4" value="4" class="mr-1">
-                                <label for="q4_4" class="mr-2">4</label>
-                                <input type="radio" name="question4" id="q4_5" value="5" class="mr-1">
-                                <label for="q4_5">5</label>
+                                <input type="radio" name="question7" id="b1_1" value="1" class="mr-1">
+                                <label for="b1_1" class="mr-2">1</label>
+                                <input type="radio" name="question7" id="b1_2" value="2" class="mr-1">
+                                <label for="b1_2" class="mr-2">2</label>
+                                <input type="radio" name="question7" id="b1_3" value="3" class="mr-1">
+                                <label for="b1_3" class="mr-2">3</label>
+                                <input type="radio" name="question7" id="b1_4" value="4" class="mr-1">
+                                <label for="b1_4" class="mr-2">4</label>
+                                <input type="radio" name="question7" id="b1_5" value="5" class="mr-1">
+                                <label for="b1_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">2.	Motivates students to think critically and creatively
+                            <label class="block text-sm font-semibold">2.	Pleasant and sincere
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question5" id="q5_1" value="1" class="mr-1">
-                                <label for="q5_1" class="mr-2">1</label>
-                                <input type="radio" name="question5" id="q5_2" value="2" class="mr-1">
-                                <label for="q5_2" class="mr-2">2</label>
-                                <input type="radio" name="question5" id="q5_3" value="3" class="mr-1">
-                                <label for="q5_3" class="mr-2">3</label>
-                                <input type="radio" name="question5" id="q5_4" value="4" class="mr-1">
-                                <label for="q5_4" class="mr-2">4</label>
-                                <input type="radio" name="question5" id="q5_5" value="5" class="mr-1">
-                                <label for="q5_5">5</label>
+                                <input type="radio" name="question8" id="b2_1" value="1" class="mr-1">
+                                <label for="b2_1" class="mr-2">1</label>
+                                <input type="radio" name="question8" id="b2_2" value="2" class="mr-1">
+                                <label for="b2_2" class="mr-2">2</label>
+                                <input type="radio" name="question8" id="b2_3" value="3" class="mr-1">
+                                <label for="b2_3" class="mr-2">3</label>
+                                <input type="radio" name="question8" id="b2_4" value="4" class="mr-1">
+                                <label for="b2_4" class="mr-2">4</label>
+                                <input type="radio" name="question8" id="b2_5" value="5" class="mr-1">
+                                <label for="b2_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">3.	Has a good command of the language of instruction with well modulated voice that can be understood by all students
+                            <label class="block text-sm font-semibold">3.	Observes confidentiality
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question6" id="q6_1" value="1" class="mr-1">
-                                <label for="q6_1" class="mr-2">1</label>
-                                <input type="radio" name="question6" id="q6_2" value="2" class="mr-1">
-                                <label for="q6_2" class="mr-2">2</label>
-                                <input type="radio" name="question6" id="q6_3" value="3" class="mr-1">
-                                <label for="q6_3" class="mr-2">3</label>
-                                <input type="radio" name="question6" id="q6_4" value="4" class="mr-1">
-                                <label for="q6_4" class="mr-2">4</label>
-                                <input type="radio" name="question6" id="q6_5" value="5" class="mr-1">
-                                <label for="q6_5">5</label>
+                                <input type="radio" name="question9" id="b3_1" value="1" class="mr-1">
+                                <label for="b3_1" class="mr-2">1</label>
+                                <input type="radio" name="question9" id="b3_2" value="2" class="mr-1">
+                                <label for="b3_2" class="mr-2">2</label>
+                                <input type="radio" name="question9" id="b3_3" value="3" class="mr-1">
+                                <label for="b3_3" class="mr-2">3</label>
+                                <input type="radio" name="question9" id="b3_4" value="4" class="mr-1">
+                                <label for="b3_4" class="mr-2">4</label>
+                                <input type="radio" name="question9" id="b3_5" value="5" class="mr-1">
+                                <label for="b3_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">4.	Comes to class on time and makes productive use of allotted time for the subject
+                            <label class="block text-sm font-semibold">4. Appreciates colleague's good
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question7" id="q7_1" value="1" class="mr-1">
-                                <label for="q7_1" class="mr-2">1</label>
-                                <input type="radio" name="question7" id="q7_2" value="2" class="mr-1">
-                                <label for="q7_2" class="mr-2">2</label>
-                                <input type="radio" name="question7" id="q7_3" value="3" class="mr-1">
-                                <label for="q7_3" class="mr-2">3</label>
-                                <input type="radio" name="question7" id="q7_4" value="4" class="mr-1">
-                                <label for="q7_4" class="mr-2">4</label>
-                                <input type="radio" name="question7" id="q7_5" value="5" class="mr-1">
-                                <label for="q7_5">5</label>
+                                <input type="radio" name="question10" id="b4_1" value="1" class="mr-1">
+                                <label for="b4_1" class="mr-2">1</label>
+                                <input type="radio" name="question10" id="b4_2" value="2" class="mr-1">
+                                <label for="b4_2" class="mr-2">2</label>
+                                <input type="radio" name="question10" id="b4_3" value="3" class="mr-1">
+                                <label for="b4_3" class="mr-2">3</label>
+                                <input type="radio" name="question10" id="b4_4" value="4" class="mr-1">
+                                <label for="b4_4" class="mr-2">4</label>
+                                <input type="radio" name="question10" id="b4_5" value="5" class="mr-1">
+                                <label for="b4_5">5</label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-100 rounded p-2 shadow-xl">
+                            <label class="block text-sm font-semibold">5.	Good listener
+                            </label>
+                            <!-- Radio inputs -->
+                            <div class="flex items-center justify-center space-x-5">
+                                <input type="radio" name="question11" id="b5_1" value="1" class="mr-1">
+                                <label for="b5_1" class="mr-2">1</label>
+                                <input type="radio" name="question11" id="b5_2" value="2" class="mr-1">
+                                <label for="b5_2" class="mr-2">2</label>
+                                <input type="radio" name="question11" id="b5_3" value="3" class="mr-1">
+                                <label for="b5_3" class="mr-2">3</label>
+                                <input type="radio" name="question11" id="b5_4" value="4" class="mr-1">
+                                <label for="b5_4" class="mr-2">4</label>
+                                <input type="radio" name="question11" id="b5_5" value="5" class="mr-1">
+                                <label for="b5_5">5</label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-100 rounded p-2 shadow-xl">
+                            <label class="block text-sm font-semibold">6.	Shares expertise and professional knowledge with colleagues
+                            </label>
+                            <!-- Radio inputs -->
+                            <div class="flex items-center justify-center space-x-5">
+                                <input type="radio" name="question12" id="b6_1" value="1" class="mr-1">
+                                <label for="b6_1" class="mr-2">1</label>
+                                <input type="radio" name="question12" id="b6_2" value="2" class="mr-1">
+                                <label for="b6_2" class="mr-2">2</label>
+                                <input type="radio" name="question12" id="b6_3" value="3" class="mr-1">
+                                <label for="b6_3" class="mr-2">3</label>
+                                <input type="radio" name="question12" id="b6_4" value="4" class="mr-1">
+                                <label for="b6_4" class="mr-2">4</label>
+                                <input type="radio" name="question12" id="b6_5" value="5" class="mr-1">
+                                <label for="b6_5">5</label>
                             </div>
                         </div>
                     </div>
-                    <h3 class="text-gray-600 font-bold">III.	Assessment of Student Learning</h3>
+                    <h3 class="text-gray-600 font-bold">C.	Ethical Behavior</h3>
                     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">
+                        <!-- Question -->
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">1.	Uses appropriate assessment strategies to evaluate learning
+                            <label class="block text-sm font-semibold">1.	Open-minded, accepts criticism in good spirit
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question8" id="q8_1" value="1" class="mr-1">
-                                <label for="q8_1" class="mr-2">1</label>
-                                <input type="radio" name="question8" id="q8_2" value="2" class="mr-1">
-                                <label for="q8_2" class="mr-2">2</label>
-                                <input type="radio" name="question8" id="q8_3" value="3" class="mr-1">
-                                <label for="q8_3" class="mr-2">3</label>
-                                <input type="radio" name="question8" id="q8_4" value="4" class="mr-1">
-                                <label for="q8_4" class="mr-2">4</label>
-                                <input type="radio" name="question8" id="q8_5" value="5" class="mr-1">
-                                <label for="q8_5">5</label>
+                                <input type="radio" name="question7" id="c1_1" value="1" class="mr-1">
+                                <label for="c1_1" class="mr-2">1</label>
+                                <input type="radio" name="question7" id="c1_2" value="2" class="mr-1">
+                                <label for="c1_2" class="mr-2">2</label>
+                                <input type="radio" name="question7" id="c1_3" value="3" class="mr-1">
+                                <label for="c1_3" class="mr-2">3</label>
+                                <input type="radio" name="question7" id="c1_4" value="4" class="mr-1">
+                                <label for="c1_4" class="mr-2">4</label>
+                                <input type="radio" name="question7" id="c1_5" value="5" class="mr-1">
+                                <label for="c1_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">2.	Is fair and objective in giving grades
+                            <label class="block text-sm font-semibold">2.	Committed to work
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question9" id="q9_1" value="1" class="mr-1">
-                                <label for="q9_1" class="mr-2">1</label>
-                                <input type="radio" name="question9" id="q9_2" value="2" class="mr-1">
-                                <label for="q9_2" class="mr-2">2</label>
-                                <input type="radio" name="question9" id="q9_3" value="3" class="mr-1">
-                                <label for="q9_3" class="mr-2">3</label>
-                                <input type="radio" name="question9" id="q9_4" value="4" class="mr-1">
-                                <label for="q9_4" class="mr-2">4</label>
-                                <input type="radio" name="question9" id="q9_5" value="5" class="mr-1">
-                                <label for="q9_5">5</label>
-                            </div>
-                        </div>
-                        <!-- Repeat for other questions -->
-                    </div>
-                    <h3 class="text-gray-600 font-bold">IV.	Classroom Management</h3>
-                    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">
-                        <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">1.	Maintains order in the class
-                            </label>
-                            <!-- Radio inputs -->
-                            <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question10" id="q10_1" value="1" class="mr-1">
-                                <label for="q10_1" class="mr-2">1</label>
-                                <input type="radio" name="question10" id="q10_2" value="2" class="mr-1">
-                                <label for="q10_2" class="mr-2">2</label>
-                                <input type="radio" name="question10" id="q10_3" value="3" class="mr-1">
-                                <label for="q10_3" class="mr-2">3</label>
-                                <input type="radio" name="question10" id="q10_4" value="4" class="mr-1">
-                                <label for="q10_4" class="mr-2">4</label>
-                                <input type="radio" name="question10" id="q10_5" value="5" class="mr-1">
-                                <label for="q10_5">5</label>
+                                <input type="radio" name="question8" id="c2_1" value="1" class="mr-1">
+                                <label for="c2_1" class="mr-2">1</label>
+                                <input type="radio" name="question8" id="c2_2" value="2" class="mr-1">
+                                <label for="c2_2" class="mr-2">2</label>
+                                <input type="radio" name="question8" id="c2_3" value="3" class="mr-1">
+                                <label for="c2_3" class="mr-2">3</label>
+                                <input type="radio" name="question8" id="c2_4" value="4" class="mr-1">
+                                <label for="c2_4" class="mr-2">4</label>
+                                <input type="radio" name="question8" id="c2_5" value="5" class="mr-1">
+                                <label for="c2_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">2.	Is approachable but firm in implementation of policies
+                            <label class="block text-sm font-semibold">3.	Accepts additional assignments and works religiously on them
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question11" id="q11_1" value="1" class="mr-1">
-                                <label for="q11_1" class="mr-2">1</label>
-                                <input type="radio" name="question11" id="q11_2" value="2" class="mr-1">
-                                <label for="q11_2" class="mr-2">2</label>
-                                <input type="radio" name="question11" id="q11_3" value="3" class="mr-1">
-                                <label for="q11_3" class="mr-2">3</label>
-                                <input type="radio" name="question11" id="q11_4" value="4" class="mr-1">
-                                <label for="q11_4" class="mr-2">4</label>
-                                <input type="radio" name="question11" id="q11_5" value="5" class="mr-1">
-                                <label for="q11_5">5</label>
-                            </div>
-                        </div>
-                        <!-- Repeat for other questions -->
-                    </div>
-                    <h3 class="text-gray-600 font-bold">V.	Personality and Poise</h3>
-                    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">
-                        <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">1.	Well groomed and has pleasing personality
-                            </label>
-                            <!-- Radio inputs -->
-                            <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question12" id="q12_1" value="1" class="mr-1">
-                                <label for="q12_1" class="mr-2">1</label>
-                                <input type="radio" name="question12" id="q12_2" value="2" class="mr-1">
-                                <label for="q12_2" class="mr-2">2</label>
-                                <input type="radio" name="question12" id="q12_3" value="3" class="mr-1">
-                                <label for="q12_3" class="mr-2">3</label>
-                                <input type="radio" name="question12" id="q12_4" value="4" class="mr-1">
-                                <label for="q12_4" class="mr-2">4</label>
-                                <input type="radio" name="question12" id="q12_5" value="5" class="mr-1">
-                                <label for="q12_5">5</label>
+                                <input type="radio" name="question9" id="c3_1" value="1" class="mr-1">
+                                <label for="c3_1" class="mr-2">1</label>
+                                <input type="radio" name="question9" id="c3_2" value="2" class="mr-1">
+                                <label for="c3_2" class="mr-2">2</label>
+                                <input type="radio" name="question9" id="c3_3" value="3" class="mr-1">
+                                <label for="c3_3" class="mr-2">3</label>
+                                <input type="radio" name="question9" id="c3_4" value="4" class="mr-1">
+                                <label for="c3_4" class="mr-2">4</label>
+                                <input type="radio" name="question9" id="c3_5" value="5" class="mr-1">
+                                <label for="c3_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">2.	Wears the prescribed uniform
+                            <label class="block text-sm font-semibold">4. Fair and objective in dealing with others
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question13" id="q13_1" value="1" class="mr-1">
-                                <label for="q13_1" class="mr-2">1</label>
-                                <input type="radio" name="question13" id="q13_2" value="2" class="mr-1">
-                                <label for="q13_2" class="mr-2">2</label>
-                                <input type="radio" name="question13" id="q13_3" value="3" class="mr-1">
-                                <label for="q13_3" class="mr-2">3</label>
-                                <input type="radio" name="question13" id="q13_4" value="4" class="mr-1">
-                                <label for="q13_4" class="mr-2">4</label>
-                                <input type="radio" name="question13" id="q13_5" value="5" class="mr-1">
-                                <label for="q13_5">5</label>
+                                <input type="radio" name="question10" id="c4_1" value="1" class="mr-1">
+                                <label for="c4_1" class="mr-2">1</label>
+                                <input type="radio" name="question10" id="c4_2" value="2" class="mr-1">
+                                <label for="c4_2" class="mr-2">2</label>
+                                <input type="radio" name="question10" id="c4_3" value="3" class="mr-1">
+                                <label for="c4_3" class="mr-2">3</label>
+                                <input type="radio" name="question10" id="c4_4" value="4" class="mr-1">
+                                <label for="c4_4" class="mr-2">4</label>
+                                <input type="radio" name="question10" id="c4_5" value="5" class="mr-1">
+                                <label for="c4_5">5</label>
                             </div>
                         </div>
                         <div class="bg-gray-100 rounded p-2 shadow-xl">
-                            <label class="block text-sm font-semibold">2.	Wears the prescribed uniform
+                            <label class="block text-sm font-semibold">5.	Is friendly and courteous in dealing with colleagues
                             </label>
                             <!-- Radio inputs -->
                             <div class="flex items-center justify-center space-x-5">
-                                <input type="radio" name="question14" id="q14_1" value="1" class="mr-1">
-                                <label for="q14_1" class="mr-2">1</label>
-                                <input type="radio" name="question14" id="q14_2" value="2" class="mr-1">
-                                <label for="q14_2" class="mr-2">2</label>
-                                <input type="radio" name="question14" id="q14_3" value="3" class="mr-1">
-                                <label for="q14_3" class="mr-2">3</label>
-                                <input type="radio" name="question14" id="q14_4" value="4" class="mr-1">
-                                <label for="q14_4" class="mr-2">4</label>
-                                <input type="radio" name="question14" id="q14_5" value="5" class="mr-1">
-                                <label for="q14_5">5</label>
+                                <input type="radio" name="question11" id="c5_1" value="1" class="mr-1">
+                                <label for="c5_1" class="mr-2">1</label>
+                                <input type="radio" name="question11" id="c5_2" value="2" class="mr-1">
+                                <label for="c5_2" class="mr-2">2</label>
+                                <input type="radio" name="question11" id="c5_3" value="3" class="mr-1">
+                                <label for="c5_3" class="mr-2">3</label>
+                                <input type="radio" name="question11" id="c5_4" value="4" class="mr-1">
+                                <label for="c5_4" class="mr-2">4</label>
+                                <input type="radio" name="question11" id="c5_5" value="5" class="mr-1">
+                                <label for="c5_5">5</label>
                             </div>
                         </div>
+                        <div class="bg-gray-100 rounded p-2 shadow-xl">
+                            <label class="block text-sm font-semibold">6.	Considerate in the use of equipment, physical facilities and instructional materials
+                            </label>
+                            <!-- Radio inputs -->
+                            <div class="flex items-center justify-center space-x-5">
+                                <input type="radio" name="question12" id="c6_1" value="1" class="mr-1">
+                                <label for="c6_1" class="mr-2">1</label>
+                                <input type="radio" name="question12" id="c6_2" value="2" class="mr-1">
+                                <label for="c6_2" class="mr-2">2</label>
+                                <input type="radio" name="question12" id="c6_3" value="3" class="mr-1">
+                                <label for="c6_3" class="mr-2">3</label>
+                                <input type="radio" name="question12" id="c6_4" value="4" class="mr-1">
+                                <label for="c6_4" class="mr-2">4</label>
+                                <input type="radio" name="question12" id="c6_5" value="5" class="mr-1">
+                                <label for="c6_5">5</label>
+                            </div>
+                        </div>  
                         <!-- Repeat for other questions -->
                     </div>
                     

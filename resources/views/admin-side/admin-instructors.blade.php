@@ -11,6 +11,7 @@
 
 @include('partials.header-admin')
 
+
 <body class="bg-gray-200">
 
 <x-nav-admin/> <!--Include nav and sidebar-->
@@ -37,10 +38,10 @@
             <!-- Small Boxes -->
             <div class="block justify-center h-full">
                 <h3 class="text-xl font-bold text-gray-700">
-                    Upload Student Records
+                    Upload Instructor Records
                 </h3>
                 <p class="text-md font-bold text-gray-500">
-                    Use this feature to easily upload student records. 
+                    Use this feature to easily upload instructor records. 
                     <i><b>E-val</b></i> simplifies the process, making it efficient and hassle-free.
                 </p>
             </div>            
@@ -50,9 +51,9 @@
     <!-- Table -->
     <div class="bg-white rounded-lg p-4 shadow-md my-4 h-auto md:h-4/5">
         <div class="overflow-x-auto overflow-y-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+            <div class="bg-gray-100 shadow-md p-2 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0 rounded">
                 <!-- Upload Form -->
-                <form action="{{ route('admin.uploadStudent') }}" method="POST" enctype="multipart/form-data" class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
+                <form action="#" method="POST" enctype="multipart/form-data" class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
                     @csrf
                     <div class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
                         <div class="flex flex-col items-start">
@@ -62,14 +63,37 @@
                         <div>
                             <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6">
                                 <i class="fas fa-upload"></i>
-                                 Upload
+                                Upload
                             </button>
                         </div>
                     </div>
                 </form>
+        
+                <!-- Peer-to-Peer Assignment Button -->
+                <div class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto mt-6 md:mt-0">
+                    @if($totalEvaluations <= 0)
+                        <form action="{{route('admin.assignPeerToPeer')}}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-red-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base">
+                                <i class="fas fa-users"></i>
+                                P2P Assignment
+                            </button>
+                        </form>
+                    @else
+                        <form action="">
+                            @csrf
+                            <button type="submit" class="bg-red-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base" disabled>
+                                <i class="fas fa-users"></i>
+                                P2P Assigned
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </form>
+                    @endif
+                </div>
             </div>
+        
             <div class="flex flex-col items-center justify-center h-full mt-4">
-                <h2 class="text-xl font-bold text-gray-700 mb-4">Overall Student Evaluation Progress</h2>
+                <h2 class="text-xl font-bold text-gray-700 mb-4">Peer to Peer Evaluation Progress</h2>
                 <div class="relative flex items-center justify-center">
                     <svg class="w-40 h-40">
                         <circle class="text-gray-300" stroke-width="5" stroke="currentColor" fill="transparent" r="60" cx="80" cy="80"/>
@@ -78,33 +102,31 @@
                     <div class="absolute flex flex-col items-center justify-center">
                         <span id="progressText" class="text-2xl font-bold text-green-800">0%</span>
                         <span class="text-sm font-semibold text-gray-600">Completed</span>
-                        {{-- <span id="completionCount" class="text-sm font-semibold text-gray-600">0/0</span> --}}
                     </div>
                 </div>
                 <div class="mt-4 text-center">
                     <p id="completionCount" class="text-lg font-semibold text-gray-700">0/0</p>
                 </div>
                 <div class="flex justify-center mt-4 mb-4">
-                    @if(session('eval_status') == 'close')
-                        @if($StudenttotalEvaluations > 0)
-                            <form action="{{route('admin.EvalControl')}}" method="POST" class="flex items-center">
+                    @if(session('eval_status_p2p') == 'close')
+                        @if($totalEvaluations > 0)
+                            <form action="{{route('admin.EvalControl_PTP')}}" method="POST" class="flex items-center">
                                 @csrf
-                                <input type="text" name="eval_status" class="hidden" value="open">
+                                <input type="text" name="eval_status_p2p" class="hidden" value="open">
                                 <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">
                                     <i class="fas fa-unlock"></i>
                                     Start Evaluation
                                 </button>
                             </form>
                         @else
-                            <h3>
-                                <i class="fas fa-upload"></i>
-                                Upload Records to start evaluation
+                            <h3 class="">
+                                Assign Instructor Evaluations to Start Peer-to-Peer Evaluation
                             </h3>
                         @endif
-                    @elseif(session('eval_status') == 'open')
-                        <form action="{{route('admin.EvalControl')}}" method="POST" class="flex items-center">
+                    @elseif(session('eval_status_p2p') == 'open')
+                        <form action="{{route('admin.EvalControl_PTP')}}" method="POST" class="flex items-center">
                             @csrf
-                            <input type="text" name="eval_status" class="hidden" value="close">
+                            <input type="text" name="eval_status_p2p" class="hidden" value="close">
                             <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-lg">
                                 <i class="fas fa-lock"></i>
                                 Close Evaluation
@@ -122,6 +144,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
     
     
@@ -132,7 +155,7 @@
 <script>
     let percentage = {{ $completionPercentage }}; // Assuming $completionPercentage is passed from the controller
     let completedCount = {{ $completedCount }}; // Assuming $completedCount is passed from the controller
-    let StudenttotalEvaluations = {{ $StudenttotalEvaluations }}; // Assuming $totalEvaluations is passed from the controller
+    let totalEvaluations = {{ $totalEvaluations }}; // Assuming $totalEvaluations is passed from the controller
     let circle = document.getElementById('progressCircle');
     let text = document.getElementById('progressText');
     let countText = document.getElementById('completionCount');
@@ -141,9 +164,22 @@
     
     circle.style.strokeDashoffset = offset;
     text.textContent = percentage + '%';
-    countText.textContent = completedCount + '/' + StudenttotalEvaluations;
+    countText.textContent = completedCount + '/' + totalEvaluations;
 </script>
     <!-- Script  -->
+    <script>
+        const addSubjectButton = document.getElementById('addSubjectButton');
+        const addSubjectModal = document.getElementById('addSubjectModal');
+        const closeSubjectModal = document.getElementById('closeSubjectModal');
+    
+        addSubjectButton.addEventListener('click', () => {
+            addSubjectModal.classList.remove('hidden');
+        });
+    
+        closeSubjectModal.addEventListener('click', () => {
+            addSubjectModal.classList.add('hidden');
+        });
+    </script>
     
 
     <script>

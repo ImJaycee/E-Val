@@ -15,6 +15,7 @@ class EvaluationStatusSeeder extends Seeder
     {
         DB::table('evaluation_status')->insert([
             'eval_status' => 'close',
+            'eval_status_p2p' => 'close',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

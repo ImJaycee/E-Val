@@ -171,6 +171,19 @@ Route::controller(AdminController::class)->group(function(){
 
         //Evaluation controll
         Route::post('/admin-evaluation-management', 'Admin_EvalControl')->name('admin.EvalControl');
+
+
+
+
+        // Student Instructor peer to peer
+        Route::get('/admin-instructor-management{admin_id}', 'Admin_manageInstructor')->name('admin.manageInstructor');
+        //Evaluation controll
+        Route::post('/admin-evaluation-management-p2p', 'Admin_EvalControlPtP')->name('admin.EvalControl_PTP');
+
+
+
+        //assign peer to peer
+        Route::post('/admin-assign-peer-to-peer', 'assignPeerToPeer')->name('admin.assignPeerToPeer');
        
     }); //end of authenticated routes
 
