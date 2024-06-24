@@ -11,5 +11,6 @@ class EvaluationStatus extends Model
     protected $table = 'evaluation_status';
     protected $fillable = [
         'eval_status',
+        'eval_status_p2p',
     ];
 }

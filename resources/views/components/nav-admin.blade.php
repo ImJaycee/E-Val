@@ -45,6 +45,10 @@
             <i class="fas fa-users"></i>
             <span>Students</span>
         </a>
+        <a href="{{ route('admin.manageInstructor', ['admin_id' => $admin_id]) }}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+            <i class="fas fa-users"></i>
+            <span>Instructors</span>
+        </a>
         {{-- <a href="{{route('instructor.instructor-rank')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-star"></i>
             <span>Instructor Ranking</span>

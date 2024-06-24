@@ -8,6 +8,8 @@ use App\Models\StudentEvaluation;
 use App\Models\SubjectAssigned; // Add this line
 use App\Models\StudentsTokenAccounts; // Add this line
 use App\Models\EvaluationStatus;
+use App\Models\PeerToPeer;
+use App\Models\DlcInstructors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -63,7 +65,8 @@ class AdminController extends Controller
             session(['admin_id' => $admin->admin_id, 
                      'firstname' => $admin->firstname,
                      'lastname' => $admin->lastname,
-                     'eval_status' => $evaluation_status->eval_status,]);
+                     'eval_status' => $evaluation_status->eval_status,
+                     'eval_status_p2p' => $evaluation_status->eval_status_p2p]);
             
             //return redirect("/instructor-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
 
@@ -149,15 +152,26 @@ class AdminController extends Controller
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
         $totalCount = StudentsTokenAccounts::all()->count();
         $completedCount = StudentEvaluation::all()->count();
+
+        $students = StudentsTokenAccounts::all();
+        $StudenttotalEvaluations = 0;
+        foreach ($students as $student){
+            for($i = 1; $i <= 10; $i++){
+                $subject = 'subject'.$i;
+                if($student->$subject != null){
+                    $StudenttotalEvaluations++;
+                }
+            }
+        }
         
         // Check if $totalCount is zero to avoid division by zero
         if ($totalCount > 0) {
-            $completionPercentage = number_format(($completedCount / $totalCount) * 100, 2);
+            $completionPercentage = number_format(($completedCount / $StudenttotalEvaluations) * 100, 2);
         } else {
             $completionPercentage = 0; // or any default value
         }
         
-        return view('admin-side.admin-students', compact('admin', 'completionPercentage','completedCount','totalCount'));
+        return view('admin-side.admin-students', compact('admin', 'completionPercentage','completedCount','StudenttotalEvaluations'));
     }
     
 
@@ -296,6 +310,94 @@ class AdminController extends Controller
         
         
     }
+
+
+    // manage instructor peer to peer 
+    public function Admin_manageInstructor($admin_id){
+        $admin = AdminAccount::where('admin_id', $admin_id)->first();
+        $totalCount = PeerToPeer::all()->count();
+        $completedCount = StudentEvaluation::all()->count();
+
+        $students = StudentsTokenAccounts::all();
+        $totalEvaluations = PeerToPeer::all()->count();
+
+        $completedCount = 0; // test only
+
+        
+        // Check if $totalCount is zero to avoid division by zero
+        if ($totalCount > 0) {
+            $completionPercentage = number_format(($completedCount / $totalEvaluations) * 100, 2);
+        } else {
+            $completionPercentage = 0; // or any default value
+        }
+        
+        return view('admin-side.admin-instructors', compact('admin', 'completionPercentage','completedCount','totalEvaluations'));
+    }
+
+    // Evaluation control Peer to peer
+    public function Admin_EvalControlPtP(Request $request){
+        $validated = $request->validate([
+            'eval_status_p2p' => ['required'],
+        ]);
+
+        $status = $validated['eval_status_p2p'];
+        $evalStatus = EvaluationStatus::first();
+        $evalStatus->eval_status_p2p = $status;
+        $evalStatus->save();
+
+                if ($status == 'open') {
+
+                }
+
+        session(['eval_status_p2p' => $status]);
+
+        if ($status == 'open') {
+            return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Evaluation Started!');
+        }else{
+            return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Evaluation Closed!');
+        }
+        
+        
+    }
+
+    //assign peer to peer
+    public function assignPeerToPeer(Request $request){
+
+        $instructors = DlcInstructors::all();
+    
+        // Shuffle the instructors to randomize the order
+        $shuffledInstructors = $instructors->shuffle();
+    
+        // Create an array to store the assigned validators
+        $assignedValidators = [];
+    
+        foreach ($instructors as $instructor) {
+            $validatorIds = $shuffledInstructors->pluck('instructor_id')->diff([$instructor->instructor_id])->take(5)->toArray();
+            $assignedValidators[$instructor->instructor_id] = $validatorIds;
+        }
+        
+    
+        // Insert the assigned validators into the database
+        foreach ($assignedValidators as $instructorId => $validatorIds) {
+            $validatorIds = array_values($validatorIds);
+            PeerToPeer::updateOrCreate(
+                ['instructor_id' => $instructorId],
+                [
+                    'peer1' => $validatorIds[0],
+                    'peer2' => $validatorIds[1],
+                    'peer3' => $validatorIds[2],
+                    'peer4' => $validatorIds[3],
+                    'peer5' => $validatorIds[4],
+                    'status' => 'assigned' // Assuming this is the default status
+                ]
+            );
+        }
+    
+        return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Peer assigned successfully!');
+    }
+    
+    
+
     
 
 }
