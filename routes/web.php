@@ -129,9 +129,8 @@ Route::controller(InstructorController::class)->group(function(){
         Route::post('/instructor-change-password{instructor_id}', 'changePassword')->name('instructor-side.change-password');
 
         //Instructor evaluation P2P Side
-        Route::get('/instructor-evaluation', function () {
-            return view('instructor-side.instructor-evaluation');
-        })->name('instructor.evaluation');
+        Route::get('/instructor-evaluation{instructor_id}', 'PeertoPeer_Eval')->name('instructor.evaluation');
+        Route::post('/instructor-submit-eval', 'PeerEvaluationProcess')->name('instructor.SubmitEvaluation');
 
         // view instructors rank
         Route::get('/instructor-instructor-rank', function () {
