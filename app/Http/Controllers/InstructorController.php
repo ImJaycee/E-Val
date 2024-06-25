@@ -6,6 +6,7 @@ use App\Models\InstructorAccount;
 use App\Models\SubjectAssigned;
 use App\Models\DlcInstructors;
 use App\Models\StudentEvaluation;
+use App\Models\PeerToPeer;
 use App\Models\Subject;
 use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
@@ -172,6 +173,67 @@ class InstructorController extends Controller
         } else {
             return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Failed to remove subject!')->with('reload', true);
         }
+    }
+
+    //Peer to Peer evaluation
+    public function PeertoPeer_Eval($instructor_id) { 
+        // Get the peer evaluation record for the given instructor
+        $instructor = PeerToPeer::where('instructor_id', $instructor_id)->first();
+    
+        // Collect the peer IDs
+        $peerIds = [
+            $instructor->peer1,
+            $instructor->peer2,
+            $instructor->peer3,
+            $instructor->peer4,
+            $instructor->peer5
+        ];
+    
+        $AllPeers = [];
+    
+        // Iterate over the peer IDs and retrieve their details
+        foreach ($peerIds as $peerId) {
+            $peer = DlcInstructors::where('instructor_id', $peerId)->first();
+            if ($peer) {
+                $AllPeers[] = [
+                    'peerName' => $peer->instructor_name,
+                    'peerID' => $peer->instructor_id,
+                ];
+            }
+        }
+       
+        return view('instructor-side.instructor-evaluation', compact('instructor', 'AllPeers'));
+    }
+
+    //Peer evaluation process
+    public function PeerEvaluationProcess(Request $request,) {
+        $validated = $request->validate([
+            'instructor_id' => ['required', 'string'],
+            'evaluator_id' => ['required', 'string'],
+            'semester' => ['required'],
+            'A_Y' => ['required'],
+            'a_1' => ['required'],
+            'a_2' => ['required'],
+            'a_3' => ['required'],
+            'a_4' => ['required'],
+            'a_5' => ['required'],
+            'a_6' => ['required'],
+            'b_1' => ['required'],
+            'b_2' => ['required'],
+            'b_3' => ['required'],
+            'b_4' => ['required'],
+            'b_5' => ['required'],
+            'b_6' => ['required'],
+            'c_1' => ['required'],
+            'c_2' => ['required'],
+            'c_3' => ['required'],
+            'c_4' => ['required'],
+            'c_5' => ['required'],
+            'c_6' => ['required'],
+            'comments' => ['required'],
+        ]);
+        dd($validated);
+    
     }
 
     public function updateProfilePage($instructor_id){ //update profile page
