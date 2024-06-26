@@ -11,6 +11,10 @@ use App\Models\Subject;
 use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+Use Sentiment\Analyzer;
+use App\Helpers\TranslateTextHelper;
+use App\Models\PeerEvaluation;
+use App\Models\EvaluationStatus;
 
 class InstructorController extends Controller
 {
@@ -61,10 +65,13 @@ class InstructorController extends Controller
             
             $instructor = auth()->guard('instructors')->user();
             $instructor_id = $instructor->instructor_id;
+
+            $evaluation_status = EvaluationStatus::first();
             
             session(['instructor_id' => $instructor->instructor_id, 
                      'firstname' => $instructor->firstname,
-                     'pfp' => $instructor->pfp, ]);
+                     'pfp' => $instructor->pfp, 
+                     'eval_status_p2p' => $evaluation_status->eval_status_p2p]);
             
             //return redirect("/instructor-dashboard")->with('message', 'Welcome Back!');//return redirect to dashboard
             return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Welcome back!');
@@ -179,6 +186,12 @@ class InstructorController extends Controller
     public function PeertoPeer_Eval($instructor_id) { 
         // Get the peer evaluation record for the given instructor
         $instructor = PeerToPeer::where('instructor_id', $instructor_id)->first();
+
+         // Check if the instructor record exists
+            if (!$instructor) {
+                // Return an error view or message if the instructor is not found
+                return redirect()->back()->with('message', 'Peers have not been assigned yet.');
+            }
     
         // Collect the peer IDs
         $peerIds = [
@@ -195,12 +208,18 @@ class InstructorController extends Controller
         foreach ($peerIds as $peerId) {
             $peer = DlcInstructors::where('instructor_id', $peerId)->first();
             if ($peer) {
+                $peerEvalStatus = PeerEvaluation::where('instructor_id', $peer->instructor_id)
+                ->where('evaluator_id', $instructor_id)
+                ->exists();
+
                 $AllPeers[] = [
                     'peerName' => $peer->instructor_name,
                     'peerID' => $peer->instructor_id,
+                    'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
                 ];
             }
         }
+
        
         return view('instructor-side.instructor-evaluation', compact('instructor', 'AllPeers'));
     }
@@ -210,8 +229,6 @@ class InstructorController extends Controller
         $validated = $request->validate([
             'instructor_id' => ['required', 'string'],
             'evaluator_id' => ['required', 'string'],
-            'semester' => ['required'],
-            'A_Y' => ['required'],
             'a_1' => ['required'],
             'a_2' => ['required'],
             'a_3' => ['required'],
@@ -232,7 +249,62 @@ class InstructorController extends Controller
             'c_6' => ['required'],
             'comments' => ['required'],
         ]);
-        dd($validated);
+
+        $comments = $request->input('comments');
+        $analyzer = new Analyzer(); // the analyzer
+        // Set the source and target languages
+        TranslateTextHelper::setSource('fil')->setTarget('en');
+
+        // Translate the text
+        $translatedComment = TranslateTextHelper::translate($comments);
+
+        $sentiment = $analyzer->getSentiment($translatedComment); // get the sentiment of the comments
+        $compound = $sentiment['compound']; // Get the compound score from the sentiment
+
+        $threshold = 0; // Set your threshold value here
+        
+        if ($compound > $threshold) {
+            $sentimentLabel = 'Best';
+        } elseif ($compound < $threshold) {
+            $sentimentLabel = 'Good';
+        } else {
+            $sentimentLabel = 'Better';
+        }
+        $validated['sentiment'] = $sentimentLabel;
+        $validated['semester'] = request('semester');
+        $validated['A_Y'] = request('A_Y');
+
+        $A_total = $validated['a_1'] + $validated['a_2'] + $validated['a_3'] + $validated['a_4'] + $validated['a_5'] + $validated['a_6'];
+        $B_total = $validated['b_1'] + $validated['b_2'] + $validated['b_3'] + $validated['b_4'] + $validated['b_5'] + $validated['b_6'];
+        $C_total = $validated['c_1'] + $validated['c_2'] + $validated['c_3'] + $validated['c_4'] + $validated['c_5'] + $validated['c_6'];
+
+        $validated['A_Total'] = $A_total;
+        $validated['B_Total'] = $B_total;
+        $validated['C_Total'] = $C_total;
+
+        $overall_total = $A_total + $B_total + $C_total;
+
+        $validated['overall_total'] = $overall_total;
+
+        //dd($validated);
+
+        $peerEvaluationStatus = PeerEvaluation::where('instructor_id', $validated['instructor_id'])
+        ->where('evaluator_id', $validated['evaluator_id'])
+        ->where('A_Y', $validated['A_Y'])
+        ->exists();
+
+        if ($peerEvaluationStatus) {
+            return redirect()->route('instructor.evaluation', ['instructor_id' => $validated['evaluator_id']])->with('message', 'Evaluation Submitted Already!');
+        }
+
+        $peerEvaluation = PeerEvaluation::create($validated);
+        if ($peerEvaluation) {
+            return redirect()->route('instructor.evaluation', ['instructor_id' => $validated['evaluator_id']])->with('message', 'Evaluation Submitted!');
+           // return back()->with('message', 'Evaluation submitted successfully');
+        } else {
+            return redirect()->route('instructor.evaluation', ['instructor_id' => $validated['evaluator_id']])->with('message', 'Evaluation Failed to Submit!');
+        }
+
     
     }
 

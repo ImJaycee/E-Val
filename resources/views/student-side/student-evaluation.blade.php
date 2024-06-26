@@ -16,6 +16,7 @@
 <x-messages/>
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->
+    
     <div class="lg:flex gap-4 items-stretch">
         <!-- White Box -->
         <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full shadow-md lg:w-[100%]">
