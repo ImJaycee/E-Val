@@ -12,9 +12,10 @@
 <body class="bg-gray-200">
 
 <x-nav-instructor/> <!--Include nav and sidebar-->
-
+<x-messages/>
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->
+ 
     <div class="lg:flex gap-4 items-stretch">
         <!-- White Box -->
         <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full shadow-md lg:w-[100%]">
@@ -51,7 +52,16 @@
                     <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
                     <p class="text-xs font-semibold text-gray-600"></p>
                     <p class="text-sm font-semibold text-gray-700">{{$peer['peerName']}}</p>
-                    <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1" onclick="openModal('{{ $peer['peerID'] }}')">Evaluate</button>
+                    @if ($peer['status'] == 'Not submitted')
+                            @if(session('eval_status_p2p') == 'open')
+                                <button class="bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-md mt-1 evaluate-button" onclick="openModal('{{ $peer['peerID'] }}')">Evaluate</button>
+                            @elseif(session('eval_status_p2p') == 'close')
+                                <button class="bg-red-900 text-white px-2 py-1 rounded-md mt-1 evaluate-button" disabled><i class="fas fa-lock"></i> Close</button>
+                            @endif
+                    @else
+                            <button class="bg-green-800 text-white px-2 py-1 rounded-md mt-1 evaluate-button min-w-20" disabled><i class="fas fa-check"></i></button>
+                    @endif
+                   
                 </div>
 
 
