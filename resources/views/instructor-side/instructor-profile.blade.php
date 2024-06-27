@@ -61,58 +61,26 @@
 
         <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full max-h-80 shadow-md lg:w-[75%]">
             <h3 class="text-xl font-bold text-gray-700">
-                Evaluated Instructors<i> A.Y. 2023-2024</i>
+                Assigned Instructors<i> A.Y. 2023-2024</i>
             </h3>
-            {{-- @if ($instructors->count() > 0) --}}
-            <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-5 gap-3 mt-4 max-h-64 overflow-y-auto">
-                {{-- @foreach ($instructors as $instructor) --}}
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
+            @if (!empty($AllPeers)) 
+                <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-5 gap-3 mt-4 max-h-64 overflow-y-auto">
+                    @foreach ($AllPeers as $peer)
+                        <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+                            @if ($peer['pfp'] == null)
+                                <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                            @else
+                                <img src="{{ asset('storage/images/pfp/'.$peer['pfp']) }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
+                            @endif
+                            <p class="text-xs text-center text-gray-600">{{$peer['peerName']}}</p>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
-                    <img src="{{ asset('storage/images/test-profile.png') }}" alt="picture" class="w-14 h-14 mb-2 rounded-full">
-                    <p class="text-xs text-center text-gray-600">CAP323</p>
-                </div>
-                {{-- @endforeach --}}
-            </div>
-            {{-- @else
-            <p class="text-md font-bold text-red-800">
-                No instructors have been evaluated yet.
-            </p>
-            @endif --}}
+             @else
+                <p class="text-md font-bold text-red-800">
+                    No instructors have been evaluated yet.
+                </p>
+            @endif
         </div>
         
 
@@ -124,13 +92,13 @@
             Evaluation History
         </h3>
         <div class="overflow-x-auto mt-1 max-h-80 lg:max-h-56 overflow-y-auto">
-            <form action="#" method="GET" class="flex flex-col lg:flex-row justify-end mb-2">
+            <form action="{{ route('instructor.profile', ['instructor_id' => $instructor->instructor_id]) }}" method="GET" class="flex flex-col lg:flex-row justify-end mb-2">
                 <label for="academic_year" class="mr-2">A.Y.</label>
                 <select name="academic_year" id="academic_year" required class="border border-gray-300 rounded-md p-1 mb-2 lg:mb-0 lg:mr-1 text-sm">
                     <option value="" disabled selected class="text-sm">Select academic year</option>
-                    <option value="2021-2022-">2021-2022</option>
-                    <option value="2022-2023">2022-2023</option>
-                    <option value="2023-2024">2023-2024</option>
+                    <option value="2023-2024" {{ $selectedAcademicYear == '2023-2024' ? 'selected' : '' }}>2023-2024</option>
+                    <option value="2024-2025" {{ $selectedAcademicYear == '2024-2025' ? 'selected' : '' }}>2024-2025</option>
+                    <option value="2025-2026" {{ $selectedAcademicYear == '2025-2026' ? 'selected' : '' }}>2025-2026</option>
                     <!-- Add more options as needed -->
                 </select>
                 <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-1 px-2 rounded"><i class="fas fa-search"></i></button>
@@ -139,66 +107,29 @@
                 <thead>
                     <tr class="text-sm font-medium text-gray-700 text-left">
                         <th class="px-4 py-2 bg-gray-200">Instructor</th>
-                        <th class="px-4 py-2 bg-gray-200">Department</th>
+                        <th class="px-4 py-2 bg-gray-200">Semester</th>
                         <th class="px-4 py-2 bg-gray-200">Status</th>
                     </tr>
                 </thead>
-                
                 <tbody class="text-sm font-normal text-gray-700">
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                     <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="px-4 py-2">Mr. Davemm Salalila</td>
-                        <td class="px-4 py-2">CCS</td>
-                        <td class="px-4 py-2">Completed</td>
-                    </tr>
-                    <!-- Add more table rows as needed -->
+                    @if ($previousEvaluations->isEmpty())
+                        <tr>
+                            <td colspan="3" class="px-4 py-2 text-center text-gray-500">No previous evaluation</td>
+                        </tr>
+                    @else
+                        @foreach ($previousEvaluations as $evaluation)
+                            <tr class="hover:bg-gray-100 border-b border-gray-200">
+                                <td class="px-4 py-2">{{ $evaluation->instructor->instructor_name }}</td>
+                                <td class="px-4 py-2">{{ $evaluation->semester }}</td>
+                                <td class="px-4 py-2">{{ $evaluation->status }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
+            
         </div>
+        
     </div>
 
 

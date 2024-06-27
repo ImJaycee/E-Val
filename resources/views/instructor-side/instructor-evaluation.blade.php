@@ -49,7 +49,11 @@
          
             @foreach ($AllPeers as $peer)
                 <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">
-                    <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                    @if ($peer['pfp'] == null)
+                        <img src="storage/images/test-profile.png" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                    @else
+                        <img src="{{ asset('storage/images/pfp/'.$peer['pfp']) }}" alt="Instructor 1" class="w-16 h-16 rounded-full mb-1">
+                    @endif
                     <p class="text-xs font-semibold text-gray-600"></p>
                     <p class="text-sm font-semibold text-gray-700">{{$peer['peerName']}}</p>
                     @if ($peer['status'] == 'Not submitted')
