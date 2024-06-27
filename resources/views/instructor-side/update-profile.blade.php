@@ -9,8 +9,32 @@
 
 @include('partials.header-student')
 
+<style>
+    body {
+       position: relative; /* Required for the ::before pseudo-element */
+       overflow: hidden; /* Prevents scrollbars when the blur is applied */
+   }
 
-<body class="bg-gray-100">
+   body::before {
+       content: "";
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100vw;
+       height: 100vh;
+       background-image: url('storage/images/index-bg.jpg');
+       background-repeat: no-repeat;
+       background-size: cover;
+       background-position: center;
+       filter: blur(8px); /* Adjust the blur amount as needed */
+       z-index: -1; /* Ensures the pseudo-element is behind all other content */
+       opacity: 0.5; /* Adjust the background image opacity as needed */
+   }
+   form {
+       background-color: rgba(255, 255, 255, 0.7); /* Adjust the opacity by changing the last parameter */
+   }
+</style>
+<body class="">
     <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-8">
     <div class="max-w-2xl mx-auto py-10 px-4">
         <form action="{{ route('instructor-side.update-profile-process', ['instructor_id' => $instructor_id]) }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -120,12 +144,12 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 mx-auto rounded focus:outline-none focus:shadow-outline w-full">
+                <button type="submit" class="bg-green-800 hover:bg-green-700 text-white font-bold py-2 px-4 mx-auto rounded focus:outline-none focus:shadow-outline w-full">
                     Update
                 </button>
             </div>
             <a href="{{route('instructor.profile', ['instructor_id' => $instructor_id])}}">
-                <div class="text-center mt-3 bg-blue-800 py-1.5 rounded hover:bg-blue-600 text-sm font-bold text-white">Cancel</div>
+                <div class="text-center mt-3 bg-red-900 py-1.5 rounded hover:bg-red-600 text-sm font-bold text-white">Cancel</div>
             </a>
          </form>
     </div>

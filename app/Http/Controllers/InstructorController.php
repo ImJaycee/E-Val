@@ -212,10 +212,13 @@ class InstructorController extends Controller
                 ->where('evaluator_id', $instructor_id)
                 ->exists();
 
+                $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
+
                 $AllPeers[] = [
                     'peerName' => $peer->instructor_name,
                     'peerID' => $peer->instructor_id,
                     'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
+                    'pfp' => $pfps->pfp ?? null,
                 ];
             }
         }
@@ -307,11 +310,80 @@ class InstructorController extends Controller
 
     
     }
+    
 
-    public function updateProfilePage($instructor_id){ //update profile page
+    public function updateProfilePage(Request $request, $instructor_id) {
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
-        return view('instructor-side.instructor-profile', compact('instructor'));
+        $peerInstructor = PeerToPeer::where('instructor_id', $instructor_id)->first();
+    
+        // Collect the peer IDs
+        $peerIds = [
+            $peerInstructor->peer1,
+            $peerInstructor->peer2,
+            $peerInstructor->peer3,
+            $peerInstructor->peer4,
+            $peerInstructor->peer5
+        ];
+
+        if (!function_exists('getCurrentAcademicYear')) {
+            function getCurrentAcademicYear() {
+                $currentMonth = date('m');
+                $currentYear = date('Y');
+        
+                if ($currentMonth >= 2 && $currentMonth <= 6) {
+                    // If the current month is between February and June, it's the second semester of the academic year
+                    return ($currentYear - 1) . '-' . $currentYear;
+                } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                    // If the current month is between August and December, it's the first semester of the academic year
+                    return $currentYear . '-' . ($currentYear + 1);
+                } else {
+                    // For January and July, we assume the academic year spans two years
+                    // January is considered part of the second semester's academic year
+                    if ($currentMonth == 1 || $currentMonth == 7) {
+                        return ($currentYear - 1) . '-' . $currentYear;
+                    }
+                }
+            }
+        }
+    
+        $AllPeers = [];
+        $selectedAcademicYear = $request->input('academic_year');
+        if ($selectedAcademicYear == null) {
+            $selectedAcademicYear = getCurrentAcademicYear();
+        }
+    
+        // Iterate over the peer IDs and retrieve their details
+        foreach ($peerIds as $peerId) {
+            $peer = DlcInstructors::where('instructor_id', $peerId)->first();
+            if ($peer) {
+                $peerEvalStatus = PeerEvaluation::where('instructor_id', $peer->instructor_id)
+                    ->where('evaluator_id', $instructor_id)
+                    ->exists();
+    
+                $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
+    
+                $AllPeers[] = [
+                    'peerName' => $peer->instructor_name,
+                    'peerID' => $peer->instructor_id,
+                    'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
+                    'pfp' => $pfps->pfp ?? null,
+                ];
+            }
+        }
+    
+        // Retrieve previous evaluations based on the selected academic year
+        $previousEvaluations = [];
+        if ($selectedAcademicYear) {
+            $previousEvaluations = PeerEvaluation::where('evaluator_id', $instructor_id)
+                ->where('A_Y', $selectedAcademicYear)
+                ->get();
+        }
+    
+        return view('instructor-side.instructor-profile', compact('instructor', 'AllPeers', 'previousEvaluations', 'selectedAcademicYear'));
     }
+    
+
+
     public function updateProfileForm($instructor_id){ //update profile form
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
         return view('instructor-side.update-profile', compact('instructor'));
