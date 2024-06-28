@@ -9,7 +9,7 @@ if (!function_exists('getCurrentSemester')) {
         } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
             return '2nd';
         } else {
-            return null; // January is enrollment period, so no current semester
+            return 'semestral break'; // January is enrollment period, so no current semester
         }
     }
 }

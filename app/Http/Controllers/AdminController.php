@@ -10,6 +10,7 @@ use App\Models\StudentsTokenAccounts; // Add this line
 use App\Models\EvaluationStatus;
 use App\Models\PeerToPeer;
 use App\Models\DlcInstructors;
+use App\Models\PeerEvaluation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -315,17 +316,15 @@ class AdminController extends Controller
     // manage instructor peer to peer 
     public function Admin_manageInstructor($admin_id){
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
-        $totalCount = PeerToPeer::all()->count();
-        $completedCount = StudentEvaluation::all()->count();
+
+        $totalCount = PeerToPeer::count(); // Count of all peer-to-peer evaluations that need to be completed
+        $completedCount = PeerEvaluation::count(); // Count of completed peer evaluations
 
         $students = StudentsTokenAccounts::all();
-        $totalEvaluations = PeerToPeer::all()->count();
+        $totalEvaluations = $totalCount * 5; // Total evaluations needed if each instructor needs to evaluate 5 instructors
 
-        $completedCount = 0; // test only
-
-        
-        // Check if $totalCount is zero to avoid division by zero
-        if ($totalCount > 0) {
+        // Check if $totalEvaluations is zero to avoid division by zero
+        if ($totalEvaluations > 0) {
             $completionPercentage = number_format(($completedCount / $totalEvaluations) * 100, 2);
         } else {
             $completionPercentage = 0; // or any default value

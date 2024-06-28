@@ -61,10 +61,17 @@
                             <input type="file" name="students_csv" accept=".csv" class="w-full md:w-auto border-2 border-gray-300 rounded-md p-1 md:p-2" required>
                         </div>
                         <div>
-                            <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6">
-                                <i class="fas fa-upload"></i>
-                                Upload
-                            </button>
+                            @if(session('eval_status_p2p') == 'close')
+                                <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6">
+                                    <i class="fas fa-upload"></i>
+                                    Upload
+                                </button>
+                            @else
+                                <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6" disabled>
+                                    <i class="fas fa-upload"></i>
+                                    Upload
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </form>

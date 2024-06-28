@@ -89,7 +89,7 @@
     <!-- Table -->
     <div class="bg-white rounded-lg p-4 shadow-md my-3 lg:h-full">
         <h3 class="text-xl font-bold text-gray-700 mb-2">
-            Evaluation History
+           Peer Evaluation History
         </h3>
         <div class="overflow-x-auto mt-1 max-h-80 lg:max-h-56 overflow-y-auto">
             <form action="{{ route('instructor.profile', ['instructor_id' => $instructor->instructor_id]) }}" method="GET" class="flex flex-col lg:flex-row justify-end mb-2">
@@ -108,7 +108,7 @@
                     <tr class="text-sm font-medium text-gray-700 text-left">
                         <th class="px-4 py-2 bg-gray-200">Instructor</th>
                         <th class="px-4 py-2 bg-gray-200">Semester</th>
-                        <th class="px-4 py-2 bg-gray-200">Status</th>
+                        <th class="px-4 py-2 bg-gray-200">Department</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm font-normal text-gray-700">
@@ -119,9 +119,9 @@
                     @else
                         @foreach ($previousEvaluations as $evaluation)
                             <tr class="hover:bg-gray-100 border-b border-gray-200">
-                                <td class="px-4 py-2">{{ $evaluation->instructor->instructor_name }}</td>
-                                <td class="px-4 py-2">{{ $evaluation->semester }}</td>
-                                <td class="px-4 py-2">{{ $evaluation->status }}</td>
+                                <td class="px-4 py-2">{{ $evaluation['instructor_name']}}</td>
+                                <td class="px-4 py-2">{{ $evaluation['semester'] }}</td>
+                                <td class="px-4 py-2">{{ $evaluation['department'] }}</td>
                             </tr>
                         @endforeach
                     @endif
