@@ -59,7 +59,7 @@
         </a>
         <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-comment"></i>
-            <span>Feedback</span>
+            <span>Feedbacks</span>
         </a>
         <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group"> 
             {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}

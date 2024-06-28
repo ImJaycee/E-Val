@@ -46,6 +46,7 @@
     <div class="bg-white rounded-lg p-4 shadow-md my-4">
        
         <div class="grid lg:grid-cols-3 grid-cols-2 gap-4">
+           
          
             @foreach ($AllPeers as $peer)
                 <div class="bg-gray-200 p-2 rounded-lg flex flex-col items-center justify-center">

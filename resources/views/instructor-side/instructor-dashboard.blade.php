@@ -48,63 +48,55 @@
 
     <!-- Table -->
     <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 31.25rem;">
-        <div class="overflow-y-auto" style="max-height: 440px;">
-            <table class="table-auto w-full" style="table-layout: fixed;">
-                <thead>
-                    <tr>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Subject Assigned</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Code</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Program Year and Section</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-center border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700"></h2>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($allSubjectsAssigned as $subject)
-                    <tr class="border-b">
-                        <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                            <p>{{ $subject['description'] }}</p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                            <p><span>{{ $subject['subject_code'] }}</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                            <p><span>{{ $subject['section'] }}</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-semibold text-md text-gray-100 text-center">
+        <div class="relative overflow-y-auto" style="max-height: 440px;">
+            <!-- Background Image -->
+            {{-- <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('storage/images/index-bg.jpg');"></div> --}}
+        
+            <!-- Content Overlay -->
+            <div class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 z-0">
+                @foreach($allSubjectsAssigned as $subject)
+                <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85" style="background-image: url('storage/images/index-bg.jpg');">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 rounded"></div>
+                    <div class="relative z-10 ">
+                        <div class="mb-2">
+                            <h2 class="text-sm font-bold text-gray-100">Subject Assigned</h2>
+                            <p class="font-bold text-xs text-gray-200">{{ $subject['description'] }}</p>
+                        </div>
+                        <div class="mb-2">
+                            <h2 class="text-sm font-bold text-gray-100">Code</h2>
+                            <p class="font-bold text-xs text-gray-200">{{ $subject['subject_code'] }}</p>
+                        </div>
+                        <div class="mb-2">
+                            <h2 class="text-sm font-bold text-gray-100">Section</h2>
+                            <p class="font-bold text-xs text-gray-200">{{ $subject['section'] }}</p>
+                        </div>
+                        <div class="text-center">
                             <form action="{{ route('instructor.removeSubject', ['instructor_id' => $instructor->instructor_id, 'subject_code' => $subject['subject_code'] ]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-red-500 px-3 py-1 rounded">
-                                    <i class="fas fa-trash-alt"></i>
+                                <button type="submit" class="bg-red-700 px-2 py-1 font-semibold rounded text-white text-xs w-1/2">                   
+                                    Remove <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
-                
-                <tr class="">
-                    <td colspan="6" class="text-center text-sm font-semibold py-1 rounded">
-                        <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
-                            <i class="fas fa-add"></i> Add subject
-                        </button>
-                    </td>
-                </tr>               
-            </tbody>
-        </table>
+        
+                <div class="col-span-1 sm:col-span-2 md:col-span-3 text-center">
+                    <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
+                        <i class="fas fa-plus"></i> Add Subject
+                    </button>
+                </div>
+            </div>
         </div>
+        
+        
     </div>
 </div>
 
 {{-- Modal for add subject --}}
-<div class="fixed inset-0 overflow-y-auto hidden" id="addSubjectModal">
+<div class="fixed inset-0 overflow-y-auto hidden z-50" id="addSubjectModal">
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -118,7 +110,6 @@
                     <input type="number" id="instructor_id" name="instructor_id" class="hidden" value="{{$instructor->instructor_id}}">
                     <div class="mb-3">
                         <label for="subject_code" class="block text-gray-700 text-sm font-bold mb-2">Course Code</label>
-                        {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
                         <select id="subject_code" name="subject_code" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Select Subject</option>
@@ -146,12 +137,10 @@
                             <option value="BScPsych">Bachelor of Science in Psychology</option>
                             <option value="BSTM">Bachelor of Science in Tourism Management</option>
                             <!-- Add more options as needed -->
-
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="year" class="block text-gray-700 text-sm font-bold mb-2">Year Level</label>
-                        {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
                         <select id="year" name="year" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Year Level</option>
@@ -164,7 +153,6 @@
                     </div>
                     <div class="mb-3">
                         <label for="section" class="block text-gray-700 text-sm font-bold mb-2">Section</label>
-                        {{-- <input type="text" class="form-control w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subjectName"> --}}
                         <select id="section" name="section" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Section</option>
@@ -184,11 +172,9 @@
                     </div>
                 </form>
             </div>
-            
         </div>
     </div>
 </div>
-
 
 
 

@@ -138,8 +138,10 @@ class InstructorController extends Controller
         ->where('section', $section)
         ->first();
 
+        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
+
         $subjectTaken = SubjectAssigned::where('subject_code', $validated['subject_code'])
-        ->where('section', $validated['section'])
+        ->where('section', $section)
         ->first();
     
         if ($subject) {
@@ -372,12 +374,19 @@ class InstructorController extends Controller
         }
     
         // Retrieve previous evaluations based on the selected academic year
-        $previousEvaluations = [];
-        if ($selectedAcademicYear) {
+         // Retrieve previous evaluations based on the selected academic year with instructor names
             $previousEvaluations = PeerEvaluation::where('evaluator_id', $instructor_id)
-                ->where('A_Y', $selectedAcademicYear)
-                ->get();
-        }
+            ->where('A_Y', $selectedAcademicYear)
+            ->get()
+            ->map(function ($evaluation) {
+                $instructor = InstructorAccount::where('instructor_id', $evaluation->instructor_id)->first();
+                return [
+                    'instructor_name' => $instructor->firstname . ' ' . $instructor->lastname,
+                    'semester' => $evaluation->semester,
+                    'department' => $instructor->department,
+                ];
+            });
+
     
         return view('instructor-side.instructor-profile', compact('instructor', 'AllPeers', 'previousEvaluations', 'selectedAcademicYear'));
     }
