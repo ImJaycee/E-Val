@@ -1,3 +1,9 @@
+@if(session('reload'))
+    <script>
+        location.reload();
+    </script>
+@endif
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,7 +80,12 @@
     </div>
 
    
-    
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
 
 
 </body>

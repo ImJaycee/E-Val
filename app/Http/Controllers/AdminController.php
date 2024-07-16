@@ -11,6 +11,7 @@ use App\Models\EvaluationStatus;
 use App\Models\PeerToPeer;
 use App\Models\DlcInstructors;
 use App\Models\PeerEvaluation;
+use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -84,15 +85,18 @@ class AdminController extends Controller
             
     } // end login process
 
-    public function logout(Request $request){//logout
+    public function logout(Request $request)
+{
         auth()->guard('admins')->logout(); 
-        $request->session()->invalidate(); //invalidate session
-        $request->session()->regenerateToken(); //regenerate token
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken(); 
+        
         return redirect('/admin/login')
-        ->with('message', 'Logged out')
-        ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-        ->header('Pragma', 'no-cache');
-    }
+            ->with('message', 'Logged out')
+            ->with('reload', true)
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->header('Pragma', 'no-cache');
+}
 
 
     public function Admin_dashboard($admin_id) {
@@ -394,6 +398,149 @@ class AdminController extends Controller
     
         return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Peer assigned successfully!');
     }
+
+
+
+    // Admin Comments view controller
+    public function viewComments($admin_id){
+        $admin = AdminAccount::where('admin_id', $admin_id)->first();
+        $instructors = InstructorAccount::all();
+        return view('admin-side.admin-comments', compact('admin', 'instructors'));
+    }
+
+    public function showComments($admin_id, $instructor_id){
+        
+        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
+        $comments = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->get();
+       
+
+
+        $allComments = [];
+
+        
+        foreach ($comments as $comment) {
+            // Filter out "N/A" and empty comments
+            if ($comment->comments === "N/A" || empty(trim($comment->comments))) {
+                continue; // Skip comment
+            }
+
+            // Filter out comments with dots
+            if (strpos($comment->comments, '.') !== false) {
+                continue; // Skip comment
+            }
+
+            // Filter emoji
+            $commentWithoutEmojis = preg_replace('/[\x{1F600}-\x{1F64F}]|[\x{1F300}-\x{1F5FF}]|[\x{1F680}-\x{1F6FF}]|[\x{2600}-\x{26FF}]|[\x{2700}-\x{27BF}]/u', '', $comment->comments);
+    
+            // If the comment becomes empty after removing emojis, skip it
+            if (empty(trim($commentWithoutEmojis))) {
+                continue; // Skip comment
+            }
+            // Filter words
+            $badWords = ['Fuck you', 'tanginamo', 'pakyu', 'ulol','damo','bobo','tanga'];
+            $containsBadWord = false;
+            foreach ($badWords as $badWord) {
+                if (stripos($comment->comments, $badWord) !== false) {
+                    $containsBadWord = true;
+                    break;
+                }
+            }
+            if ($containsBadWord) {
+                continue; // Skip comment
+            }
+
+            // Add filtered comment to $allComments
+            $allComments[] = [
+                'comment' => $comment->comments,
+                'sentiment' => $comment->sentiment,
+                'semester' => $comment->semester,
+                'A_Y' => $comment->A_Y,
+                'time' => $comment->created_at->format('Y-m-d H:i:s'),
+            ];
+        }
+
+        return view('admin-side.admin-show-comments', compact('instructor', 'allComments'));
+    }
+
+
+    public function viewFeedback($admin_id){
+        $feedbacks = UsersFeedback::all();
+
+        return view('admin-side.users-feedbacks', compact('feedbacks'));
+        
+    }
+
+    public function viewReport($admin_id){ // generate a report
+        return view('admin-side.admin-reports');
+        
+    }
+
+    public function viewSummary(Request $request)
+    {
+        $academicYear = $request->input('A_Y');
+        $semester = $request->input('semester');
+    
+        // Fetch summarized data based on academic year and semester
+        $instructors = InstructorAccount::with(['evaluations' => function ($query) use ($academicYear, $semester) {
+            $query->where('A_Y', $academicYear)
+                ->where('semester', $semester)
+                ->selectRaw('instructor_id, AVG(total_score) as average_rating')
+                ->groupBy('instructor_id');
+        }])
+        ->get();
+    
+        // Ensure average rating is accessible and formatted
+        $instructors->each(function ($instructor) {
+            if ($instructor->evaluations->isNotEmpty()) {
+                // Assign the formatted average rating to the instructor
+                $instructor->rating = number_format($instructor->evaluations->first()->average_rating, 1);
+            } else {
+                // Default to null if no evaluations
+                $instructor->rating = null;
+            }
+        });
+    
+        // Sort instructors by rating (descending) and then by lastname (ascending)
+        $instructors = $instructors->sortByDesc('rating')->sortBy('lastname');
+    
+        return view('admin-side.report-summary', compact('instructors', 'academicYear', 'semester'));
+    }
+    
+    public function viewSummary_Ranking(Request $request)
+    {
+        $academicYear = $request->input('A_Y');
+        $semester = $request->input('semester');
+    
+        // Fetch summarized data based on academic year and semester
+        $instructors = InstructorAccount::with(['evaluations' => function ($query) use ($academicYear, $semester) {
+            $query->where('A_Y', $academicYear)
+                ->where('semester', $semester)
+                ->selectRaw('instructor_id, AVG(total_score) as average_rating')
+                ->groupBy('instructor_id');
+        }])
+        ->get();
+    
+        // Ensure average rating is accessible and formatted
+        $instructors->each(function ($instructor) {
+            if ($instructor->evaluations->isNotEmpty()) {
+                // Assign the formatted average rating to the instructor
+                $instructor->rating = number_format($instructor->evaluations->first()->average_rating, 1);
+            } else {
+                // Default to null if no evaluations
+                $instructor->rating = null;
+            }
+        });
+    
+        // Sort instructors by rating (descending) and then by lastname (ascending)
+        $instructors = $instructors->sortByDesc('rating');
+    
+        return view('admin-side.report-summary', compact('instructors', 'academicYear', 'semester'));
+    }
+    
+    
+
+
+    
     
     
 

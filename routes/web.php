@@ -183,6 +183,21 @@ Route::controller(AdminController::class)->group(function(){
 
         //assign peer to peer
         Route::post('/admin-assign-peer-to-peer', 'assignPeerToPeer')->name('admin.assignPeerToPeer');
+
+
+        //Admin comments view
+        Route::get('/admin-comments{admin_id}', 'viewComments')->name('admin.comments');
+        Route::get('admin/{admin_id}/comments/{instructor_id}', 'showComments')->name('admin.showComments');
+
+
+        //Admin feedback
+        Route::get('/admin-users-feedback{admin_id}', 'viewFeedback')->name('admin.feedbacks');
+
+        //Admin report view
+        Route::get('/admin-report{admin_id}', 'viewReport')->name('admin.report');
+        Route::post('/view-summary', 'viewSummary')->name('view.summary');
+        Route::post('/view-summary-rank', 'viewSummary_Ranking')->name('view.Ranking');
+
        
     }); //end of authenticated routes
 

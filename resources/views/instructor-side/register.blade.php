@@ -101,15 +101,33 @@
                 </div>
             </div>
 
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" id="email" name="email" required onfocus="clearError()"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('email')}}>
-                    @error('email')
-                       <p class="text-red-500 text-sm text-end p-1">
-                           {{$message}}
-                       </p>
-                   @enderror
+            <div class="md:flex md:justify-between">
+                <div class="mb-4 md:w-2/3">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="email" name="email" required onfocus="clearError()"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('email')}}>
+                        @error('email')
+                        <p class="text-red-500 text-sm text-end p-1">
+                            {{$message}}
+                        </p>
+                    @enderror
+                </div>
+                <div class="mb-4 md:w-1/4">
+                    <label for="sex" class="block text-gray-700 text-sm font-bold mb-2">Sex</label>
+                    <select id="sex" name="sex" required onfocus="clearError()"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
+                        <option value="" disabled selected></option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+    
+                    </select>
+                        @error('sex')
+                            <p class="text-red-500 text-sm text-end p-1">
+                                {{$message}}
+                            </p>
+                        @enderror
+                </div>
+        
             </div>
             <div class="mb-4">
                 <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
