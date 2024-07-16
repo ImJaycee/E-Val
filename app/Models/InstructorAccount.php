@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class InstructorAccount extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    
     protected $fillable = [
         'instructor_id',
         'contact',
@@ -18,9 +19,15 @@ class InstructorAccount extends Authenticatable
         'middlename',
         'lastname',
         'email',
+        'sex',
         'department',
         'pfp', //profile picture
         'password',
         'password_reset_token',
     ];
+
+    public function evaluations()
+    {
+        return $this->hasMany(StudentEvaluation::class, 'instructor_id', 'instructor_id');
+    }
 }

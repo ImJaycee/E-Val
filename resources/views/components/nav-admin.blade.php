@@ -24,7 +24,7 @@
             @If(!empty($pfp))
                 <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
             @else
-                <img class="h-10 w-10 rounded-full object-cover"src="storage/images/test-profile.png" alt="User profile picture">
+                <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/test-profile.png') }}" alt="User profile picture">
             @endif
         </a>
         </div>
@@ -53,13 +53,17 @@
             <i class="fas fa-star"></i>
             <span>Instructor Ranking</span>
         </a> --}}
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+        <a href="{{ route('admin.comments', ['admin_id' => $admin_id]) }}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-comment"></i>
             <span>Comments</span>
         </a>
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
-            <i class="fas fa-comment"></i>
-            <span>Feedbacks</span>
+        <a href="{{ route('admin.feedbacks', ['admin_id' => $admin_id]) }}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+            <i class="fas fa-star"></i>
+            <span class=" text-md">Rating & feedback</span>
+        </a>
+        <a href="{{ route('admin.report', ['admin_id' => $admin_id]) }}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+            <i class="fas fa-chart-line"></i>
+            <span class=" text-md">Reports & ranking</span>
         </a>
         <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group"> 
             {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}

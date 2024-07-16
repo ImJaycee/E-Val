@@ -39,4 +39,8 @@ class StudentEvaluation extends Model
         'V_Total',
         'total_score'
     ];
+    public function instructor()
+    {
+        return $this->belongsTo(InstructorAccount::class, 'instructor_id', 'instructor_id');
+    }
 }

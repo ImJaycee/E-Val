@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('middlename');
             $table->string('lastname');
             $table->string('email')->unique();
+            $table->string('sex');
             $table->string('department');
             $table->string('pfp')->nullable();
             $table->string('password');
