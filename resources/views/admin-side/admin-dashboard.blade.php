@@ -46,56 +46,39 @@
             </div>
         </div>
     </div>
-
-    <!-- Table -->
-    <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 31.25rem;">
-        <div class="overflow-y-auto" style="max-height: 440px;">
-            <table class="table-auto w-full" style="table-layout: fixed;">
-                <thead>
-                    <tr>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Name</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Department</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-left border-b-2 text-center" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Total Evaluations</h2>
-                        </th>
-                        <th class="bg-white px-4 py-2 text-center border-b-2" style="width: 25%;">
-                            <h2 class="text-ml font-bold text-gray-700">Completed Evaluations</h2>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+    
+    {{-- Instructors --}}
+    <div class="container mx-auto mt-1">
+        <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 27rem;">
+            <h1 class="text-2xl font-bold ">Instructors</h1>
+            <div class="relative overflow-y-auto overflow-x-auto" style="max-height: 380px;">
+                <div class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 z-0">
                     @foreach($allInstructorsData as $instructors)
-                    <tr class="border-b">
-                        <td class="px-4 py-3 text-left align-top font-bold text-sm text-gray-600">
-                            <p>{{ $instructors['name'] }}</p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600">
-                            <p><span>{{ $instructors['department'] }}</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>{{ $instructors['total_evaluators'] }}</span></p>
-                        </td>
-                        <td class="px-4 py-3 text-left font-bold text-sm text-gray-600 text-center">
-                            <p><span>{{ $instructors['completed_evaluations'] }}</span></p>
-                        </td>
-                    </tr>
-                @endforeach
-                
-                {{-- <tr class="">
-                    <td colspan="6" class="text-center text-sm font-semibold py-1 rounded">
-                        <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
-                            <i class="fas fa-file-alt"></i> Open Evaluation
-                        </button>
-                    </td>
-                </tr>                --}}
-            </tbody>
-        </table>
+                    <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85" style="background-image: url('storage/images/index-bg.jpg');">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 rounded"></div>
+                        <div class="relative z-10">
+                            <div class="mb-2">
+                                <h2 class="text-sm font-bold text-gray-100">Instructor Name</h2>
+                                <p class="font-bold text-xs text-gray-200">{{ $instructors['name'] }}</p>
+                            </div>
+                            <div class="mb-2">
+                                <h2 class="text-sm font-bold text-gray-100">Department</h2>
+                                <p class="font-bold text-xs text-gray-200">{{ $instructors['department'] }}</p>
+                            </div>
+                            <div class="mb-2">
+                                <h2 class="text-sm font-bold text-gray-100">Evaluation Progress</h2>
+                                <p class="font-bold text-xs text-gray-200">{{ $instructors['completed_evaluations'] }}/{{ $instructors['total_evaluators'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
+
+
+
 </div>
 
 {{-- Modal for add subject --}}

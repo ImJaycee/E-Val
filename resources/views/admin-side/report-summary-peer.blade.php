@@ -22,7 +22,7 @@
                 <h3 class="text-md">Republic of the Philippines</h3>
                 <h2 class="text-xl font-bold">Don Honorio Ventura State University</h2>
                 <h3 class="text-sm">Sta. Catalina Lubao, Pampanga</h3>
-                <p class="mt-5 text-md font-bold">SUMMARY STUDENTS' EVALUATION</p>
+                <p class="mt-5 text-md font-bold">SUMMARY PEER TO PEER EVALUATION</p>
                 <p class="text-md font-bold">{{ $semester }} SEMESTER - A.Y {{ $academicYear }}</p>
             </div>
             <img src="{{ asset('storage/images/dlc-logo-bg.jpg') }}" alt="School Logo" class="h-20">
@@ -52,6 +52,7 @@
                     @endforeach
                 </tbody>
             </table>
+            
         </div>
     </div>
 
@@ -59,13 +60,13 @@
     <div class="mt-4 text-center">
         <button onclick="window.print()" class="px-4 py-2 bg-gray-500 text-white rounded no-print">Print</button>
         <button onclick="downloadPDF()" class="px-4 py-2 bg-green-500 text-white rounded no-print">Download as PDF</button>
-        <form action="{{ route('view.Ranking') }}" method="POST" class="inline no-print">
+        <form action="{{ route('view.peer_summary_rank') }}" method="POST" class="inline no-print">
             @csrf
             <input type="hidden" name="A_Y" value="{{ $academicYear }}">
             <input type="hidden" name="semester" value="{{ $semester }}">
             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Sort By Rank</button>
         </form>
-        <form action="{{ route('view.summary') }}" method="POST" class="inline no-print">
+        <form action="{{ route('view.peer_summary') }}" method="POST" class="inline no-print">
             @csrf
             <input type="hidden" name="A_Y" value="{{ $academicYear }}">
             <input type="hidden" name="semester" value="{{ $semester }}">

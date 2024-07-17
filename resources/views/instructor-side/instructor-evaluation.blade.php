@@ -95,7 +95,8 @@
                                     <!-- Questions (replace with actual questions) -->
                                     <input type="text" name="instructor_id" value="{{$peer['peerID']}}" class="hidden">
                                     <input type="text" name="evaluator_id" value="{{$instructor_id}}" class="hidden">
-                                    <input type="text" name="semester" value="{{ getCurrentSemester() }}" class="hidden">
+                                    {{-- <input type="text" name="semester" value="{{ getCurrentSemester() }}" class="hidden"> --}}
+                                    <input type="text" name="semester" value="2nd" class="hidden">
                                     <input type="text" name="A_Y" value="{{ getCurrentAcademicYear() }}" class="hidden">
                                     <h3 class="text-gray-600 font-bold">A.   Personal Qualities</h3>
                                     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 p-4 rounded">

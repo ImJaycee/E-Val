@@ -63,7 +63,7 @@
         </a>
         <a href="{{ route('admin.report', ['admin_id' => $admin_id]) }}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-chart-line"></i>
-            <span class=" text-md">Reports & ranking</span>
+            <span class=" text-md">Evaluation Summary</span>
         </a>
         <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group"> 
             {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}

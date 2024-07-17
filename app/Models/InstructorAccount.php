@@ -30,4 +30,9 @@ class InstructorAccount extends Authenticatable
     {
         return $this->hasMany(StudentEvaluation::class, 'instructor_id', 'instructor_id');
     }
+
+    public function peerEvaluations()
+    {
+        return $this->hasMany(PeerEvaluation::class, 'instructor_id', 'instructor_id');
+    }
 }

@@ -198,6 +198,9 @@ Route::controller(AdminController::class)->group(function(){
         Route::post('/view-summary', 'viewSummary')->name('view.summary');
         Route::post('/view-summary-rank', 'viewSummary_Ranking')->name('view.Ranking');
 
+        Route::post('/view-summary-rank-peer-to-peer', 'viewSummary_PeertoPeer')->name('view.peer_summary');
+        Route::post('/view-summary-rank-peer-to-peer-rank', 'viewSummary_PeertoPeer_Rank')->name('view.peer_summary_rank');
+
        
     }); //end of authenticated routes
 
