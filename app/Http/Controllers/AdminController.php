@@ -99,54 +99,58 @@ class AdminController extends Controller
 }
 
 
-    public function Admin_dashboard($admin_id) {
-        $admin = AdminAccount::where('admin_id', $admin_id)->first();
-    
-        // Get all instructors
-        $instructors = InstructorAccount::all();
-    
-        $allInstructorsData = [];
-    
-        // Loop through each instructor to gather the required information
-        foreach ($instructors as $instructor) {
-            // Get the subjects assigned to the instructor
-            $assignedSubjects = SubjectAssigned::where('instructor_id', $instructor->instructor_id)->get();
-    
-            $totalEvaluators = 0;
-    
-            foreach ($assignedSubjects as $subject) {
-                $subjectCode = $subject->subject_code. ' ' . $subject->section;
-                $studentsEnrolled = StudentsTokenAccounts::where('subject1', $subjectCode)
-                    ->orWhere('subject2', $subjectCode)
-                    ->orWhere('subject3', $subjectCode)
-                    ->orWhere('subject4', $subjectCode)
-                    ->orWhere('subject5', $subjectCode)
-                    ->orWhere('subject6', $subjectCode)
-                    ->orWhere('subject7', $subjectCode)
-                    ->orWhere('subject8', $subjectCode)
-                    ->orWhere('subject9', $subjectCode)
-                    ->orWhere('subject10', $subjectCode)
-                    ->count();
-            
-                $totalEvaluators += $studentsEnrolled;
-            }
-            
-    
-            // Get the completed evaluations count for the instructor
-            $completedEvaluations = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->count();
-    
-            // Combine the instructor data
-            $allInstructorsData[] = [
-                'name' => $instructor->firstname . ' ' . $instructor->lastname,
-                'department' => $instructor->department,
-                'total_evaluators' => $totalEvaluators,
-                'completed_evaluations' => $completedEvaluations,
-            ];
+public function Admin_dashboard($admin_id) {
+    // Fetch admin details
+    $admin = AdminAccount::where('admin_id', $admin_id)->first();
+
+    // Get all instructors
+    $instructors = InstructorAccount::all();
+
+    $allInstructorsData = [];
+
+    // Loop through each instructor to gather the required information
+    foreach ($instructors as $instructor) {
+        // Get the subjects assigned to the instructor
+        $assignedSubjects = SubjectAssigned::where('instructor_id', $instructor->instructor_id)->get();
+
+        $totalEvaluators = 0;
+
+        foreach ($assignedSubjects as $subject) {
+            $subjectCode = $subject->subject_code . ' ' . $subject->section;
+            $studentsEnrolled = StudentsTokenAccounts::where('subject1', $subjectCode)
+                                                    ->orWhere('subject2', $subjectCode)
+                                                    ->orWhere('subject3', $subjectCode)
+                                                    ->orWhere('subject4', $subjectCode)
+                                                    ->orWhere('subject5', $subjectCode)
+                                                    ->orWhere('subject6', $subjectCode)
+                                                    ->orWhere('subject7', $subjectCode)
+                                                    ->orWhere('subject8', $subjectCode)
+                                                    ->orWhere('subject9', $subjectCode)
+                                                    ->orWhere('subject10', $subjectCode)
+                                                    ->count();
+
+            $totalEvaluators += $studentsEnrolled;
         }
-       
-    
-        return view('admin-side.admin-dashboard', compact('admin', 'allInstructorsData'));
+
+        // Get the completed evaluations count for the instructor
+        $completedEvaluations = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->count();
+
+        // Calculate percentages
+        $totalEvaluatorsPercent = ($totalEvaluators > 0) ? ($completedEvaluations / $totalEvaluators) * 100 : 0;
+
+        // Combine the instructor data
+        $allInstructorsData[] = [
+            'name' => $instructor->firstname . ' ' . $instructor->lastname,
+            'department' => $instructor->department,
+            'total_evaluators' => $totalEvaluators,
+            'total_evaluators_percent' => round($totalEvaluatorsPercent, 2), // Round to two decimal places
+            'completed_evaluations' => $completedEvaluations,
+        ];
     }
+
+    return view('admin-side.admin-dashboard', compact('admin', 'allInstructorsData'));
+}
+
 
 
 
@@ -437,7 +441,7 @@ class AdminController extends Controller
                 continue; // Skip comment
             }
             // Filter words
-            $badWords = ['Fuck you', 'tanginamo', 'pakyu', 'ulol','damo','bobo','tanga'];
+            $badWords = ['Fuck you', 'tanginamo', 'pakyu', 'ulol','damo','bobo','tanga','idiot','stupid'];
             $containsBadWord = false;
             foreach ($badWords as $badWord) {
                 if (stripos($comment->comments, $badWord) !== false) {
@@ -535,6 +539,68 @@ class AdminController extends Controller
         $instructors = $instructors->sortByDesc('rating');
     
         return view('admin-side.report-summary', compact('instructors', 'academicYear', 'semester'));
+    }
+
+    public function viewSummary_PeertoPeer(Request $request){
+        $academicYear = $request->input('A_Y');
+        $semester = $request->input('semester');
+    
+        // Fetch summarized peer evaluation data based on academic year and semester
+        $instructors = InstructorAccount::with(['peerEvaluations' => function ($query) use ($academicYear, $semester) {
+            $query->where('A_Y', $academicYear)
+                  ->where('semester', $semester)
+                  ->selectRaw('instructor_id, AVG(overall_total) as average_rating')
+                  ->groupBy('instructor_id');
+        }])
+        ->get();
+    
+        // Ensure average rating is accessible and formatted
+        $instructors->each(function ($instructor) {
+            if ($instructor->peerEvaluations->isNotEmpty()) {
+                // Assign the formatted average rating to the instructor
+                $instructor->rating = number_format($instructor->peerEvaluations->first()->average_rating, 1);
+            } else {
+                // Default to null if no peer evaluations
+                $instructor->rating = null;
+            }
+        });
+    
+        // Sort instructors by rating (descending) and then by lastname (ascending)
+        $instructors = $instructors->sortByDesc('rating')->sortBy('lastname');
+
+    
+        return view('admin-side.report-summary-peer', compact('instructors', 'academicYear', 'semester'));
+    }
+
+    public function viewSummary_PeertoPeer_Rank(Request $request){
+        $academicYear = $request->input('A_Y');
+        $semester = $request->input('semester');
+    
+        // Fetch summarized peer evaluation data based on academic year and semester
+        $instructors = InstructorAccount::with(['peerEvaluations' => function ($query) use ($academicYear, $semester) {
+            $query->where('A_Y', $academicYear)
+                  ->where('semester', $semester)
+                  ->selectRaw('instructor_id, AVG(overall_total) as average_rating')
+                  ->groupBy('instructor_id');
+        }])
+        ->get();
+    
+        // Ensure average rating is accessible and formatted
+        $instructors->each(function ($instructor) {
+            if ($instructor->peerEvaluations->isNotEmpty()) {
+                // Assign the formatted average rating to the instructor
+                $instructor->rating = number_format($instructor->peerEvaluations->first()->average_rating, 1);
+            } else {
+                // Default to null if no peer evaluations
+                $instructor->rating = null;
+            }
+        });
+    
+        // Sort instructors by rating (descending) and then by lastname (ascending)
+        $instructors = $instructors->sortByDesc('rating');
+
+    
+        return view('admin-side.report-summary-peer', compact('instructors', 'academicYear', 'semester'));
     }
     
     

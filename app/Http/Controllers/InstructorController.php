@@ -28,6 +28,7 @@ class InstructorController extends Controller
             "middlename" => ['required', 'string', 'min:2'],
             "lastname" => ['required', 'string', 'min:2'],
             "email" => ['required', 'email', 'unique:instructor_accounts'],
+            "sex" => ['required', 'string'],
             "department" => ['required', 'string'],
             "password" => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -217,7 +218,7 @@ class InstructorController extends Controller
                 $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
 
                 $AllPeers[] = [
-                    'peerName' => $peer->instructor_name,
+                    'peerName' => $pfps->firstname . ' ' . $pfps->lastname,
                     'peerID' => $peer->instructor_id,
                     'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
                     'pfp' => $pfps->pfp ?? null,
@@ -365,7 +366,7 @@ class InstructorController extends Controller
                 $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
     
                 $AllPeers[] = [
-                    'peerName' => $peer->instructor_name,
+                    'peerName' => $pfps->firstname . ' ' . $pfps->lastname,
                     'peerID' => $peer->instructor_id,
                     'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
                     'pfp' => $pfps->pfp ?? null,
@@ -375,17 +376,26 @@ class InstructorController extends Controller
     
         // Retrieve previous evaluations based on the selected academic year
          // Retrieve previous evaluations based on the selected academic year with instructor names
-            $previousEvaluations = PeerEvaluation::where('evaluator_id', $instructor_id)
+         $previousEvaluations = PeerEvaluation::where('evaluator_id', $instructor_id)
             ->where('A_Y', $selectedAcademicYear)
             ->get()
             ->map(function ($evaluation) {
                 $instructor = InstructorAccount::where('instructor_id', $evaluation->instructor_id)->first();
+        
+                if ($instructor) {
+                    $instructorName = $instructor->firstname . ' ' . $instructor->lastname;
+                    $department = $instructor->department;
+                } else {
+                    $instructorName = 'Instructor not registered';
+                    $department = 'N/A';
+                }
+        
                 return [
-                    'instructor_name' => $instructor->firstname . ' ' . $instructor->lastname,
+                    'instructor_name' => $instructorName,
                     'semester' => $evaluation->semester,
-                    'department' => $instructor->department,
+                    'department' => $department,
                 ];
-            });
+         });
 
     
         return view('instructor-side.instructor-profile', compact('instructor', 'AllPeers', 'previousEvaluations', 'selectedAcademicYear'));
