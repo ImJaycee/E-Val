@@ -20,11 +20,11 @@
         </div>
 
         {{-- notification --}}
-        <a href="#">
+        <a href="{{route('admin.profile', ['admin_id' => $admin_id])}}">
             @If(!empty($pfp))
                 <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
             @else
-                <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/test-profile.png') }}" alt="User profile picture">
+                <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/dhvsu.png') }}" alt="User profile picture">
             @endif
         </a>
         </div>
@@ -65,10 +65,10 @@
             <i class="fas fa-chart-line"></i>
             <span class=" text-md">Evaluation Summary</span>
         </a>
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group"> 
-            {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}
+        <a href="{{route('admin.profile', ['admin_id' => $admin_id])}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group"> 
+            
             <i class="fas fa-user"></i>
-            <span>Profile</span>
+            <span>Profile & Records</span>
         </a>
         <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-sign-out-alt"></i>

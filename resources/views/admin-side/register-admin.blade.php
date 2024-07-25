@@ -57,6 +57,11 @@
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
             <div class="mb-4">
+                <label for="middlename" class="block text-gray-900 text-sm font-bold mb-2">Middle name</label>
+                <input type="text" id="middlename" name="middlename" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
                 <label for="lastname" class="block text-gray-900 text-sm font-bold mb-2">Last name</label>
                 <input type="text" id="lastname" name="lastname" required
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">

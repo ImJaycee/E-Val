@@ -122,7 +122,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Pepartment</label>
+                <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
                 <select id="department" name="department" required onfocus="clearError()"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     <option value="" disabled>Select your Department</option>
