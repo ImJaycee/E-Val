@@ -168,6 +168,9 @@ Route::controller(AdminController::class)->group(function(){
         //upload student
         Route::post('/admin-upload-student', 'uploadStudents')->name('admin.uploadStudent');
 
+        //upload student
+        Route::post('/admin-upload-instructor', 'uploadInstructors')->name('admin.uploadInstructor');
+
         //Evaluation controll
         Route::post('/admin-evaluation-management', 'Admin_EvalControl')->name('admin.EvalControl');
 
@@ -176,6 +179,8 @@ Route::controller(AdminController::class)->group(function(){
 
         // Student Instructor peer to peer
         Route::get('/admin-instructor-management{admin_id}', 'Admin_manageInstructor')->name('admin.manageInstructor');
+        //clear peer to peer
+        Route::post('/admin-clear-peer-to-peer', 'clearPeerToPeer')->name('admin.clearPeerToPeer');
         //Evaluation controll
         Route::post('/admin-evaluation-management-p2p', 'Admin_EvalControlPtP')->name('admin.EvalControl_PTP');
 
@@ -200,6 +205,17 @@ Route::controller(AdminController::class)->group(function(){
 
         Route::post('/view-summary-rank-peer-to-peer', 'viewSummary_PeertoPeer')->name('view.peer_summary');
         Route::post('/view-summary-rank-peer-to-peer-rank', 'viewSummary_PeertoPeer_Rank')->name('view.peer_summary_rank');
+
+
+
+        //Admin Profile Management
+        Route::get('/admin-profile{admin_id}', 'updateProfilePage')->name('admin.profile');
+        Route::post('/admin-update-profile{admin_id}', 'updateProfile')->name('admin.update-profile');
+
+        Route::post('/admin-change-password{admin_id}', 'changePassword')->name('admin.change-password');
+
+        Route::delete('/admin-remove-instructor{instructor_id}', 'removeInstructor')->name('admin.remove-instructor');
+        Route::post('/admin-add-instructor{admin_id}', 'AddInstructor')->name('admin.add-instructor');
 
        
     }); //end of authenticated routes

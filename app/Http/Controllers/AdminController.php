@@ -28,6 +28,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             "admin_id" => ['required', 'min:3','numeric'],
             "firstname" => ['required', 'min:3'],
+            "middlename" => ['required', 'min:3'],
             "lastname" => ['required', 'min:3'],
             "email" => ['required', 'email'],
             "password" => ['required', 'min:8'],
@@ -75,7 +76,7 @@ class AdminController extends Controller
             return redirect()->route('admin.dashboard', ['admin_id' => $admin_id])->with('message', 'Welcome back!');
         }else {
           
-            return redirect("/")->with('message', 'Invalid Credentials!');//return redirect to dashboard
+            return back()->with('message', 'Invalid Credentials!');//return redirect to dashboard
           
         }   
 
@@ -159,8 +160,29 @@ public function Admin_dashboard($admin_id) {
     // Admin student management
     public function Admin_manageStudent($admin_id){
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
+
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+
+        if ($currentMonth >= 2 && $currentMonth <= 6) {
+            // If the current month is between February and June, it's the second semester of the academic year
+            $A_Y = ($currentYear - 1) . '-' . $currentYear;
+            $semester = '2nd';
+        } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+            // If the current month is between August and December, it's the first semester of the academic year
+            $A_Y = $currentYear . '-' . ($currentYear + 1);
+            $semester = '1st';
+        } else {
+            // For January and July, we assume the academic year spans two years
+            // January is considered part of the second semester's academic year
+            if ($currentMonth == 1 || $currentMonth == 7) {
+                $A_Y = ($currentYear - 1) . '-' . $currentYear;
+                $semester = '2nd';
+            }
+        }
+
         $totalCount = StudentsTokenAccounts::all()->count();
-        $completedCount = StudentEvaluation::all()->count();
+        $completedCount = StudentEvaluation::where('semester',$semester)->where('A_Y',$A_Y)->count();
 
         $students = StudentsTokenAccounts::all();
         $StudenttotalEvaluations = 0;
@@ -255,6 +277,69 @@ public function Admin_dashboard($admin_id) {
     
     }
 
+     //upload student
+     public function uploadInstructors(Request $request){
+        $request->validate([
+            'instructors_csv' => 'required|file|mimes:csv,txt',
+        ]);
+        
+        $file = $request->file('instructors_csv');
+        $filePath = $file->getRealPath();
+        
+        $csvData = array_map('str_getcsv', file($filePath));
+        
+        // Set row 9 as the header (array index 8 since indexing starts at 0)
+        $headerRowIndex = 8; // This corresponds to the 9th row
+        
+        // Get the header from the specified row
+        $header = $csvData[$headerRowIndex];
+        
+        // Skip rows up to the specified header row
+        $csvData = array_slice($csvData, $headerRowIndex + 1);
+
+        
+       // Insert or update student records within a transaction
+        DB::transaction(function () use ($csvData, $header) {
+            foreach ($csvData as $row) {
+                $rowData = array_combine($header, $row);
+                //dd($rowData);
+                // Generate a random token
+
+                
+                // $randomToken = bin2hex(random_bytes(5));
+
+                // // Check if the token is unique
+                // while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
+                //     $randomToken = bin2hex(random_bytes(5));
+                // }
+
+                // Insert or update student record
+                try {
+                    // Insert or update student record
+                    if(session('eval_status_p2p') == 'open'){
+                        return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Cannot clear peer assignment while evaluation is ongoing!');
+                    }
+                   
+                    DlcInstructors::updateOrCreate(
+                        ['instructor_id' => $rowData['instructor_id']],
+                        [
+                            'instructor_name' => $rowData['instructor_name'], // 
+                            
+                        ]
+                     
+                    );
+                
+                } catch (\Exception $e) {
+                    dd($e->getMessage()); // Output any exception message
+                }
+            }
+        });
+
+
+        return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Record added successfuly!');
+    
+    }
+
     // Evaluation control
     public function Admin_EvalControl(Request $request){
         $validated = $request->validate([
@@ -325,10 +410,31 @@ public function Admin_dashboard($admin_id) {
     public function Admin_manageInstructor($admin_id){
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
 
-        $totalCount = PeerToPeer::count(); // Count of all peer-to-peer evaluations that need to be completed
-        $completedCount = PeerEvaluation::count(); // Count of completed peer evaluations
+        $currentMonth = date('m');
+        $currentYear = date('Y');
 
-        $students = StudentsTokenAccounts::all();
+        if ($currentMonth >= 2 && $currentMonth <= 6) {
+            // If the current month is between February and June, it's the second semester of the academic year
+            $A_Y = ($currentYear - 1) . '-' . $currentYear;
+            $semester = '2nd';
+        } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+            // If the current month is between August and December, it's the first semester of the academic year
+            $A_Y = $currentYear . '-' . ($currentYear + 1);
+            $semester = '1st';
+        } else {
+            // For January and July, we assume the academic year spans two years
+            // January is considered part of the second semester's academic year
+            if ($currentMonth == 1 || $currentMonth == 7) {
+                $A_Y = ($currentYear - 1) . '-' . $currentYear;
+                $semester = '2nd';
+            }
+        }
+
+
+        $totalCount = PeerToPeer::count(); // Count of all peer-to-peer evaluations that need to be completed
+        $completedCount = PeerEvaluation::where('semester', $semester)->where('A_Y',$A_Y)->count(); // Count of completed peer evaluations
+
+        
         $totalEvaluations = $totalCount * 5; // Total evaluations needed if each instructor needs to evaluate 5 instructors
 
         // Check if $totalEvaluations is zero to avoid division by zero
@@ -339,6 +445,15 @@ public function Admin_dashboard($admin_id) {
         }
         
         return view('admin-side.admin-instructors', compact('admin', 'completionPercentage','completedCount','totalEvaluations'));
+    }
+
+    //Clear peer to peer
+    public function clearPeerToPeer(Request $request){
+        if(session('eval_status_p2p') == 'open'){
+            return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Cannot clear peer assignment while evaluation is ongoing!');
+        }
+        PeerToPeer::truncate();
+        return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Peer Assignment cleared!');
     }
 
     // Evaluation control Peer to peer
@@ -371,6 +486,10 @@ public function Admin_dashboard($admin_id) {
     public function assignPeerToPeer(Request $request){
 
         $instructors = DlcInstructors::all();
+
+        if($instructors->count() < 6){
+            return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'There must be at least six instructors to assign peers!');
+        }
     
         // Shuffle the instructors to randomize the order
         $shuffledInstructors = $instructors->shuffle();
@@ -605,7 +724,128 @@ public function Admin_dashboard($admin_id) {
     
     
 
+    // Admin account management
+    public function updateProfilePage($admin_id){
+        $admin = AdminAccount::where('admin_id', $admin_id)->first();
+        $instructors = DlcInstructors::all()->sortBy('instructor_name');
+       
+        return view('admin-side.admin-profile-records', compact('admin', 'instructors'));
+    }
 
+
+    public function updateProfile(Request $request, $admin_id){
+       
+        $validated = $request->validate([
+            "admin_id" => ['required', 'min:3','numeric'],
+            "firstname" => ['required', 'min:2'],
+            "middlename" => ['required', 'min:2'],
+            "lastname" => ['required', 'min:2'],
+            "email" => ['required', 'email'],
+        ]);     
+
+    
+        $admin = AdminAccount::where('admin_id', $admin_id)->first();
+
+        if(!$admin){
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('error', 'Account not found');
+        }
+        
+        
+            if ($admin->update($validated)) {
+                session(['firstname' => $admin->firstname, 
+                         'lastname' => $admin->lastname,
+                        ]);
+                return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Account updated successfully');
+            } else {
+                return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('error', 'Failed to update account');
+            }
+        
+    }
+
+    public function changePassword(Request $request ,$admin_id){
+        $validated = $request->validate([
+            "oldpassword" => ['required'],
+            "newpassword" => ['required'],
+            "con_pass" => ['required'],
+        ]);
+
+        if(strlen($request->input('newpassword')) < 8 ){
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Password must be at least 8 characters long');
+        }
+
+        if($request->input('newpassword') != $request->input('con_pass')){
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Password does not match');
+        }
+
+        $admin = AdminAccount::where('admin_id', $admin_id)->first();
+
+        if (password_verify($request->input('oldpassword'), $admin->password)) {
+            // Hash the new password before updating the database
+            $hashedPassword = bcrypt($request->input('newpassword'));
+    
+            // Update the password
+            $admin->password = $hashedPassword;
+            $admin->save();
+    
+            // Redirect with success message
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Password changed!');
+        } else {
+            // Redirect with error message
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Incorrect Password!');
+        }
+        
+    }
+
+
+    public function removeInstructor(Request $request,$instructor_id){
+        $validated = $request->validate([
+            "RemoveAccount" => ['required',],
+        ]);
+
+        $instructor = DlcInstructors::where('instructor_id', $instructor_id)->first();
+        $instructor_account = InstructorAccount::where('instructor_id', $instructor_id)->first();
+
+        if(!$instructor){
+            return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor not found');
+        }
+
+        
+
+        if($validated['RemoveAccount'] == 'remove_account' && $instructor_account){
+            $instructor->delete();
+            $instructor_account->delete();
+            return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor removed successfully');
+        }
+
+        if ($instructor){
+            $instructor->delete();
+            return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor removed successfully');
+        }
+
+        return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor not found');
+
+
+    }
+
+    public function AddInstructor(Request $request,$admin_id){
+        $validated = $request->validate([
+            "instructor_id" => ['required', 'numeric','min:3'],
+            "instructor_name" => ['required', 'min:4'],
+        ]);
+
+        $instructor = DlcInstructors::where('instructor_id', $validated['instructor_id'])->first();
+
+        if($instructor){
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Instructor already exists');
+        }
+
+        if ($instructor = DlcInstructors::create($validated)) {
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Instructor added successfully');
+        } else {
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('error', 'Failed to add instructor');
+        }
+
+    }
     
     
     
