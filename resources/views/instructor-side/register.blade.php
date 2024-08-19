@@ -54,18 +54,6 @@
                     @enderror
                 </div>
 
-                <!-- Contact -->
-                <div class="flex flex-col">
-                    <label for="contact" class="block text-gray-700 text-sm font-bold mb-2">Contact</label>
-                    <input type="number" id="contact" name="contact" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ old('contact') }}">
-                    @error('contact')
-                        <p class="text-red-500 text-sm mt-1">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
-
                 <!-- Names -->
                 <div class="md:flex md:space-x-4">
                     <div class="flex-1">
@@ -100,6 +88,18 @@
                             </p>
                         @enderror
                     </div>
+                </div>
+
+                 <!-- Contact -->
+                 <div class="flex flex-col">
+                    <label for="contact" class="block text-gray-700 text-sm font-bold mb-2">Contact</label>
+                    <input type="number" id="contact" name="contact" required
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ old('contact') }}">
+                    @error('contact')
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 <!-- Email -->

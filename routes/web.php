@@ -217,6 +217,14 @@ Route::controller(AdminController::class)->group(function(){
         Route::delete('/admin-remove-instructor{instructor_id}', 'removeInstructor')->name('admin.remove-instructor');
         Route::post('/admin-add-instructor{admin_id}', 'AddInstructor')->name('admin.add-instructor');
 
+
+        //Update student subjects enrolled
+        Route::post('/admin-update-student-subjects{admin_id}', 'updateStudentSubjects')->name('admin.update-student-subjects');
+
+
+        // Move all student to archives
+        Route::post('/admin-move-student-to-archives', 'moveStudentToArchives')->name('admin.move-student-to-archives');
+
        
     }); //end of authenticated routes
 
