@@ -155,11 +155,14 @@ class InstructorController extends Controller
 
         $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
 
+        $assigned_to =  $validated['subject_code'] . " " . $section;
+
         $subjectAssigned = SubjectAssigned::create([
             'instructor_id' => $instructor_id,
             'instructor_name' => $instructor->firstname . ' ' . $instructor->lastname,
             'subject_code' => $validated['subject_code'],
             'section' => $section,
+            'assigned_to' => $assigned_to,
         ]);
 
 
@@ -318,30 +321,31 @@ class InstructorController extends Controller
     public function updateProfilePage(Request $request, $instructor_id) {
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
         $peerInstructor = PeerToPeer::where('instructor_id', $instructor_id)->first();
+        
+        // Initialize $peerIds as an empty array
+        $peerIds = [];
     
-        // Collect the peer IDs
-        $peerIds = [
-            $peerInstructor->peer1,
-            $peerInstructor->peer2,
-            $peerInstructor->peer3,
-            $peerInstructor->peer4,
-            $peerInstructor->peer5
-        ];
-
+        if ($peerInstructor) {
+            // Collect the peer IDs if $peerInstructor is not null
+            $peerIds = [
+                $peerInstructor->peer1,
+                $peerInstructor->peer2,
+                $peerInstructor->peer3,
+                $peerInstructor->peer4,
+                $peerInstructor->peer5
+            ];
+        }
+    
         if (!function_exists('getCurrentAcademicYear')) {
             function getCurrentAcademicYear() {
                 $currentMonth = date('m');
                 $currentYear = date('Y');
         
                 if ($currentMonth >= 2 && $currentMonth <= 6) {
-                    // If the current month is between February and June, it's the second semester of the academic year
                     return ($currentYear - 1) . '-' . $currentYear;
                 } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
-                    // If the current month is between August and December, it's the first semester of the academic year
                     return $currentYear . '-' . ($currentYear + 1);
                 } else {
-                    // For January and July, we assume the academic year spans two years
-                    // January is considered part of the second semester's academic year
                     if ($currentMonth == 1 || $currentMonth == 7) {
                         return ($currentYear - 1) . '-' . $currentYear;
                     }
@@ -375,8 +379,7 @@ class InstructorController extends Controller
         }
     
         // Retrieve previous evaluations based on the selected academic year
-         // Retrieve previous evaluations based on the selected academic year with instructor names
-         $previousEvaluations = PeerEvaluation::where('evaluator_id', $instructor_id)
+        $previousEvaluations = PeerEvaluation::where('evaluator_id', $instructor_id)
             ->where('A_Y', $selectedAcademicYear)
             ->get()
             ->map(function ($evaluation) {
@@ -395,11 +398,11 @@ class InstructorController extends Controller
                     'semester' => $evaluation->semester,
                     'department' => $department,
                 ];
-         });
-
+            });
     
         return view('instructor-side.instructor-profile', compact('instructor', 'AllPeers', 'previousEvaluations', 'selectedAcademicYear'));
     }
+    
     
 
 

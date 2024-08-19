@@ -78,7 +78,7 @@
                 </div>
              @else
                 <p class="text-md font-bold text-red-800">
-                    No instructors have been evaluated yet.
+                    No instructors assigned yet.
                 </p>
             @endif
         </div>

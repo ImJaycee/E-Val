@@ -113,13 +113,12 @@
                         <select id="subject_code" name="subject_code" required onfocus="clearError()"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Select Subject</option>
-                            <option value="IAS 323">IAS 323</option>
-                            <option value="ITELEC 4">ITELEC 4</option>
-                            <option value="HCI 323">HCI 323</option>
-                            <option value="MS 323">MS 323</option>
+                            <option value="SAM 413">SAM 413</option>
+                            <option value="CLDCOMP 413">CLDCOMP 413</option>
+                            <option value="ASIA 413">ASIA 413</option>
+                            <option value="CAP 413">CAP 413</option>
                             <option value="CIS 323">CIS 323</option>
                             <option value="SIA 323">SIA 323</option>
-                            <option value="CAP 323">CAP 323</option>
                             <!-- Add more options as needed -->
                         </select>  
                     </div>

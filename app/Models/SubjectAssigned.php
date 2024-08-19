@@ -14,5 +14,6 @@ class SubjectAssigned extends Model
         'instructor_name',
         'subject_code',
         'section',
+        'assigned_to'
     ];
 }

@@ -149,6 +149,7 @@ class StudentController extends Controller
         // Loop through each subject to get the assigned instructor
         foreach ($studentSubjects as $subjectCodes) {
             // Split the subject code and section
+
             $subjectCode = substr($subjectCodes, 0, 7); // Assuming the subject code is always 3 characters
             $section = substr($subjectCodes, 8); // Assuming the section starts after the subject code
         
@@ -158,9 +159,7 @@ class StudentController extends Controller
                 continue;
             }
     
-            $assignedInstructor = SubjectAssigned::where('subject_code', $subjectCode)
-                ->where('section', $section)
-                ->first();
+            $assignedInstructor = SubjectAssigned::where('assigned_to', $subjectCodes)->first();
     
             if ($assignedInstructor) {
                 $InstructorPFP = InstructorAccount::where('instructor_id', $assignedInstructor->instructor_id)->first();
@@ -173,7 +172,7 @@ class StudentController extends Controller
                 // Combine the subject and instructor data
                 $allSubjectsEnrolled[] = [
                     'instructor_id' => $assignedInstructor->instructor_id,
-                    'subject_code' => $subjectCode,
+                    'subject_code' => $assignedInstructor->subject_code,
                     //'section' => $section,
                     'pfp' => $InstructorPFP ? $InstructorPFP->pfp : null,
                     'instructor_name' => $assignedInstructor->instructor_name,

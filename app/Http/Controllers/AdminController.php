@@ -7,6 +7,8 @@ use App\Models\InstructorAccount;
 use App\Models\StudentEvaluation;
 use App\Models\SubjectAssigned; // Add this line
 use App\Models\StudentsTokenAccounts; // Add this line
+use App\Models\StudentArchives; // Add this line
+use App\Models\InstructorArchives; // Add this line
 use App\Models\EvaluationStatus;
 use App\Models\PeerToPeer;
 use App\Models\DlcInstructors;
@@ -15,7 +17,7 @@ use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Carbon\Carbon;
 use App\Mail\EvaluationTokenMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -448,7 +450,7 @@ public function Admin_dashboard($admin_id) {
     }
 
     //Clear peer to peer
-    public function clearPeerToPeer(Request $request){
+    public function clearPeerToPeer(Request $request){ // clear peer to peer
         if(session('eval_status_p2p') == 'open'){
             return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Cannot clear peer assignment while evaluation is ongoing!');
         }
@@ -483,7 +485,7 @@ public function Admin_dashboard($admin_id) {
     }
 
     //assign peer to peer
-    public function assignPeerToPeer(Request $request){
+    public function assignPeerToPeer(Request $request){ // assign peer to peer
 
         $instructors = DlcInstructors::all();
 
@@ -525,13 +527,13 @@ public function Admin_dashboard($admin_id) {
 
 
     // Admin Comments view controller
-    public function viewComments($admin_id){
+    public function viewComments($admin_id){ // view comments
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
         $instructors = InstructorAccount::all();
         return view('admin-side.admin-comments', compact('admin', 'instructors'));
     }
 
-    public function showComments($admin_id, $instructor_id){
+    public function showComments($admin_id, $instructor_id){ // show comments
         
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
         $comments = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->get();
@@ -586,7 +588,7 @@ public function Admin_dashboard($admin_id) {
     }
 
 
-    public function viewFeedback($admin_id){
+    public function viewFeedback($admin_id){ // admin view feedback
         $feedbacks = UsersFeedback::all();
 
         return view('admin-side.users-feedbacks', compact('feedbacks'));
@@ -598,8 +600,7 @@ public function Admin_dashboard($admin_id) {
         
     }
 
-    public function viewSummary(Request $request)
-    {
+    public function viewSummary(Request $request){  // view summary
         $academicYear = $request->input('A_Y');
         $semester = $request->input('semester');
     
@@ -629,8 +630,7 @@ public function Admin_dashboard($admin_id) {
         return view('admin-side.report-summary', compact('instructors', 'academicYear', 'semester'));
     }
     
-    public function viewSummary_Ranking(Request $request)
-    {
+    public function viewSummary_Ranking(Request $request){ // view summary ranking
         $academicYear = $request->input('A_Y');
         $semester = $request->input('semester');
     
@@ -660,7 +660,7 @@ public function Admin_dashboard($admin_id) {
         return view('admin-side.report-summary', compact('instructors', 'academicYear', 'semester'));
     }
 
-    public function viewSummary_PeertoPeer(Request $request){
+    public function viewSummary_PeertoPeer(Request $request){ // view summary student evaluation summary
         $academicYear = $request->input('A_Y');
         $semester = $request->input('semester');
     
@@ -691,7 +691,7 @@ public function Admin_dashboard($admin_id) {
         return view('admin-side.report-summary-peer', compact('instructors', 'academicYear', 'semester'));
     }
 
-    public function viewSummary_PeertoPeer_Rank(Request $request){
+    public function viewSummary_PeertoPeer_Rank(Request $request){ //view summary peer to peer ranking
         $academicYear = $request->input('A_Y');
         $semester = $request->input('semester');
     
@@ -725,15 +725,32 @@ public function Admin_dashboard($admin_id) {
     
 
     // Admin account management
-    public function updateProfilePage($admin_id){
+    public function updateProfilePage(Request $request, $admin_id){
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
         $instructors = DlcInstructors::all()->sortBy('instructor_name');
-       
-        return view('admin-side.admin-profile-records', compact('admin', 'instructors'));
+
+        $student_id = $request->input('student_id');
+
+        if ($student_id) {
+            $students = StudentsTokenAccounts::where('student_id', $student_id)->get();
+
+            if ($students->isEmpty()) {
+                // Set a flash message and retrieve all student records
+                $students = StudentsTokenAccounts::all();
+                return redirect()->route('admin.profile', ['admin_id' => $admin_id])
+                ->with('message', "No student found with the ID {$student_id}.");
+            }
+        } else {
+            $students = StudentsTokenAccounts::all();
+        }
+
+        return view('admin-side.admin-profile-records', compact('admin', 'instructors', 'students'));
     }
 
 
-    public function updateProfile(Request $request, $admin_id){
+
+
+    public function updateProfile(Request $request, $admin_id){ // update admin profile
        
         $validated = $request->validate([
             "admin_id" => ['required', 'min:3','numeric'],
@@ -762,7 +779,7 @@ public function Admin_dashboard($admin_id) {
         
     }
 
-    public function changePassword(Request $request ,$admin_id){
+    public function changePassword(Request $request ,$admin_id){ //change password
         $validated = $request->validate([
             "oldpassword" => ['required'],
             "newpassword" => ['required'],
@@ -797,7 +814,7 @@ public function Admin_dashboard($admin_id) {
     }
 
 
-    public function removeInstructor(Request $request,$instructor_id){
+    public function removeInstructor(Request $request,$instructor_id){ // remove single instructor
         $validated = $request->validate([
             "RemoveAccount" => ['required',],
         ]);
@@ -812,12 +829,35 @@ public function Admin_dashboard($admin_id) {
         
 
         if($validated['RemoveAccount'] == 'remove_account' && $instructor_account){
+
+            $archive = InstructorArchives::create([
+                'instructor_id' => $instructor_account->instructor_id,
+                'firstname' => $instructor_account->firstname,
+                'middlename' => $instructor_account->middlename,
+                'lastname' => $instructor_account->lastname,
+                'email' => $instructor_account->email,
+                'sex' => $instructor_account->sex,
+                'department' => $instructor_account->department,
+                'pfp' => $instructor_account->pfp,
+            ]);
+
             $instructor->delete();
             $instructor_account->delete();
             return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor removed successfully');
         }
 
         if ($instructor){
+            $archive = InstructorArchives::create([
+                'instructor_id' => $instructor_account->instructor_id,
+                'firstname' => $instructor_account->firstname,
+                'middlename' => $instructor_account->middlename,
+                'lastname' => $instructor_account->lastname,
+                'email' => $instructor_account->email,
+                'sex' => $instructor_account->sex,
+                'department' => $instructor_account->department,
+                'pfp' => $instructor_account->pfp,
+            ]);
+
             $instructor->delete();
             return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor removed successfully');
         }
@@ -827,7 +867,7 @@ public function Admin_dashboard($admin_id) {
 
     }
 
-    public function AddInstructor(Request $request,$admin_id){
+    public function AddInstructor(Request $request,$admin_id){ // add single instructor 
         $validated = $request->validate([
             "instructor_id" => ['required', 'numeric','min:3'],
             "instructor_name" => ['required', 'min:4'],
@@ -846,9 +886,87 @@ public function Admin_dashboard($admin_id) {
         }
 
     }
+
+
+    public function updateStudentSubjects(Request $request,$admin_id){//Update student subjects enrolled
+        $validated = $request->validate([
+            "student_id" => [ 'numeric','min:6'],
+        ]);
+
+        $student = StudentsTokenAccounts::where('student_id', $validated['student_id'])->first();
+
+        if(!$student){
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Student not found');
+        }
+
+        $student->subject1 = $request->input('subject1');
+        $student->subject2 = $request->input('subject2');
+        $student->subject3 = $request->input('subject3');
+        $student->subject4 = $request->input('subject4');
+        $student->subject5 = $request->input('subject5');
+        $student->subject6 = $request->input('subject6');
+        $student->subject7 = $request->input('subject7');
+        $student->subject8 = $request->input('subject8');
+        $student->subject9 = $request->input('subject9');
+        $student->subject10 = $request->input('subject10');
+
+        
+        if ($student->save()){
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('message', 'Subjects updated successfully');
+        } else {
+            return redirect()->route('admin.profile', ['admin_id' => $admin_id])->with('error', 'Failed to update subjects');
+        }
     
-    
-    
+    }
+
+    public function moveStudentToArchives(Request $request){ // remove single student
+       // Retrieve all students
+        $students = StudentsTokenAccounts::all();
+
+        foreach ($students as $student) {
+            // Determine academic year and semester based on the `created_at` timestamp
+            $timestamp = Carbon::parse($student->created_at);
+            $year = $timestamp->year;
+            $month = $timestamp->month;
+
+            // Assuming academic year starts in August and semester is split accordingly
+            if ($month >= 8) {
+                $academicYear = $year . '-' . ($year + 1);
+                $semester = '1st Semester';
+            } elseif ($month >= 1 && $month < 6) {
+                $academicYear = ($year - 1) . '-' . $year;
+                $semester = '2nd Semester';
+            } else {
+                $academicYear = ($year - 1) . '-' . $year;
+                $semester = 'Semestral Break';
+            }
+
+            //dd($academicYear, $semester);
+
+            // Create a new archive record for each student
+            StudentArchives::create([
+                'student_id' => $student->student_id,
+                'email' => $student->email,
+                'eval_token' => $student->eval_token,
+                'subject1' => $student->subject1,
+                'subject2' => $student->subject2,
+                'subject3' => $student->subject3,
+                'subject4' => $student->subject4,
+                'subject5' => $student->subject5,
+                'subject6' => $student->subject6,
+                'subject7' => $student->subject7,
+                'subject8' => $student->subject8,
+                'subject9' => $student->subject9,
+                'subject10' => $student->subject10,
+                'A_Y' => $academicYear,
+                'semester' => $semester,
+            ]);
+        }
+
+        // Delete all students from the original table after archiving them
+        StudentsTokenAccounts::truncate();
+            return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Students removed successfully');
+    }
 
     
 

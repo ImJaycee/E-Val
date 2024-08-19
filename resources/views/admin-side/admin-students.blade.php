@@ -76,7 +76,7 @@
                 </form>
             </div>
             <div class="flex flex-col items-center justify-center h-full mt-4">
-                <h2 class="text-xl font-bold text-gray-700 mb-4">Overall Student Evaluation Progress</h2>
+                <h2 class="text-xl font-bold text-gray-700 mb-4">Evaluation Progress</h2>
                 <div class="relative flex items-center justify-center">
                     <svg class="w-40 h-40">
                         <circle class="text-gray-300" stroke-width="5" stroke="currentColor" fill="transparent" r="60" cx="80" cy="80"/>
