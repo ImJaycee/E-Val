@@ -36,17 +36,36 @@
         </div>
     </div>
 
-    <div class="container mx-auto mt-5">
-        <h1 class="text-2xl font-bold mb-5">Instructors</h1>
-        <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 27rem;">
-            <div class="relative overflow-y-auto" style="height: 100%;">
-                <div class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 z-0">
-                    @foreach($instructors as $instructor)
-                    <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85" style="background-image: url('storage/images/index-bg.jpg');">
+    <div class="container mx-auto mt-5 ">
+        <div class="relative bg-cover bg-center bg-no-repeat rounded-lg p-4 my-4 " style="height: 27rem;">
+            <!-- Blurred Background Image -->
+            <div class="absolute inset-0">
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('storage/images/index-bg.jpg'); filter: blur(8px);"></div>
+                <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+            </div>
+            <div class="relative overflow-y-auto " style="height: 100%;">
+                <div class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 z-0 ">
+                    @php
+                        // Define an array of background colors
+                        $colors = [
+                            'bg-blue-500',
+                            'bg-green-500',
+                            'bg-red-500',
+                            'bg-yellow-500',
+                            'bg-purple-500',
+                            'bg-orange-500',
+                            'bg-pink-500',
+                            'bg-teal-500',
+                            'bg-indigo-500',
+                            'bg-gray-500'
+                        ];
+                    @endphp
+                    @foreach($instructors as  $index => $instructor)
+                    <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85 {{ $colors[$index % count($colors)] }}">
                         <div class="absolute inset-0 bg-black bg-opacity-50 rounded"></div>
                         <div class="relative z-10">
                             <div class="mb-2">
-                                <h2 class="text-sm font-bold text-gray-100">Instructor Name</h2>
+                                <h2 class="text-sm font-bold text-gray-100"></h2>
                                 <p class="font-bold text-xs text-gray-200">{{ $instructor->firstname }} {{ $instructor->lastname }}</p>
                             </div>
                             <div class="mb-2">
@@ -54,7 +73,7 @@
                                 <p class="font-bold text-xs text-gray-200">{{ $instructor->instructor_id }}</p>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('admin.showComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="bg-green-700 px-2 py-1 font-semibold rounded text-white text-xs w-full">
+                                <a href="{{ route('admin.showComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="bg-gray-200 px-2 py-1 font-semibold rounded text-green-800 text-xs w-full">
                                     View Comments <i class="fas fa-comments"></i>
                                 </a>
                             </div>

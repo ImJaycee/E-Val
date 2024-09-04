@@ -63,7 +63,7 @@
             @csrf
             <input type="hidden" name="A_Y" value="{{ $academicYear }}">
             <input type="hidden" name="semester" value="{{ $semester }}">
-            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Sort By Rank</button>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Sort By Rating</button>
         </form>
         <form action="{{ route('view.summary') }}" method="POST" class="inline no-print">
             @csrf

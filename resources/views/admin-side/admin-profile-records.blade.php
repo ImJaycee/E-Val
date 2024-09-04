@@ -44,8 +44,25 @@
         </div>
 
         <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full shadow-md lg:w-[75%]">
-            <h3 class="font-bold text-gray-700 bg-gray-200 px-1 rounded">Instructors</h3>
             <div class="max-h-60 overflow-x-auto relative">
+
+                <div class="flex flex-col md:flex-row justify-end items-start rounded-lg bg-gray-200 p-1">
+                    <form action="{{ route('admin.profile', ['admin_id' => $admin_id]) }}" class="flex items-center mt-1 md:mt-0">
+                        <select id="departmentDropdown" name="department" class="bg-white text-gray-800 font-semibold py-1 px-4 rounded-l-md w-full md:w-auto">
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="College of Engineering and Architecture">College of Engineering and Architecture</option>
+                            <option value="College of Business Administration">College of Business Administration</option>
+                            <option value="College of Computing Studies">College of Computing Studies</option>
+                            <option value="College of Education">College of Education</option>
+                            <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                            <option value="College of Hospitality and Tourism Management">College of Hospitality and Tourism Management</option>
+                        </select>
+                        <button type="submit" class="px-3 py-1 bg-green-600 text-white rounded-r-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            
                 <table class="w-full table-fixed">
                     <thead class="bg-white top-0">
                         <tr>
@@ -64,7 +81,7 @@
                         @foreach($instructors as $instructor)
                             <tr class="border-b">
                                 <td class="px-4 py-2 text-left align-top font-semibold text-sm text-gray-600">
-                                    <p>{{ $instructor->instructor_name }}</p>
+                                    <p>{{ $instructor->lastname }},{{ $instructor->firstname }} {{ $instructor->middlename }}.</p>
                                 </td>
                                 <td class="px-4 py-2 text-left font-semibold text-sm text-gray-600">
                                     <p><span>{{ $instructor->instructor_id }}</span></p>
@@ -77,7 +94,6 @@
                                 </td>
                             </tr>
 
-                             {{-- Remove Instructor Modal --}}
                {{-- Remove Instructor Modal --}}
                             <div class="fixed inset-0 overflow-y-auto hidden" id="RemoveInstructorModal-{{ $instructor->instructor_id }}">
                                 <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -457,7 +473,7 @@
                 <h3 class="text-lg font-bold text-gray-700">Add Instructor</h3>
                 <form action="{{route('admin.add-instructor', ['admin_id' => $admin_id])}}" method="POST" class="bg-white shadow-md rounded px-3 pt-5 pb-6 mb-1">
                     @csrf
-                    <div class="mb-4 md:w-full md:mr-2">
+                    <div class="mb-3 md:w-full md:mr-2">
                         <label for="instructor_id" class="block text-gray-700 text-sm font-bold mb-2">Instructor ID</label>
                         <div class="relative">
                             <input type="number" id="instructor_id" name="instructor_id" required onfocus="clearError()"
@@ -470,19 +486,81 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="mb-4 md:w-full md:mr-2">
-                        <label for="instructor_name" class="block text-gray-700 text-sm font-bold mb-2">Instructor Name 
-                            <span class="text-gray-500" style="font-size: 10px;">(LASTNAME, FIRSTNAME MI.)</span>
-                        </label>
+                    <div class="mb-3 md:w-full md:mr-2">
+                        <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">First name</label>
                         <div class="relative">
-                            <input type="text" id="instructor_name" name="instructor_name" required onfocus="clearError()" oninput="this.value = this.value.toUpperCase()"
+                            <input type="text" id="firstname" name="firstname" required onfocus="clearError()" oninput="this.value = this.value.toUpperCase()"
                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                            
-                            @error('instructor_name')
-                                <p id="instructor_name_error" class="text-red-500 text-sm text-end p-1">
+                            @error('firstname')
+                                <p id="firstname_error" class="text-red-500 text-sm text-end p-1">
                                     {{ $message }}
                                 </p>
                             @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 md:w-full md:mr-2">
+                        <label for="middlename" class="block text-gray-700 text-sm font-bold mb-2">Middle name</label>
+                        <div class="relative">
+                            <input type="text" id="middlename" name="middlename" required onfocus="clearError()" oninput="this.value = this.value.toUpperCase()"
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                           
+                            @error('middlename')
+                                <p id="middlename_error" class="text-red-500 text-sm text-end p-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 md:w-full md:mr-2">
+                        <label for="lastname" class="block text-gray-700 text-sm font-bold mb-2">Last name</label>
+                        <div class="relative">
+                            <input type="text" id="lastname" name="lastname" required onfocus="clearError()" oninput="this.value = this.value.toUpperCase()"
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                           
+                            @error('lastname')
+                                <p id="lastname_error" class="text-red-500 text-sm text-end p-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 md:w-full md:mr-2">
+                        <label for="sex" class="block text-gray-700 text-sm font-bold mb-2">Sex</label>
+                        <div class="relative">
+                            <select id="sex" name="sex" required 
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="" disabled selected>Select</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        <!-- Add more options as needed -->
+                            </select>
+                            @error('sex')
+                                <p class="text-red-500 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 md:w-full md:mr-2">
+                        <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
+                        <div class="relative">
+                            <select id="department" name="department" required 
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="" disabled selected>Select your Department</option>
+                            <option value="College of Engineering and Architecture">College of Engineering and Architecture</option>
+                            <option value="College of Business Administration">College of Business Administration</option>
+                            <option value="College of Computing Studies">College of Computing Studies</option>
+                            <option value="College of Education">College of Education</option>
+                            <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                            <option value="College of Hospitality and Tourism Management">College of Hospitality and Tourism Management</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    @error('department')
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                         </div>
                     </div>
                     

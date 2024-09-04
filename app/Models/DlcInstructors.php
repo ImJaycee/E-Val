@@ -11,6 +11,12 @@ class DlcInstructors extends Model
     protected $table = 'dlc_instructors';
     protected $fillable = [
         'instructor_id', 
-        'instructor_name', 
+        'firstname',
+        'middlename',
+        'lastname',
+        'sex', 
+        'department',
     ];
 }
+
+// need edit dlc instructor table and department searching feature

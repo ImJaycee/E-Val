@@ -42,7 +42,7 @@
     <div class="max-w-md mx-auto py-10 px-4 " id="StudentLogin">
         
         <form action="{{ route('Student_loginprocess')}}" method="POST" class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h1 class="text-lg text-center font-bold mb-4 text-gray-800">Login as Student</h1>
+            <h1 class="text-lg text-center font-bold mb-4 text-gray-800"></h1>
             @csrf
             <div class="flex justify-center space-x-4">
                 <button id="studentButton" type="button" onclick="showStudentLogin()" class="bg-green-800 hover:bg-green-800 text-white font-semibold py-1 px-4 mb-2 rounded focus:outline-none focus:shadow-outline active:bg-green-700">Login as Student</button>
@@ -86,7 +86,7 @@
     <div class="max-w-md mx-auto py-10 px-4 hidden" id="InstructorLogin">
         
         <form action="{{ route('Instructor_loginprocess')}}" method="POST" class=" shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h1 class="text-lg text-center font-bold mb-4">Login as Instructor</h1>
+            <h1 class="text-lg text-center font-bold mb-4"></h1>
             @csrf
             <div class="flex justify-center space-x-4">
                 <button id="studentButton" type="button" onclick="showStudentLogin()" class="bg-green-700 hover:bg-green-800 text-white font-semibold py-1 px-4 mb-2 rounded focus:outline-none focus:shadow-outline active:bg-green-700">Login as Student</button>

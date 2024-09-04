@@ -211,7 +211,7 @@ public function Admin_dashboard($admin_id) {
     //upload student
     public function uploadStudents(Request $request){
         $request->validate([
-            'students_csv' => 'required|file|mimes:csv,txt',
+            'students_csv' => 'required|file|mimes:csv',
         ]);
         
         $file = $request->file('students_csv');
@@ -282,7 +282,7 @@ public function Admin_dashboard($admin_id) {
      //upload student
      public function uploadInstructors(Request $request){
         $request->validate([
-            'instructors_csv' => 'required|file|mimes:csv,txt',
+            'instructors_csv' => 'required|file|mimes:csv',
         ]);
         
         $file = $request->file('instructors_csv');
@@ -325,7 +325,11 @@ public function Admin_dashboard($admin_id) {
                     DlcInstructors::updateOrCreate(
                         ['instructor_id' => $rowData['instructor_id']],
                         [
-                            'instructor_name' => $rowData['instructor_name'], // 
+                            'firstname' => $rowData['firstname'], // 
+                            'middlename' => $rowData['middlename'], // 
+                            'lastname' => $rowData['lastname'], // 
+                            'sex' => $rowData['sex'], // 
+                            'department' => $rowData['department'],
                             
                         ]
                      
@@ -536,7 +540,7 @@ public function Admin_dashboard($admin_id) {
     public function showComments($admin_id, $instructor_id){ // show comments
         
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
-        $comments = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->get();
+        $comments = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->orderBy('created_at', 'desc')->get();
        
 
 
@@ -577,6 +581,12 @@ public function Admin_dashboard($admin_id) {
             // Add filtered comment to $allComments
             $allComments[] = [
                 'comment' => $comment->comments,
+                'I_avg' => number_format($comment->I_Total / 3, 2),
+                'II_avg' => number_format($comment->II_Total /4, 2),
+                'III_avg' => number_format($comment->III_Total /2, 2),
+                'IV_avg' => number_format($comment->IV_Total /2, 2),
+                'V_avg' => number_format($comment->V_Total /3, 2),
+                'overall_avg' => number_format($comment->total_score/14, 2),
                 'sentiment' => $comment->sentiment,
                 'semester' => $comment->semester,
                 'A_Y' => $comment->A_Y,
@@ -727,9 +737,10 @@ public function Admin_dashboard($admin_id) {
     // Admin account management
     public function updateProfilePage(Request $request, $admin_id){
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
-        $instructors = DlcInstructors::all()->sortBy('instructor_name');
+        $instructors = DlcInstructors::all()->sortBy('lastname');
 
         $student_id = $request->input('student_id');
+        $department = $request->input('department');
 
         if ($student_id) {
             $students = StudentsTokenAccounts::where('student_id', $student_id)->get();
@@ -742,6 +753,19 @@ public function Admin_dashboard($admin_id) {
             }
         } else {
             $students = StudentsTokenAccounts::all();
+        }
+
+        if ($department) {
+            $instructors = DlcInstructors::where('department', $department)->get();
+
+            if ($instructors->isEmpty()) {
+                // Set a flash message and retrieve all student records
+                $students = DlcInstructors::all();
+                return redirect()->route('admin.profile', ['admin_id' => $admin_id])
+                ->with('message', "No instructor found in the {$department} department.");
+            }
+        } else {
+            $instructors = DlcInstructors::all();
         }
 
         return view('admin-side.admin-profile-records', compact('admin', 'instructors', 'students'));
@@ -825,7 +849,6 @@ public function Admin_dashboard($admin_id) {
         if(!$instructor){
             return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Instructor not found');
         }
-
         
 
         if($validated['RemoveAccount'] == 'remove_account' && $instructor_account){
@@ -848,14 +871,14 @@ public function Admin_dashboard($admin_id) {
 
         if ($instructor){
             $archive = InstructorArchives::create([
-                'instructor_id' => $instructor_account->instructor_id,
-                'firstname' => $instructor_account->firstname,
-                'middlename' => $instructor_account->middlename,
-                'lastname' => $instructor_account->lastname,
-                'email' => $instructor_account->email,
-                'sex' => $instructor_account->sex,
-                'department' => $instructor_account->department,
-                'pfp' => $instructor_account->pfp,
+                'instructor_id' => $instructor_id,
+                'firstname' => $instructor->firstname,
+                'middlename' => $instructor->middlename,
+                'lastname' => $instructor->lastname,
+                'email' => null,
+                'sex' => $instructor->sex,
+                'department' => $instructor->department,
+                'pfp' => null,
             ]);
 
             $instructor->delete();
@@ -870,7 +893,11 @@ public function Admin_dashboard($admin_id) {
     public function AddInstructor(Request $request,$admin_id){ // add single instructor 
         $validated = $request->validate([
             "instructor_id" => ['required', 'numeric','min:3'],
-            "instructor_name" => ['required', 'min:4'],
+            "firstname" => ['required', 'min:4'],
+            "middlename" => ['required', 'min:2'],
+            "lastname" => ['required', 'min:4'],
+            "sex" => ['required'],
+            "department" => ['required', 'min:4'],
         ]);
 
         $instructor = DlcInstructors::where('instructor_id', $validated['instructor_id'])->first();

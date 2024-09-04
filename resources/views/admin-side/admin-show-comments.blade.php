@@ -37,7 +37,6 @@
     </div>
 
     <div class="container mx-auto mt-5">
-        <h1 class="text-2xl font-bold mb-5">Instructors</h1>
         <div class="bg-white rounded-lg p-4 shadow-md my-4 lg:w-4/5 mx-auto" style="height: 29rem;">
             <a href="{{ route('admin.comments', ['admin_id' => $admin_id]) }}" class="text-white bg-green-700 p-1 rounded mx-auto">
                 <i class="fas fa-arrow-left"></i> Go Back
@@ -47,17 +46,24 @@
             @else
                 <div class="relative overflow-y-auto" style="height: 100%;">
                         @foreach($allComments as $comment)
-                        <div class="flex items-center mb-2 bg-gray-100 p-1 rounded mt-4">
+                        <div class="flex items-center mb-2 bg-gray-100 p-1 rounded mt-2">
                             <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
                                 <img src="{{ asset('storage/images/test-profile.png') }}" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
                             </div>
                             <img src="storage/images/test-profile.png" alt="">
                             <div class="ml-3">
-                                <p class="font-semibold">-</p>
-                                <p class="text-sm text-gray-600">Date: {{$comment['time']}}</p>
-                                <p class="text-gray-900 p-2">{{$comment['comment']}}</p>
-                                <p class="text-sm font-semibold text-gray-600">
-                                    Sentiment:
+                                <p class="text-xs text-gray-600">Date: {{$comment['time']}}</p>
+                                <p class="text-xs font-semibold text-gray-800">
+                                    <span>Average I: {{ $comment['I_avg'] }}</span>
+                                    <span class="ml-2">Average II: {{ $comment['II_avg'] }}</span>
+                                    <span class="ml-2">Average III: {{ $comment['III_avg'] }}</span>
+                                    <span class="ml-2">Average IV: {{ $comment['IV_avg'] }}</span>
+                                    <span class="ml-2">Average V: {{ $comment['V_avg'] }}</span> <br />
+                                    <span class="">Overall avg: {{ $comment['overall_avg'] }}</span>
+                                </p>    
+                                <p class="text-gray-900 p-1 font-semibold">{{$comment['comment']}}</p>
+                                <p class="text-xs font-semibold text-gray-600">
+                                    Comment Sentiment:
                                     @if($comment['sentiment'] == 'Good')
                                         <span class="text-red-600">{{$comment['sentiment']}}</span>
                                     @elseif($comment['sentiment'] == 'Better')

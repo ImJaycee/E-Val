@@ -58,6 +58,11 @@
                         <div class="flex flex-col items-start">
                             <label for="students_csv" class="text-gray-700 font-bold mb-1 text-sm md:text-base">Upload Students (.csv)</label>
                             <input type="file" name="students_csv" accept=".csv" class="w-full md:w-auto border-2 border-gray-300 rounded-md p-1 md:p-2" required>
+                            @error('students_csv')
+                                <p class="text-red-500 text-sm text-end p-1">
+                                    {{$message}}
+                                </p>
+                            @enderror
                         </div>
                         <div>
                             @if(session('eval_status') == 'close')

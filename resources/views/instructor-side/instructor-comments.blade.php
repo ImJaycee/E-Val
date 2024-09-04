@@ -38,28 +38,42 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Anonymous Student Comments</h1>
         <div class="overflow-y-auto" style="max-height: 360px">
             @foreach($comments as $comment)
-                <div class="flex items-center mb-2">
-                    <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                        <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
-                    </div>
-                    <div class="ml-3">
-                        <p class="font-semibold">-</p>
-                        <p class="text-sm text-gray-600">Date: {{$comment->created_at}}</p>
-                        <p class="text-gray-900 p-2">{{$comment->comments}}</p>
-                        <p class="text-sm font-semibold text-gray-600">
-                            Sentiment:
-                            @if($comment->sentiment == 'Good')
-                                <span class="text-green-600">{{$comment->sentiment}}</span>
-                            @elseif($comment->sentiment == 'Better')
-                                <span class="text-blue-600">{{$comment->sentiment}}</span>
-                            @elseif($comment->sentiment == 'Best')
-                                <span class="text-purple-600">{{$comment->sentiment}}</span>
-                            @endif
-                        </p>
-                        
-                    </div>
+            <div class="flex items-center mb-2 border-b">
+                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
+                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
                 </div>
-            @endforeach
+                <div class="ml-3">
+                    <!-- Display the comment's creation date -->
+                    <p class="text-sm text-gray-600">Date: {{ $comment->created_at->format('M d, Y h:i A') }}</p>
+                    
+                    <!-- Display the ratings -->
+                    <p class="text-sm text-gray-600">
+                        <span>Average I: {{ number_format($comment->I_Total / 3, 2) ?? '-' }}</span>
+                        <span class="ml-2">Average II: {{ number_format($comment->II_Total / 4, 2) ?? '-' }}</span>
+                        <span class="ml-2">Average III: {{ number_format($comment->III_Total / 2, 2) ?? '-' }}</span>
+                        <span class="ml-2">Average IV: {{ number_format($comment->IV_Total / 2, 2) ?? '-' }}</span>
+                        <span class="ml-2">Average V: {{ number_format($comment->V_Total / 3, 2) ?? '-' }}</span> <br />
+                        <span class="">Overall avg: {{ number_format($comment->total_score / 14, 2) ?? '-' }}</span>
+                    </p>                    
+                    
+                    <!-- Display the comment -->
+                    <p class="text-gray-900 p-2 text-sm font-semibold">{{ $comment->comments }}</p>
+                    
+                    <!-- Display the sentiment -->
+                    <p class="text-sm text-gray-600">
+                        Comment Sentiment:
+                        @if($comment->sentiment == 'Good')
+                            <span class="text-green-600">{{ $comment->sentiment }}</span>
+                        @elseif($comment->sentiment == 'Better')
+                            <span class="text-blue-600">{{ $comment->sentiment }}</span>
+                        @elseif($comment->sentiment == 'Best')
+                            <span class="text-purple-600">{{ $comment->sentiment }}</span>
+                        @endif
+                    </p>
+                </div>
+            </div>
+        @endforeach
+        
             <!-- Add more comments here -->
         </div>
     </div>

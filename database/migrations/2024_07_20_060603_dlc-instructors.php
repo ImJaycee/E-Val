@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('dlc_instructors', function (Blueprint $table) {
             $table->id();
             $table->string('instructor_id')->unique();
-            $table->string('instructor_name');
+            $table->string('firstname');
+            $table->string('middlename');
+            $table->string('lastname');
+            $table->string('sex');
+            $table->string('department');
             $table->timestamps();
         });
     }

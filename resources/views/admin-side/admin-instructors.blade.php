@@ -59,6 +59,11 @@
                             <div class="flex flex-col items-start">
                                 <label for="instructors_csv" class="text-gray-700 font-bold mb-1 text-sm md:text-base">Upload Instructors (.csv)</label>
                                 <input type="file" name="instructors_csv" accept=".csv" class="w-full md:w-auto border-2 border-gray-300 rounded-md p-1 md:p-2" required>
+                                @error('instructors_csv')
+                                    <p class="text-red-500 text-sm text-end p-1">
+                                        {{$message}}
+                                    </p>
+                                @enderror
                             </div>
                             <div>
                                 @if(session('eval_status_p2p') == 'close')
@@ -104,7 +109,7 @@
                 </div>
             
                 <div class="flex flex-col items-center justify-center h-full mt-4">
-                    <h2 class="text-xl font-bold text-gray-700 mb-4">Peer to Peer Evaluation Progress</h2>
+                    <h2 class="text-xl font-bold text-gray-700 mb-4">Peer Evaluation Progress</h2>
                     <div class="relative flex items-center justify-center">
                         <svg class="w-40 h-40">
                             <circle class="text-gray-300" stroke-width="5" stroke="currentColor" fill="transparent" r="60" cx="80" cy="80"/>
@@ -132,7 +137,7 @@
 
                             @else
                                 <h3 class="">
-                                    Assign Instructor Evaluations to Start Peer-to-Peer Evaluation
+                                    Assign Instructor Evaluations to Start Peer Evaluation
                                 </h3>
                             @endif
                         @elseif(session('eval_status_p2p') == 'open')

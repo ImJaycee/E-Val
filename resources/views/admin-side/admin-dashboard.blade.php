@@ -49,24 +49,45 @@
     
     {{-- Instructors --}}
     <div class="container mx-auto mt-1">
-        <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 27rem;">
-            <h1 class="text-2xl font-bold ">Instructors</h1>
+        <div class="relative bg-cover bg-center bg-no-repeat rounded-lg p-4 shadow-md my-4" style="height: 29rem;">
+            <!-- Blurred Background Image -->
+            <div class="absolute inset-0">
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('storage/images/index-bg.jpg'); filter: blur(8px);"></div>
+                <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+            </div>
             <div class="relative overflow-y-auto overflow-x-auto" style="max-height: 380px;">
-                <div class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 z-0">
-                    @foreach($allInstructorsData as $instructors)
-                    <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85" style="background-image: url('storage/images/index-bg.jpg');">
+                <div class="relative grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 p-4 z-0">
+
+                    @php
+                        // Define an array of background colors
+                        $colors = [
+                            'bg-blue-500',
+                            'bg-green-500',
+                            'bg-red-500',
+                            'bg-yellow-500',
+                            'bg-purple-500',
+                            'bg-orange-500',
+                            'bg-pink-500',
+                            'bg-teal-500',
+                            'bg-indigo-500',
+                            'bg-gray-500'
+                        ];
+                    @endphp
+
+                    @foreach($allInstructorsData as $index => $instructors)
+                    <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85 {{ $colors[$index % count($colors)] }}">
                         <div class="absolute inset-0 bg-black bg-opacity-50 rounded"></div>
                         <div class="relative z-10">
                             <div class="mb-2">
-                                <h2 class="text-sm font-bold text-gray-100">Instructor Name</h2>
+                                <h2 class="text-sm font-bold text-gray-100"></h2>
                                 <p class="font-bold text-xs text-gray-200">{{ $instructors['name'] }}</p>
                             </div>
                             <div class="mb-2">
-                                <h2 class="text-sm font-bold text-gray-100">Department</h2>
+                                <h2 class="text-sm font-bold text-gray-100"></h2>
                                 <p class="font-bold text-xs text-gray-200">{{ $instructors['department'] }}</p>
                             </div>
                             <div class="mb-2">
-                                <h2 class="text-sm font-bold text-gray-100">Evaluation Progress</h2>
+                                <h2 class="text-xs font-semibold text-gray-100">Evaluation Progress</h2>
                                 <p class="font-bold text-xs text-gray-200">{{ $instructors['completed_evaluations'] }}/{{ $instructors['total_evaluators'] }}</p>
                             </div>
                         </div>

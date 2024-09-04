@@ -166,7 +166,7 @@ class StudentController extends Controller
                 
                 $status = StudentEvaluation::where('instructor_id', $assignedInstructor->instructor_id)
                     ->where('eval_token', $student->eval_token)
-                    ->where('subject_code', $subjectCode)
+                    ->where('subject_code',  $assignedInstructor->subject_code)
                     ->exists();
     
                 // Combine the subject and instructor data

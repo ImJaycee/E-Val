@@ -526,14 +526,15 @@ class InstructorController extends Controller
 
     }
 
-    // Display Comments for Instructor
-    public function viewComments($instructor_id){
+    public function viewComments($instructor_id) {
+        // Retrieve comments for the specific instructor, ordered by the latest
         $comments = StudentEvaluation::where('instructor_id', $instructor_id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
     
-        //dd($comments);
-        return view('instructor-side.instructor-comments', compact( 'comments'));
+        // Return the view with the comments and averages
+        return view('instructor-side.instructor-comments', compact('comments'));
     }
+    
 
 }

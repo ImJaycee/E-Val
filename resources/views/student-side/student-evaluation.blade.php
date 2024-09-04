@@ -386,6 +386,11 @@
 
             <!-- Sample instructor card, repeat this for each instructor -->
         </div>
+        <a href="{{ route('student.feedback') }}" 
+            class="fixed bottom-4 right-4 sm:text-sm text-yellow-500 bg-gray-100 border-2 border-gray-200 text-white p-3 rounded-full shadow-lg hover:bg-red-700 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            <i class="fas fa-star"></i>
+        </a>
+
 
 </div>
 

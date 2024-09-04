@@ -55,10 +55,10 @@
             <i class="fas fa-comment"></i>
             <span>Comments</span>
         </a>
-        <a href="{{route('instructor.feedback')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+        {{-- <a href="{{route('instructor.feedback')}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-comment"></i>
             <span>Feedback</span>
-        </a>
+        </a> --}}
         <a href="{{route('instructor.profile', ['instructor_id' => $instructor_id])}}" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group"> 
             {{-- {{route('student.profile', ['instructor_id' => $instructor_id])}} --}}
             <i class="fas fa-user"></i>

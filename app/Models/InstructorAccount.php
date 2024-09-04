@@ -26,6 +26,8 @@ class InstructorAccount extends Authenticatable
         'password_reset_token',
     ];
 
+    public $rating;
+
     public function evaluations()
     {
         return $this->hasMany(StudentEvaluation::class, 'instructor_id', 'instructor_id');
@@ -35,4 +37,6 @@ class InstructorAccount extends Authenticatable
     {
         return $this->hasMany(PeerEvaluation::class, 'instructor_id', 'instructor_id');
     }
+
+    
 }

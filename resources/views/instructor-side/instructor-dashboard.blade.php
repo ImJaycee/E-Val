@@ -47,50 +47,77 @@
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-lg p-4 shadow-md my-4" style="height: 31.25rem;">
+    <div class="relative bg-cover bg-center bg-no-repeat rounded-lg p-4 shadow-md my-4" style="height: 31.25rem;">
+        <!-- Blurred Background Image -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('storage/images/index-bg.jpg'); filter: blur(8px);"></div>
+            <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+        </div>
+    
         <div class="relative overflow-y-auto" style="max-height: 440px;">
             <!-- Background Image -->
             {{-- <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('storage/images/index-bg.jpg');"></div> --}}
         
             <!-- Content Overlay -->
-            <div class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 z-0">
-                @foreach($allSubjectsAssigned as $subject)
-                <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85" style="background-image: url('storage/images/index-bg.jpg');">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 rounded"></div>
-                    <div class="relative z-10 ">
-                        <div class="mb-2">
-                            <h2 class="text-sm font-bold text-gray-100">Subject Assigned</h2>
-                            <p class="font-bold text-xs text-gray-200">{{ $subject['description'] }}</p>
-                        </div>
-                        <div class="mb-2">
-                            <h2 class="text-sm font-bold text-gray-100">Code</h2>
-                            <p class="font-bold text-xs text-gray-200">{{ $subject['subject_code'] }}</p>
-                        </div>
-                        <div class="mb-2">
-                            <h2 class="text-sm font-bold text-gray-100">Section</h2>
-                            <p class="font-bold text-xs text-gray-200">{{ $subject['section'] }}</p>
-                        </div>
-                        <div class="text-center">
-                            <form action="{{ route('instructor.removeSubject', ['instructor_id' => $instructor->instructor_id, 'subject_code' => $subject['subject_code'] ]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-700 px-2 py-1 font-semibold rounded text-white text-xs w-1/2">                   
-                                    Remove <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
+            <div class="relative grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5 p-4 z-0">
+                @php
+                    // Define an array of background colors
+                    $colors = [
+                        'bg-blue-500',
+                        'bg-green-500',
+                        'bg-red-500',
+                        'bg-yellow-500',
+                        'bg-purple-500',
+                        'bg-orange-500',
+                        'bg-pink-500',
+                        'bg-teal-500',
+                        'bg-indigo-500',
+                        'bg-gray-500'
+                    ];
+                @endphp
+
+                @foreach($allSubjectsAssigned as $index => $subject)
+                    <div class="relative bg-cover bg-center shadow-md rounded p-3 opacity-85 {{ $colors[$index % count($colors)] }}">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 rounded"></div>
+                        <div class="relative z-10">
+                            <div class="mb-2">
+                                <h2 class="text-sm font-bold text-gray-100"></h2>
+                                <p class="font-bold text-xs text-gray-200">{{ $subject['description'] }}</p>
+                            </div>
+                            <div class="mb-2">
+                                <h2 class="text-sm font-bold text-gray-100"></h2>
+                                <p class="font-bold text-xs text-gray-200">{{ $subject['subject_code'] }}</p>
+                            </div>
+                            <div class="mb-2">
+                                <h2 class="text-sm font-bold text-gray-100"></h2>
+                                <p class="font-bold text-xs text-gray-200">{{ $subject['section'] }}</p>
+                            </div>
+                            <div class="text-center">
+                                <form action="{{ route('instructor.removeSubject', ['instructor_id' => $instructor->instructor_id, 'subject_code' => $subject['subject_code'] ]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-700 px-2 py-1 font-semibold rounded text-white text-xs w-1/2">                   
+                                        Remove <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
+
         
-                <div class="col-span-1 sm:col-span-2 md:col-span-3 text-center">
-                    <button class="w-full md:w-60 py-1 bg-green-800 text-white border-2 border-green-900 rounded mt-2" id="addSubjectButton">
+                <div class="col-span-1 sm:col-span-3 md:col-span-4 text-center">
+                    <button class="w-full md:w-60 py-1 bg-gray-700 text-white  border-gray-600 rounded mt-2" id="addSubjectButton">
                         <i class="fas fa-plus"></i> Add Subject
                     </button>
                 </div>
             </div>
         </div>
         
+        <a href="{{ route('instructor.feedback') }}" 
+            class="fixed bottom-4 right-4 sm:text-sm text-yellow-500 bg-gray-100 border-2 border-gray-200 text-white p-3 rounded-full shadow-lg hover:bg-red-700 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            <i class="fas fa-star"></i>
+        </a>
         
     </div>
 </div>
@@ -217,7 +244,8 @@
         }
 
         // Update date and time every second
-        setInterval(updateDateTime, 1000);
+        setInterval(updateDateTime, 100
+        0);
 
         // Initial update
         updateDateTime();

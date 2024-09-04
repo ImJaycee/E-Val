@@ -52,10 +52,10 @@
             <i class="fas fa-star"></i>
             <span>Instructors Ranking</span>
         </a> --}}
-        <a href="{{route('student.feedback')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
+        {{-- <a href="{{route('student.feedback')}}" class="px-5 py-4 flex items-center space-x-4 border-b rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-comment"></i>
             <span>Feedback</span>
-        </a>
+        </a> --}}
         {{-- <a href="{{route('student.profile', ['student_id' => $student_id])}}" class="px-5 py-4 border-b flex items-center space-x-4 rounded-sm text-gray-700 hover:bg-gray-200 group">
             <i class="fas fa-user"></i>
             <span>Profile</span>
