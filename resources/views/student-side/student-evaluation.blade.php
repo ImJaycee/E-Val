@@ -366,7 +366,17 @@
                                 <!-- Comments -->
                                 <div class="mb-4">
                                     <label class="block text-sm font-semibold">Comments</label>
-                                    <textarea name="comments" class="w-full border border-gray-300 rounded-md p-2" required autocorrect="off" autocomplete="off" spellcheck="false"></textarea>
+                                    <textarea 
+                                        name="comments" 
+                                        id="comments" 
+                                        class="w-full border border-gray-300 rounded-md p-2" 
+                                        required 
+                                        autocorrect="off" 
+                                        autocomplete="off" 
+                                        spellcheck="false"
+                                        placeholder="Enter your comments here (up to 100 words)"
+                                    ></textarea>
+                                    <p id="wordCountMessage" class="text-red-500 text-sm mt-1"></p>
                                 </div>
                                 
                                 <!-- Submit and close buttons -->
@@ -406,6 +416,29 @@
     }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('comments');
+        const messageElement = document.getElementById('wordCountMessage');
+        const maxWords = 100;
+    
+        function checkWordLimit() {
+            const words = textarea.value.trim().split(/\s+/).filter(Boolean);
+            const wordCount = words.length;
+            
+            if (wordCount > maxWords) {
+                messageElement.textContent = `You have exceeded the word limit of ${maxWords}.`;
+                textarea.value = words.slice(0, maxWords).join(' ');
+            } else {
+                messageElement.textContent = `${maxWords - wordCount} words remaining.`;
+            }
+        }
+    
+        textarea.addEventListener('input', checkWordLimit);
+        // Initialize the word count message
+        checkWordLimit();
+    });
+    </script>
 
     <!-- Script For modal too  -->
     {{-- <script>

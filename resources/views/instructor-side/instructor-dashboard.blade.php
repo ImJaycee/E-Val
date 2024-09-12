@@ -138,14 +138,11 @@
                     <div class="mb-3">
                         <label for="subject_code" class="block text-gray-700 text-sm font-bold mb-2">Course Code</label>
                         <select id="subject_code" name="subject_code" required onfocus="clearError()"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
+                            class="shadow appearance-none border rounded w-full text-sm py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
                             <option value="" disabled selected>Select Subject</option>
-                            <option value="SAM 413">SAM 413</option>
-                            <option value="CLDCOMP 413">CLDCOMP 413</option>
-                            <option value="ASIA 413">ASIA 413</option>
-                            <option value="CAP 413">CAP 413</option>
-                            <option value="CIS 323">CIS 323</option>
-                            <option value="SIA 323">SIA 323</option>
+                            @foreach($AllSubjectCodes as $subjectcodes) {{-- Loop through all subject codes --}}
+                                <option value="{{$subjectcodes->subject_code}}">{{$subjectcodes->subject_code}}</option>
+                            @endforeach
                             <!-- Add more options as needed -->
                         </select>  
                     </div>

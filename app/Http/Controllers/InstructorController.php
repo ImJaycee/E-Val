@@ -89,6 +89,7 @@ class InstructorController extends Controller
     } // end login process
 
     public function Instructor_dashboard($instructor_id){ //Instructor dashboard
+        $AllSubjectCodes = Subject::orderBy('subject_code', 'asc')->get();
         $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
 
         // Get the subjects assigned for instructor
@@ -109,7 +110,7 @@ class InstructorController extends Controller
         }
 
 
-        return view('instructor-side.instructor-dashboard', compact('instructor', 'allSubjectsAssigned'));
+        return view('instructor-side.instructor-dashboard', compact('instructor', 'allSubjectsAssigned', 'AllSubjectCodes'));
     }
 
     public function logout(Request $request){//logout
@@ -221,7 +222,7 @@ class InstructorController extends Controller
                 $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
 
                 $AllPeers[] = [
-                    'peerName' => $pfps->firstname . ' ' . $pfps->lastname,
+                    'peerName' => $peer->firstname . ' ' . $peer->lastname,
                     'peerID' => $peer->instructor_id,
                     'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
                     'pfp' => $pfps->pfp ?? null,
@@ -270,15 +271,18 @@ class InstructorController extends Controller
         $sentiment = $analyzer->getSentiment($translatedComment); // get the sentiment of the comments
         $compound = $sentiment['compound']; // Get the compound score from the sentiment
 
-        $threshold = 0; // Set your threshold value here
-        
-        if ($compound > $threshold) {
-            $sentimentLabel = 'Best';
-        } elseif ($compound < $threshold) {
-            $sentimentLabel = 'Good';
-        } else {
-            $sentimentLabel = 'Better';
-        }
+                // Define thresholds for sentiment classification
+                $threshold = 0; // Since you're focusing only on positive and negative, use 0 as the threshold
+
+                // Sentiment classification based purely on positive or negative
+                if ($compound > $threshold) {
+                    $sentimentLabel = 'Best'; // Positive sentiment
+                } else {
+                    $sentimentLabel = 'Good'; // Negative sentiment
+                }
+                
+
+        // dd($comments,$translatedComment, $sentiment,$sentimentLabel);
         $validated['sentiment'] = $sentimentLabel;
         $validated['semester'] = request('semester');
         $validated['A_Y'] = request('A_Y');
@@ -370,7 +374,7 @@ class InstructorController extends Controller
                 $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
     
                 $AllPeers[] = [
-                    'peerName' => $pfps->firstname . ' ' . $pfps->lastname,
+                    'peerName' => $peer->firstname . ' ' . $peer->lastname,
                     'peerID' => $peer->instructor_id,
                     'status' => $peerEvalStatus ? 'Submitted' : 'Not submitted',
                     'pfp' => $pfps->pfp ?? null,
@@ -383,15 +387,14 @@ class InstructorController extends Controller
             ->where('A_Y', $selectedAcademicYear)
             ->get()
             ->map(function ($evaluation) {
-                $instructor = InstructorAccount::where('instructor_id', $evaluation->instructor_id)->first();
+                // $instructor = InstructorAccount::where('instructor_id', $evaluation->instructor_id)->first();
+
+                $instructorBackup = DlcInstructors::where('instructor_id', $evaluation->instructor_id)->first();
         
-                if ($instructor) {
-                    $instructorName = $instructor->firstname . ' ' . $instructor->lastname;
-                    $department = $instructor->department;
-                } else {
-                    $instructorName = 'Instructor not registered';
-                    $department = 'N/A';
-                }
+            
+                    $instructorName = $instructorBackup->firstname . ' ' . $instructorBackup->lastname;
+                    $department = $instructorBackup->department;
+               
         
                 return [
                     'instructor_name' => $instructorName,
@@ -527,14 +530,78 @@ class InstructorController extends Controller
     }
 
     public function viewComments($instructor_id) {
-        // Retrieve comments for the specific instructor, ordered by the latest
-        $comments = StudentEvaluation::where('instructor_id', $instructor_id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // Retrieve the search parameters
+        $academicYear = request()->input('academic_year');
+        $semester = request()->input('semester');
+
+        if (!function_exists('getCurrentSemester')) {
+            function getCurrentSemester() {
+                $currentMonth = date('m');
+        
+                if ($currentMonth >= 8 && $currentMonth <= 12) {
+                    return '1st';
+                } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
+                    return '2nd';
+                } else {
+                    return 'semestral break'; // January is enrollment period, so no current semester
+                }
+            }
+        }
+        
+        if (!function_exists('getCurrentAcademicYear')) {
+            function getCurrentAcademicYear() {
+                $currentMonth = date('m');
+                $currentYear = date('Y');
+        
+                if ($currentMonth >= 2 && $currentMonth <= 6) {
+                    // If the current month is between February and June, it's the second semester of the academic year
+                    return ($currentYear - 1) . '-' . $currentYear;
+                } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                    // If the current month is between August and December, it's the first semester of the academic year
+                    return $currentYear . '-' . ($currentYear + 1);
+                } else {
+                    // For January and July, we assume the academic year spans two years
+                    // January is considered part of the second semester's academic year
+                    if ($currentMonth == 1 || $currentMonth == 7) {
+                        return ($currentYear - 1) . '-' . $currentYear;
+                    }
+                }
+            }
+        }
     
-        // Return the view with the comments and averages
-        return view('instructor-side.instructor-comments', compact('comments'));
+        // If no academic year is provided, set to the current academic year
+        if (!$academicYear) {
+            $academicYear = getCurrentAcademicYear();
+        }
+    
+        // If no semester is provided, set to the current semester
+        if (!$semester) {
+            $semester = getCurrentSemester();
+        }
+    
+        // Retrieve instructor details
+        $instructor = DlcInstructors::where('instructor_id', $instructor_id)->first();
+    
+        // Query to retrieve comments based on filters
+        $commentsQuery = StudentEvaluation::where('instructor_id', $instructor_id);
+    
+        if ($academicYear) {
+            $commentsQuery->where('A_Y', $academicYear);
+        }
+    
+        if ($semester) {
+            $commentsQuery->where('semester', $semester);
+        }
+    
+        $comments = $commentsQuery->orderBy('created_at', 'desc')->get();
+    
+        // Return the view with the comments and instructor details
+        return view('instructor-side.instructor-comments', compact('comments', 'instructor', 'semester','academicYear'));
     }
+    
+    
+    
+    
     
 
 }
