@@ -218,7 +218,7 @@ class StudentController extends Controller
               'V-1' => ['required', 'string'],
               'V-2' => ['required', 'string'],
               'V-3' => ['required', 'string'],
-              'comments' => ['required', 'string'],
+              'comments' => ['required', 'string',],
           ]);
           
         $comments = $request->input('comments');
@@ -232,15 +232,14 @@ class StudentController extends Controller
         $sentiment = $analyzer->getSentiment($translatedComment); // get the sentiment of the comments
         $compound = $sentiment['compound']; // Get the compound score from the sentiment
 
-        $threshold = 0; // Set your threshold value here
-        
-        if ($compound > $threshold) {
-            $sentimentLabel = 'Best';
-        } elseif ($compound < $threshold) {
-            $sentimentLabel = 'Good';
-        } else {
-            $sentimentLabel = 'Better';
-        }
+        $threshold = 0; // Since you're focusing only on positive and negative, use 0 as the threshold
+
+                // Sentiment classification based purely on positive or negative
+                if ($compound > $threshold) {
+                    $sentimentLabel = 'Best'; // Positive sentiment
+                } else {
+                    $sentimentLabel = 'Good'; // Negative sentiment
+                }
         $validated['sentiment'] = $sentimentLabel;
 
         $totalScore = $validated['I-1'] + $validated['I-2'] + $validated['I-3'] + $validated['II-1'] + $validated['II-2'] + $validated['II-3'] + $validated['II-4'] + $validated['III-1'] + $validated['III-2'] + $validated['IV-1'] + $validated['IV-2'] + $validated['V-1'] + $validated['V-2'] + $validated['V-3'];

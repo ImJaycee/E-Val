@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('V-1'); // Part 5 Question1
             $table->string('V-2');
             $table->string('V-3');
-            $table->string('comments');
+            $table->text('comments');
             $table->string('sentiment');
             $table->string('I_Total');
             $table->string('II_Total');

@@ -13,73 +13,212 @@
 
 <x-nav-instructor/> <!--Include nav and sidebar-->
 
-<div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
+<div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-2 mx-2">
     <!-- Main Container -->
-    <div class="lg:flex gap-4 items-stretch">
-        <!-- White Box -->
-        <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full shadow-md lg:w-[100%]">
-            <!-- Small Boxes -->
-            <div class="block justify-center h-full">
-                <h3 class="text-xl font-bold text-gray-700">
-                    <i>Student Comments</i>!
-                </h3>
-                <p class="text-md font-bold text-gray-600">
-                    Welcome, Instructor! This page contains anonymous comments from your students. 
-                    These comments provide valuable insights into the student experience and can help 
-                    you understand their perspectives, challenges, and suggestions. Please review 
-                    these comments to gain a better understanding of your students' feedback and 
-                    enhance your teaching approach. Your attention to these comments is greatly appreciated!
-                </p>
+    
+    <!-- Search Form -->
+    <div class="flex justify-end mb-1 no-print">
+        <form method="GET" action="{{ route('instructor.comments', ['instructor_id' => $instructor->instructor_id]) }}" class="flex gap-4 items-center">
+            <div class="flex gap-4 items-center">
+                <!-- Academic Year -->
+                <div>
+                    <label for="academic_year" class="block text-sm font-semibold">Academic Year</label>
+                    <select id="academic_year" name="academic_year" class="border border-gray-300 rounded-md p-1 text-sm">
+                        <option value="">Select A.Y</option>
+                        <option value="2024-2025" {{ request()->input('academic_year') == '2024-2025' ? 'selected' : '' }}>2024-2025</option>
+                        <option value="2025-2026" {{ request()->input('academic_year') == '2025-2026' ? 'selected' : '' }}>2025-2026</option>
+                    </select>
+                </div>
+                <!-- Semester -->
+                <div>
+                    <label for="semester" class="block text-sm font-semibold">Semester</label>
+                    <select id="semester" name="semester" class="border border-gray-300 rounded-md p-1 text-sm">
+                        <option value="">Select Semester</option>
+                        <option value="1st" {{ request()->input('semester') == '1st' ? 'selected' : '' }}>1st Semester</option>
+                        <option value="2nd" {{ request()->input('semester') == '2nd' ? 'selected' : '' }}>2nd Semester</option>
+                    </select>
+                </div>
+                <!-- Search Button -->
+                <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded text-sm mt-5 mr-1">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-        </div>
+        </form>
     </div>
 
-    <div class="bg-white rounded-lg p-4 shadow-md my-4">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">Anonymous Student Comments</h1>
-        <div class="overflow-y-auto" style="max-height: 360px">
-            @foreach($comments as $comment)
-            <div class="flex items-center mb-2 border-b">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">
-                    <img src="storage/images/test-profile.png" alt="Instructor Image" class="w-10 h-10 rounded-full mx-auto">
-                </div>
-                <div class="ml-3">
-                    <!-- Display the comment's creation date -->
-                    <p class="text-sm text-gray-600">Date: {{ $comment->created_at->format('M d, Y h:i A') }}</p>
-                    
-                    <!-- Display the ratings -->
-                    <p class="text-sm text-gray-600">
-                        <span>Average I: {{ number_format($comment->I_Total / 3, 2) ?? '-' }}</span>
-                        <span class="ml-2">Average II: {{ number_format($comment->II_Total / 4, 2) ?? '-' }}</span>
-                        <span class="ml-2">Average III: {{ number_format($comment->III_Total / 2, 2) ?? '-' }}</span>
-                        <span class="ml-2">Average IV: {{ number_format($comment->IV_Total / 2, 2) ?? '-' }}</span>
-                        <span class="ml-2">Average V: {{ number_format($comment->V_Total / 3, 2) ?? '-' }}</span> <br />
-                        <span class="">Overall avg: {{ number_format($comment->total_score / 14, 2) ?? '-' }}</span>
-                    </p>                    
-                    
-                    <!-- Display the comment -->
-                    <p class="text-gray-900 p-2 text-sm font-semibold">{{ $comment->comments }}</p>
-                    
-                    <!-- Display the sentiment -->
-                    <p class="text-sm text-gray-600">
-                        Comment Sentiment:
-                        @if($comment->sentiment == 'Good')
-                            <span class="text-green-600">{{ $comment->sentiment }}</span>
-                        @elseif($comment->sentiment == 'Better')
-                            <span class="text-blue-600">{{ $comment->sentiment }}</span>
-                        @elseif($comment->sentiment == 'Best')
-                            <span class="text-purple-600">{{ $comment->sentiment }}</span>
-                        @endif
-                    </p>
-                </div>
-            </div>
-        @endforeach
+    {{-- Table --}}
+    <div class="bg-white container mx-auto mt-2 text-center p-3 overflow-y-auto" style="height: 580px;">
         
-            <!-- Add more comments here -->
-        </div>
+            <!-- The Container to Print or Download -->
+            <div id="content-to-print-or-download" class="print-container">
+                <div class="flex items-start justify-between mb-4 mx-auto">
+                    <!-- School Logos and Details -->
+                    <img src="{{ asset('storage/images/dhvsu.png') }}" alt="School Logo" class="h-20">
+                    <div class="text-center flex-grow">
+                        <h3 class="text-md">Republic of the Philippines</h3>
+                        <h2 class="text-xl font-bold">Don Honorio Ventura State University</h2>
+                        <h3 class="text-sm">Sta. Catalina Lubao, Pampanga</h3>
+                        <p class="mt-5 text-md font-bold">LUBAO CAMPUS</p>
+                        <p class="text-md font-bold">Faculty Code: {{$instructor->instructor_id}}</p>
+                        <p class="text-md font-bold">Faculty Name: {{$instructor->lastname}}, {{$instructor->firstname}} 
+                            @if($instructor->middlename)
+                                {{ strtoupper(substr($instructor->middlename, 0, 1)) }}
+                            @else
+                                N/A
+                            @endif.
+                        </p>
+                        <p class="text-md font-bold">{{$semester}} SEMESTER - A.Y {{$academicYear}}</p>
+                    </div>
+                    <img src="{{ asset('storage/images/dlc-logo-bg.jpg') }}" alt="School Logo" class="h-20">
+                </div>
+            
+                <!-- Table Section -->
+                <div class="overflow-x-auto">
+                    <table class="divide-y divide-gray-200 border-collapse border border-gray-400" style="table-layout: auto; width: 100%;">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Equivalent</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($comments->take(100) as $comment)
+                                <tr class="{{ $loop->iteration % 50 == 0 ? 'page-break' : '' }}">
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $loop->iteration }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->total_score }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ round(($comment->total_score / 70) * 100) }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">{{ $comment->comments }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            
+                <!-- Signature Section -->
+                <div class="mt-8">
+                    <div class="flex flex-col">
+                        <!-- Conforme Section -->
+                        <div class="text-left mb-8">
+                            <p class="font-semibold">Conforme:</p>
+                            <div class="mt-10">
+                                <hr class="border-t border-gray-800 w-1/4">
+                            </div>
+                        </div>
+
+                        <!-- Certified Correct Section -->
+                        <div class="flex justify-between text-left">
+                            <div class="signature-section flex-1">
+                                <p class="font-semibold">Certified Correct:</p>
+                                <div class="mt-10">
+                                    <p class="text-md font-semibold">MARIA CHRISTINA L. MEDINA, LPT, MALEd</p>
+                                    <p>Academic Chairperson, Lubao Campus</p>
+                                </div>
+                            </div>
+                            <div class="signature-section flex-1">
+                                <div class="mt-14">
+                                    <p class="text-md font-semibold">ROWEL D. WAJE, RCE, MAEd</p>
+                                    <p>Director Lubao Campus</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .signature-section {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: left;
+                    }
+                </style>
+                
+
+            </div>
+            <!-- Print and Download Buttons -->
+            <div class=" text-right no-print">
+                <button onclick="window.print()" class="px-4 py-2 bg-gray-500 text-white rounded">Print</button>
+                <button onclick="downloadPDF()" class="px-4 py-2 bg-green-500 text-white rounded">Download as PDF</button>
+            </div>
+
+            <!-- JavaScript for PDF Download -->
+            <script>
+                function downloadPDF() {
+                    var element = document.getElementById('content-to-print-or-download');
+                    html2pdf(element, {
+                        margin: 0.5,
+                        filename: 'my_students_evaluation.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'in', format: 'legal', orientation: 'portrait' }
+                    });
+                }
+            </script>
+
+            <!-- CSS for Print Layout -->
+            <style>
+                @media print {
+                    /* Ensure content fits on the page properly */
+                    @page {
+                        size: 8.5in 14in; /* Legal size paper dimensions */
+                        margin: 0.5in; /* Adjust margins as needed */
+                    }
+                    body {
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                        font-size: 12px;
+                    }
+            
+                    /* Hide everything except the div we want to print */
+                    body * {
+                        visibility: hidden;
+                    }
+            
+                    #content-to-print-or-download, #content-to-print-or-download * {
+                        visibility: visible;
+                    }
+            
+                    #content-to-print-or-download {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                    }
+            
+                    /* Set page break behavior to handle long content */
+                    .page-break {
+                        page-break-before: always;
+                    }
+            
+                    .print-container {
+                        page-break-inside: avoid;
+                        break-inside: avoid;
+                    }
+            
+                    table {
+                        border-collapse: collapse;
+                    }
+            
+                    th, td {
+                        word-wrap: break-word;
+                        padding: 3px;
+                    }
+                    table {
+                        width: 100%;
+                        table-layout: auto;
+                    }
+                    td {
+                        word-wrap: break-word;
+                        white-space: normal;
+                    }
+                    .page-break {
+                        page-break-after: always;
+                    }
+                }
+            </style>
     </div>
-
-
 </div>
+
 
 
 <script>
@@ -110,6 +249,8 @@
     });
 </script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </body>
 
 @include('partials.footer')
