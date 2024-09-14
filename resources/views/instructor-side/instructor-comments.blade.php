@@ -84,15 +84,35 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
+                            @php
+                                $totalEquivalent = 0;
+                                $count = $comments->count();
+                            @endphp
                             @foreach($comments->take(100) as $comment)
+                                @php
+                                    $equivalent = round(($comment->total_score / 70) * 100);
+                                    $totalEquivalent += $equivalent;
+                                @endphp
                                 <tr class="{{ $loop->iteration % 50 == 0 ? 'page-break' : '' }}">
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $loop->iteration }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->total_score }}</td>
-                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ round(($comment->total_score / 70) * 100) }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">{{ $comment->comments }}</td>
                                 </tr>
                             @endforeach
+                        
+                            @php
+                                $averageEquivalent = $count > 0 ? round($totalEquivalent / $count) : 0;
+                            @endphp
+                        
+                            <!-- Add the row for average -->
+                            <tr class="bg-gray-100">
+                                <td class="px-6 py-1 text-sm font-semibold text-gray-800 text-center" colspan="2">Average</td>
+                                <td class="px-6 py-1 text-sm font-semibold text-gray-800 text-center">{{ $averageEquivalent }}</td>
+                                <td class="px-6 py-1 text-sm text-gray-800"></td>
+                            </tr>
                         </tbody>
+                        
                     </table>
                 </div>
             

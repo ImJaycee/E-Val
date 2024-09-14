@@ -18,7 +18,7 @@
 
         <!-- Logo -->
         <div class="ml-1 flex">
-            <img src="storage/images/dlc-logo-bg.jpg" alt="logo" class="h-14 w-15 p-2 rounded-full">
+            <img src="{{ asset('storage/images/dlc-logo-bg.jpg') }}" alt="logo" class="h-14 w-15 p-2 rounded-full">
             <h1 class="text-sm md:text-xl mt-4 md:mt-3 text-gray-200 font-bold">E-VAL</h1>
         </div>
 
@@ -27,7 +27,7 @@
                 @If(!empty($pfp))
                     <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/pfp/'.$pfp) }}" alt="User profile picture">
                 @else
-                    <img class="h-10 w-10 rounded-full object-cover"src="storage/images/test-profile.png" alt="User profile picture">
+                    <img class="h-10 w-10 rounded-full object-cover"src="{{ asset('storage/images/dhvsu.png') }}" alt="User profile picture">
                 @endif
             </a>
         </div>
