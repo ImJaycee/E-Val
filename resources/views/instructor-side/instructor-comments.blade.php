@@ -97,7 +97,18 @@
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $loop->iteration }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->total_score }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>
-                                    <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">{{ $comment->comments }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">
+                                        {{ $comment->comments }} -
+                                        <span class="no-print">
+                                            @if ($comment->sentiment == 'Best')
+                                                <span style="color: green;">{{ $comment->sentiment }}</span>
+                                            @elseif ($comment->sentiment == 'Good')
+                                                <span style="color: rgb(26, 68, 196);">{{ $comment->sentiment }}</span>
+                                            @else
+                                                <span style="color: gray;">{{ $comment->sentiment }}</span>
+                                            @endif
+                                        </span>
+                                    </td>
                                 </tr>
                             @endforeach
                         
@@ -182,6 +193,9 @@
                     @page {
                         size: 8.5in 14in; /* Legal size paper dimensions */
                         margin: 0.5in; /* Adjust margins as needed */
+                    }
+                    .no-print {
+                        display: none;
                     }
                     body {
                         -webkit-print-color-adjust: exact;

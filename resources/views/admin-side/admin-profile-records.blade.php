@@ -81,7 +81,7 @@
                         @foreach($instructors as $instructor)
                             <tr class="border-b">
                                 <td class="px-4 py-2 text-left align-top font-semibold text-sm text-gray-600">
-                                    <p>{{ $instructor->lastname }},{{ $instructor->firstname }} {{ $instructor->middlename }}.</p>
+                                    <p>{{ $instructor->lastname }},{{ $instructor->firstname }} {{ substr($instructor->middlename, 0, 1) }}.</p>
                                 </td>
                                 <td class="px-4 py-2 text-left font-semibold text-sm text-gray-600">
                                     <p><span>{{ $instructor->instructor_id }}</span></p>
