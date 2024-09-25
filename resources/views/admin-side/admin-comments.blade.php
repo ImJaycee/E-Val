@@ -14,7 +14,7 @@
 <body class="bg-gray-200">
 
 <x-nav-admin/> <!--Include nav and sidebar-->
-
+<x-messages/>
 <div class="lg:ml-64 lg:pl-4 lg:flex lg:flex-col lg:w-75% mt-5 mx-2">
     <!-- Main Container -->
     <div class="lg:flex gap-4 items-stretch">
@@ -34,6 +34,16 @@
                 </p>
             </div>
         </div>
+        <div class="bg-gray-400 max-w-full p-2 rounded">
+            <p class="font-bold mb-1">Offensive Word Filter</p>
+            <form action="{{route('admin.filter-words')}}" method="POST">
+                @csrf
+                <input type="text" id="word" name="word" placeholder="Enter word to block" class="p-2 border border-gray-300 rounded w-full mb-4" required>
+                <button type="submit" class="bg-red-500 text-white p-2 rounded hover:bg-red-600 text-sm">Add to Filter</button>
+            </form>
+        </div>
+        
+        
     </div>
 
     <div class="container mx-auto mt-5 ">

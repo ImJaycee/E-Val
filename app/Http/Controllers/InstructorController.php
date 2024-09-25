@@ -8,6 +8,7 @@ use App\Models\DlcInstructors;
 use App\Models\StudentEvaluation;
 use App\Models\PeerToPeer;
 use App\Models\Subject;
+use App\Models\FilterWords;
 use App\Models\UsersFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -581,19 +582,33 @@ class InstructorController extends Controller
     
         // Retrieve instructor details
         $instructor = DlcInstructors::where('instructor_id', $instructor_id)->first();
-    
+
+        // Retrieve blocked/filtered words
+        $filteredWords = FilterWords::pluck('word')->toArray(); // Get an array of filtered words
+
         // Query to retrieve comments based on filters
         $commentsQuery = StudentEvaluation::where('instructor_id', $instructor_id);
-    
+
+        // Apply academic year filter
         if ($academicYear) {
             $commentsQuery->where('A_Y', $academicYear);
         }
-    
+
+        // Apply semester filter
         if ($semester) {
             $commentsQuery->where('semester', $semester);
         }
-    
+
+        // Apply filter for blocked words
+        if (!empty($filteredWords)) {
+            foreach ($filteredWords as $word) {
+                $commentsQuery->where('comments', 'NOT LIKE', "%{$word}%");
+            }
+        }
+
+        // Fetch the comments
         $comments = $commentsQuery->orderBy('created_at', 'desc')->get();
+
     
         // Return the view with the comments and instructor details
         return view('instructor-side.instructor-comments', compact('comments', 'instructor', 'semester','academicYear'));

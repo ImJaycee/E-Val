@@ -14,6 +14,7 @@ use App\Models\PeerToPeer;
 use App\Models\DlcInstructors;
 use App\Models\PeerEvaluation;
 use App\Models\UsersFeedback;
+use App\Models\FilterWords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -1062,6 +1063,19 @@ public function Admin_dashboard($admin_id) {
         // Delete all students from the original table after archiving them
         StudentsTokenAccounts::truncate();
             return redirect()->route('admin.profile', ['admin_id' => session('admin_id')])->with('message', 'Students removed successfully');
+    }
+
+
+    public function filterWords(Request $request){
+        $validated = $request->validate([
+            "word" => ['required', ],
+        ]);
+        $filter = FilterWords::create($validated);
+
+        if ($filter){
+           return redirect()->route('admin.comments', ['admin_id' =>session('admin_id')])->with('message','Word Added to filter successfully');
+        }
+        return redirect()->route('admin.comments', ['admin_id' =>session('admin_id')])->with('message','try again!');
     }
 
     
