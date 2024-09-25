@@ -225,6 +225,8 @@ Route::controller(AdminController::class)->group(function(){
         // Move all student to archives
         Route::post('/admin-move-student-to-archives', 'moveStudentToArchives')->name('admin.move-student-to-archives');
 
+        Route::post('/admin-filter-words', 'filterWords')->name('admin.filter-words');
+
        
     }); //end of authenticated routes
 
