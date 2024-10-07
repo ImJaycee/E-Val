@@ -23,6 +23,7 @@ use App\Mail\EvaluationTokenMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -362,12 +363,7 @@ public function Admin_dashboard($admin_id) {
 
                         $students = StudentsTokenAccounts::all();
 
-                        foreach ($students as $student) {
-                            $email = $student->email;
-                            $token = $student->eval_token;
-
                             //send token via email
-                            // Assuming $students is a collection of student objects
                             foreach ($students as $student) {
                                 $email = $student->email;
                                 $token = $student->eval_token;
@@ -397,8 +393,6 @@ public function Admin_dashboard($admin_id) {
                                 }
                             }
                             
-
-                        }
                 }
 
         session(['eval_status' => $status]);

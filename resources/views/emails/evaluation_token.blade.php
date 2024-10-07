@@ -6,7 +6,7 @@
 <body style="background-color: #f3f4f6; font-family: Arial, sans-serif; padding: 20px;">
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <div style="background-color: #1f2937; padding: 20px; text-align: center;">
-            <img src="https://dhvsu.edu.ph/images/banners/dhvsu.png" alt="Logo" style="max-width: 100px; margin: 0 auto;">
+            <img src="https://upload.wikimedia.org/wikipedia/en/5/52/Don_Honorio_Ventura_State_University_logo.png" alt="Logo" style="max-width: 100px; margin: 0 auto;">
         </div>
         <div style="padding: 20px;">
             <h1 style="font-size: 24px; font-weight: bold; color: #1f2937;">Your Evaluation Token</h1>

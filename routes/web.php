@@ -67,7 +67,7 @@ Route::controller(StudentController::class)->group(function(){
     Route::get('/logout-inactive','logout_inactive')->name('logout-inactive'); // inactive logout route
 
 
-    Route::group(['middleware' => 'auth:students'], function () { 
+    Route::group(['middleware' => ['auth:students', 'preventBackHistory']], function () { 
         //Student Dashboard
         Route::post('/student-add-subject{student_id}', 'AddSubject')->name('student.addSubject');//Adding subject
         Route::match(['post', 'delete'], '/student-remove-subject/{student_id}/{subject_code}', 'RemoveSubject')->name('student.removeSubject');//Removing subject
@@ -117,7 +117,7 @@ Route::controller(InstructorController::class)->group(function(){
     Route::get('/instructor-dashboard{instructor_id}', 'Instructor_dashboard')->name('instructor.dashboard')->middleware('auth:instructors'); 
     Route::post('/instructor-logout', 'logout')->name('instructor_logout'); // Protect the logout route
 
-    Route::group(['middleware' => 'auth:instructors'], function () { 
+    Route::group(['middleware' => ['auth:instructors', 'preventBackHistory']], function () { 
         // Dashboard routes
         Route::post('/instructor-add-subject{instructor_id}', 'AddSubject')->name('instructor.addSubject');//Adding subject
         Route::match(['post', 'delete'], '/instructor-remove-subject/{instructor_id}/{subject_code}', 'RemoveSubject')->name('instructor.removeSubject');//Removing subject
@@ -161,7 +161,7 @@ Route::controller(AdminController::class)->group(function(){
     Route::post('/admin-logout', 'logout')->name('admin_logout'); // Protect the logout route
     Route::get('/admin-dashboard{admin_id}', 'Admin_dashboard')->name('admin.dashboard')->middleware('auth:admins');
     
-    Route::group(['middleware' => 'auth:admins'], function () { 
+    Route::group(['middleware' => ['auth:admins', 'preventBackHistory']], function () { 
         // Student management
         Route::get('/admin-student-management{admin_id}', 'Admin_manageStudent')->name('admin.manageStudent');
 

@@ -32,7 +32,7 @@
 </nav>
 
 <!-- Sidebar -->
-<div id="sideNav" class="lg:block hidden bg-gray-100 w-64 h-screen fixed rounded-none border-none">
+<div id="sideNav" class="lg:block hidden bg-gray-100 w-64 h-screen fixed rounded-none border-none z-50">
     <!-- Items -->
     <div class="p-4 space-y-4">
         <!-- Home -->
@@ -70,13 +70,14 @@
             <i class="fas fa-user"></i>
             <span>Profile & Records</span>
         </a>
-        <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
-            <i class="fas fa-sign-out-alt"></i>
-            <form action="{{ route('admin_logout') }}" method="post">
-                @csrf
-                <button type="submit">Log out</button>
-            </form>
-        </a>
+        <form action="{{ route('admin_logout') }}" method="post" class="flex items-center">
+            @csrf
+            <button type="submit" class="w-full text-left px-4 py-3 flex items-center space-x-4 rounded-md text-gray-700 hover:bg-gray-200 group">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Log out</span>
+            </button>
+        </form>
+              
     </div>
     {{-- <footer class="bg-gray-700 text-gray-200 py-3 text-center rounded-sm mt-36">
         <p class="text-sm">&copy; 2024 All Rights Reserved.</p>
