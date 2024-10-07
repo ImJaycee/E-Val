@@ -1,9 +1,3 @@
-@if(session('reload'))
-    <script>
-        location.reload();
-    </script>
-@endif
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

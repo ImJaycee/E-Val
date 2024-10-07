@@ -98,8 +98,9 @@
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->total_score }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">
-                                        {{ $comment->comments }} -
+                                        {{ $comment->comments }} 
                                         <span class="no-print">
+                                            -
                                             @if ($comment->sentiment == 'Best')
                                                 <span style="color: green;">{{ $comment->sentiment }}</span>
                                             @elseif ($comment->sentiment == 'Good')
