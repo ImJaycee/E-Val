@@ -516,7 +516,7 @@ class InstructorController extends Controller
             $days = $interval->format('%a');
 
             if ($days < 30) {
-                return back()->with('message', 'Feedback can only be submitted once a month.');
+                return back()->with('message', 'Feedback can be submitted only once per semester.');
             }
         }
 
