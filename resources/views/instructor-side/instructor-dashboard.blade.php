@@ -176,14 +176,22 @@
                     </div>
                     <div class="mb-3">
                         <label for="section" class="block text-gray-700 text-sm font-bold mb-2">Section</label>
-                        <select id="section" name="section" required onfocus="clearError()"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={{old('program')}}>
-                            <option value="" disabled selected>Section</option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <!-- Add more options as needed -->
-                        </select>  
+                        <div id="section" name="section" required onfocus="clearError()"
+                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <div>
+                                <input type="checkbox" name="sections[]" value="A">
+                                <label for="sectionA">A</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="sections[]" value="B">
+                                <label for="sectionB">B</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="sections[]" value="C">
+                                <label for="sectionC">C</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm" id="saveSubjectButton">

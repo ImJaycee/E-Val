@@ -526,71 +526,11 @@ public function Admin_dashboard($admin_id) {
 
 
     // Admin Comments view controller
-    public function viewComments($admin_id){ // view comments
+    public function viewComments($admin_id){ // view Student comments
         $admin = AdminAccount::where('admin_id', $admin_id)->first();
         $instructors = InstructorAccount::all();
         return view('admin-side.admin-comments', compact('admin', 'instructors'));
     }
-
-    // public function showComments(Request $request, $admin_id, $instructor_id){ // show comments
-        
-    //     $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
-    //     $comments = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->orderBy('created_at', 'desc')->get();
-       
-
-
-    //     $allComments = [];
-
-        
-    //     foreach ($comments as $comment) {
-    //         // Filter out "N/A" and empty comments
-    //         if ($comment->comments === "N/A" || empty(trim($comment->comments))) {
-    //             continue; // Skip comment
-    //         }
-
-    //         // Filter out comments with dots
-    //         if (strpos($comment->comments, '.') !== false) {
-    //             continue; // Skip comment
-    //         }
-
-    //         // Filter emoji
-    //         $commentWithoutEmojis = preg_replace('/[\x{1F600}-\x{1F64F}]|[\x{1F300}-\x{1F5FF}]|[\x{1F680}-\x{1F6FF}]|[\x{2600}-\x{26FF}]|[\x{2700}-\x{27BF}]/u', '', $comment->comments);
-    
-    //         // If the comment becomes empty after removing emojis, skip it
-    //         if (empty(trim($commentWithoutEmojis))) {
-    //             continue; // Skip comment
-    //         }
-    //         // Filter words
-    //         $badWords = ['Fuck you', 'tanginamo', 'pakyu', 'ulol','damo','bobo','tanga','idiot','stupid'];
-    //         $containsBadWord = false;
-    //         foreach ($badWords as $badWord) {
-    //             if (stripos($comment->comments, $badWord) !== false) {
-    //                 $containsBadWord = true;
-    //                 break;
-    //             }
-    //         }
-    //         if ($containsBadWord) {
-    //             continue; // Skip comment
-    //         }
-
-    //         // Add filtered comment to $allComments
-    //         $allComments[] = [
-    //             'comment' => $comment->comments,
-    //             'I_avg' => number_format($comment->I_Total / 3, 2),
-    //             'II_avg' => number_format($comment->II_Total /4, 2),
-    //             'III_avg' => number_format($comment->III_Total /2, 2),
-    //             'IV_avg' => number_format($comment->IV_Total /2, 2),
-    //             'V_avg' => number_format($comment->V_Total /3, 2),
-    //             'overall_avg' => number_format($comment->total_score/14, 2),
-    //             'sentiment' => $comment->sentiment,
-    //             'semester' => $comment->semester,
-    //             'A_Y' => $comment->A_Y,
-    //             'time' => $comment->created_at->format('Y-m-d H:i:s'),
-    //         ];
-    //     }
-
-    //     return view('admin-side.admin-show-comments', compact('instructor', 'allComments'));
-    // }
 
     public function showComments(Request $request, $admin_id, $instructor_id){ // show comments
         
@@ -659,6 +599,75 @@ public function Admin_dashboard($admin_id) {
         $comments = $commentsQuery->orderBy('created_at', 'desc')->get();
         
         return view('admin-side.admin-show-comments', compact('comments', 'instructor', 'semester','academicYear'));
+    }
+
+    public function showPeerComments(Request $request, $admin_id, $instructor_id){ // show comments
+        
+        $academicYear = request()->input('academic_year');
+        $semester = request()->input('semester');
+
+        if (!function_exists('getCurrentSemester')) {
+            function getCurrentSemester() {
+                $currentMonth = date('m');
+        
+                if ($currentMonth >= 8 && $currentMonth <= 12) {
+                    return '1st';
+                } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
+                    return '2nd';
+                } else {
+                    return 'semestral break'; // January is enrollment period, so no current semester
+                }
+            }
+        }
+        
+        if (!function_exists('getCurrentAcademicYear')) {
+            function getCurrentAcademicYear() {
+                $currentMonth = date('m');
+                $currentYear = date('Y');
+        
+                if ($currentMonth >= 2 && $currentMonth <= 6) {
+                    // If the current month is between February and June, it's the second semester of the academic year
+                    return ($currentYear - 1) . '-' . $currentYear;
+                } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                    // If the current month is between August and December, it's the first semester of the academic year
+                    return $currentYear . '-' . ($currentYear + 1);
+                } else {
+                    // For January and July, we assume the academic year spans two years
+                    // January is considered part of the second semester's academic year
+                    if ($currentMonth == 1 || $currentMonth == 7) {
+                        return ($currentYear - 1) . '-' . $currentYear;
+                    }
+                }
+            }
+        }
+    
+        // If no academic year is provided, set to the current academic year
+        if (!$academicYear) {
+            $academicYear = getCurrentAcademicYear();
+        }
+    
+        // If no semester is provided, set to the current semester
+        if (!$semester) {
+            $semester = getCurrentSemester();
+        }
+    
+        // Retrieve instructor details
+        $instructor = DlcInstructors::where('instructor_id', $instructor_id)->first();
+    
+        // Query to retrieve comments based on filters
+        $commentsQuery = PeerEvaluation::where('instructor_id', $instructor_id);
+    
+        if ($academicYear) {
+            $commentsQuery->where('A_Y', $academicYear);
+        }
+    
+        if ($semester) {
+            $commentsQuery->where('semester', $semester);
+        }
+    
+        $comments = $commentsQuery->orderBy('created_at', 'desc')->get();
+        
+        return view('admin-side.admin-peer-comments', compact('comments', 'instructor', 'semester','academicYear'));
     }
 
 

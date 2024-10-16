@@ -193,6 +193,7 @@ Route::controller(AdminController::class)->group(function(){
         //Admin comments view
         Route::get('/admin-comments{admin_id}', 'viewComments')->name('admin.comments');
         Route::get('admin/{admin_id}/comments/{instructor_id}', 'showComments')->name('admin.showComments');
+        Route::get('admin/{admin_id}/peer/comments/{instructor_id}', 'showPeerComments')->name('admin.showPeerComments');
 
 
         //Admin feedback

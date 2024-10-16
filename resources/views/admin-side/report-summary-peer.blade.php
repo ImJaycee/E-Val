@@ -22,7 +22,7 @@
                 <h3 class="text-md">Republic of the Philippines</h3>
                 <h2 class="text-xl font-bold">Don Honorio Ventura State University</h2>
                 <h3 class="text-sm">Sta. Catalina Lubao, Pampanga</h3>
-                <p class="mt-5 text-md font-bold">SUMMARY PEER TO PEER EVALUATION</p>
+                <p class="mt-5 text-md font-bold">SUMMARY PEER EVALUATION</p>
                 <p class="text-md font-bold">{{ $semester }} SEMESTER - A.Y {{ $academicYear }}</p>
             </div>
             <img src="{{ asset('storage/images/dlc-logo-bg.jpg') }}" alt="School Logo" class="h-20">

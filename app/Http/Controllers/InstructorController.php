@@ -125,57 +125,63 @@ class InstructorController extends Controller
         ->header('Pragma', 'no-cache');
     }
 
-    public function AddSubject(Request $request, $instructor_id){ //add subject
+    public function AddSubject(Request $request, $instructor_id) {
+        // Validate the inputs
         $validated = $request->validate([
             'instructor_id' => ['required'],
             'subject_code' => ['required', 'string'],
             'program' => ['required', 'string'],
             'year' => ['required', 'string'],
-            'section' => ['required', 'string'],
-        ]);        
-        //dd($validated);
-        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
-
-        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
-        $subject = SubjectAssigned::where('subject_code', $validated['subject_code'])
-        ->where('instructor_id', $instructor_id)
-        ->where('section', $section)
-        ->first();
-
-        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
-
-        $subjectTaken = SubjectAssigned::where('subject_code', $validated['subject_code'])
-        ->where('section', $section)
-        ->first();
-    
-        if ($subject) {
-             return back()->with('message', 'Subject added already!');
-        }
-
-        if ($subjectTaken) {
-            return back()->with('message', 'Subject already taken!');
-        }
-
-        $section = $validated['program'] ." ". $validated['year'] . $validated['section'];
-
-        $assigned_to =  $validated['subject_code'] . " " . $section;
-
-        $subjectAssigned = SubjectAssigned::create([
-            'instructor_id' => $instructor_id,
-            'instructor_name' => $instructor->firstname . ' ' . $instructor->lastname,
-            'subject_code' => $validated['subject_code'],
-            'section' => $section,
-            'assigned_to' => $assigned_to,
+            'sections' => ['required', 'array'], // Validate array of sections
+            'sections.*' => ['string'], // Validate each section in the array
         ]);
-
-
-        if ($subjectAssigned) {
-            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Subject added successfully!')->with('reload', true);
-           
-        } else {
-            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])->with('message', 'Failed to add subject!')->with('reload', true);
+    
+        $instructor = InstructorAccount::where('instructor_id', $instructor_id)->first();
+        
+        $sections = $validated['sections']; // Array of sections selected
+        $subject_code = $validated['subject_code'];
+        $program = $validated['program'];
+        $year = $validated['year'];
+    
+        $subject_taken = false; // Flag to check if any section was already taken
+    
+        foreach ($sections as $section) {
+            $full_section = $program . " " . $year . $section;
+    
+            // Check if the section is already taken by another instructor
+            $existing_subject = SubjectAssigned::where('subject_code', $subject_code)
+                ->where('section', $full_section)
+                ->first();
+    
+            if ($existing_subject) {
+                // Set the flag and stop further processing
+                $subject_taken = true;
+                break;
+            }
+    
+            // Assign subject if not taken
+            $assigned_to = $subject_code . " " . $full_section;
+    
+            SubjectAssigned::create([
+                'instructor_id' => $instructor_id,
+                'instructor_name' => $instructor->firstname . ' ' . $instructor->lastname,
+                'subject_code' => $subject_code,
+                'section' => $full_section,
+                'assigned_to' => $assigned_to,
+            ]);
         }
+    
+        // Return feedback based on whether the subject was already taken
+        if ($subject_taken) {
+            return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])
+                ->with('message', 'Subject already taken!');
+        }
+    
+        return redirect()->route('instructor.dashboard', ['instructor_id' => $instructor_id])
+            ->with('message', 'Subject added successfully!')
+            ->with('reload', true);
     }
+    
 
     public function RemoveSubject($instructor_id, $subject_code){ //remove subject
         $subject = SubjectAssigned::where('instructor_id', $instructor_id)
