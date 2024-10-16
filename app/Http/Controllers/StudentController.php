@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\InstructorAccount;
-use App\Models\StudentAccount;
 use App\Models\StudentsTokenAccounts;
-use App\Models\SubjectEnrolled;
 use App\Models\SubjectAssigned;
 use App\Models\StudentEvaluation;
 use App\Models\UsersFeedback;
 use App\Models\EvaluationStatus;
-use App\Models\EnrolledStudents;
-use App\Models\Subject;
 use Carbon\Translator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -304,8 +300,8 @@ class StudentController extends Controller
             $interval = date_diff($lastFeedbackDate, $currentDate);
             $days = $interval->format('%a');
 
-            if ($days < 30) {
-                return back()->with('message', 'Feedback can only be submitted once a month.');
+            if ($days < 152) {
+                return back()->with('message', 'Feedback can be submitted only once per semester.');
             }
         }
 

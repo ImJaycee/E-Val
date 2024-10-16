@@ -20,10 +20,10 @@
     
     <!-- Search Form -->
     <div class="flex justify-end mb-1 no-print">
-        <form method="GET" action="{{ route('admin.showComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="flex gap-4 items-center">
+        <form method="GET" action="{{ route('admin.showPeerComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="flex gap-4 items-center">
             <div class="flex gap-4 items-center">
                 <!-- Academic Year -->
-                <a href="{{ route('admin.showPeerComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="bg-green-700 py-1 px-2 rounded text-sm text-gray-200">Instructors</a>
+                <a href="{{ route('admin.showComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="bg-green-700 py-1 px-2 rounded text-sm text-gray-200">Students</a>
                 <div>
                     <label for="academic_year" class="block text-sm font-semibold">Academic Year</label>
                     <select id="academic_year" name="academic_year" class="border border-gray-300 rounded-md p-1 text-sm">
@@ -70,6 +70,7 @@
                                 N/A
                             @endif.
                         </p>
+                        <p class="text-sm font-semibold">PEER EVALUATION</p>
                         <p class="text-md font-bold">{{$semester}} SEMESTER - A.Y {{$academicYear}}</p>
                     </div>
                     <img src="{{ asset('storage/images/dlc-logo-bg.jpg') }}" alt="School Logo" class="h-20">
@@ -80,7 +81,7 @@
                     <table class="divide-y divide-gray-200 border-collapse border border-gray-400" style="table-layout: auto; width: 100%;">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Peer</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Equivalent</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
@@ -93,12 +94,12 @@
                             @endphp
                             @foreach($comments->take(100) as $comment)
                                 @php
-                                    $equivalent = round(($comment->total_score / 70) * 100);
+                                    $equivalent = round(($comment->overall_total / 70) * 100);
                                     $totalEquivalent += $equivalent;
                                 @endphp
                                 <tr class="{{ $loop->iteration % 50 == 0 ? 'page-break' : '' }}">
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $loop->iteration }}</td>
-                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->total_score }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->overall_total }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">
                                         {{ $comment->comments }} 
