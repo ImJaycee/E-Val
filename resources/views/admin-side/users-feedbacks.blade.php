@@ -38,7 +38,7 @@
 
     <div class="bg-white rounded-lg p-4 shadow-md my-4">
         <h1 class="text-2xl font-bold text-gray-800 mb-4"></h1>
-        <div class="overflow-y-auto" style="max-height: 360px">
+        <div class="overflow-y-auto" style="max-height: 430px">
             @foreach($feedbacks as $feedback)
                 <div class="flex items-center mb-2">
                     <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0">

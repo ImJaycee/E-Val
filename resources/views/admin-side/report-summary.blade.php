@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($instructors as $instructor)
+                    @foreach($instructors as $instructor)     
                         <tr>
                             <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-800 text-center">{{ $loop->iteration }}</td>
                             <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-800 text-center">{{ $instructor->lastname }}, {{ $instructor->firstname }} {{ strtoupper(substr($instructor->middlename, 0, 1)) }}.</td>

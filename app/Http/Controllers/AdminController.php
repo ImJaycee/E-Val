@@ -108,6 +108,41 @@ public function Admin_dashboard($admin_id) {
     // Fetch admin details
     $admin = AdminAccount::where('admin_id', $admin_id)->first();
 
+    if (!function_exists('getCurrentSemester')) {
+        function getCurrentSemester() {
+            $currentMonth = date('m');
+    
+            if ($currentMonth >= 8 && $currentMonth <= 12) {
+                return '1st';
+            } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
+                return '2nd';
+            } else {
+                return 'semestral break'; // January is enrollment period, so no current semester
+            }
+        }
+    }
+    
+    if (!function_exists('getCurrentAcademicYear')) {
+        function getCurrentAcademicYear() {
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+    
+            if ($currentMonth >= 2 && $currentMonth <= 6) {
+                // If the current month is between February and June, it's the second semester of the academic year
+                return ($currentYear - 1) . '-' . $currentYear;
+            } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                // If the current month is between August and December, it's the first semester of the academic year
+                return $currentYear . '-' . ($currentYear + 1);
+            } else {
+                // For January and July, we assume the academic year spans two years
+                // January is considered part of the second semester's academic year
+                if ($currentMonth == 1 || $currentMonth == 7) {
+                    return ($currentYear - 1) . '-' . $currentYear;
+                }
+            }
+        }
+    }
+
     // Get all instructors
     $instructors = InstructorAccount::all();
 
@@ -138,7 +173,13 @@ public function Admin_dashboard($admin_id) {
         }
 
         // Get the completed evaluations count for the instructor
-        $completedEvaluations = StudentEvaluation::where('instructor_id', $instructor->instructor_id)->count();
+        $semester = getCurrentSemester();
+        $academicYear = getCurrentAcademicYear();
+        
+        $completedEvaluations = StudentEvaluation::where('instructor_id', $instructor->instructor_id)
+        ->where('semester',$semester)
+        ->where('A_Y',$academicYear)
+        ->count();
 
         // Calculate percentages
         $totalEvaluatorsPercent = ($totalEvaluators > 0) ? ($completedEvaluations / $totalEvaluators) * 100 : 0;
@@ -186,9 +227,10 @@ public function Admin_dashboard($admin_id) {
         }
 
         $totalCount = StudentsTokenAccounts::all()->count();
-        $completedCount = StudentEvaluation::where('semester',$semester)->where('A_Y',$A_Y)->count();
+        $completedCount = StudentEvaluation::where('semester',$semester)->where('A_Y',$A_Y)->count(); 
 
         $students = StudentsTokenAccounts::all();
+
         $StudenttotalEvaluations = 0;
         foreach ($students as $student){
             for($i = 1; $i <= 10; $i++){
@@ -435,7 +477,6 @@ public function Admin_dashboard($admin_id) {
         $totalCount = PeerToPeer::count(); // Count of all peer-to-peer evaluations that need to be completed
         $completedCount = PeerEvaluation::where('semester', $semester)->where('A_Y',$A_Y)->count(); // Count of completed peer evaluations
 
-        
         $totalEvaluations = $totalCount * 5; // Total evaluations needed if each instructor needs to evaluate 5 instructors
 
         // Check if $totalEvaluations is zero to avoid division by zero
@@ -484,29 +525,39 @@ public function Admin_dashboard($admin_id) {
     }
 
     //assign peer to peer
-    public function assignPeerToPeer(Request $request){ // assign peer to peer
-
+    public function assignPeerToPeer(Request $request) { 
+        // Fetch all instructors
         $instructors = DlcInstructors::all();
-
-        if($instructors->count() < 6){
-            return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'There must be at least six instructors to assign peers!');
+    
+        // Check if there are at least 6 instructors
+        if ($instructors->count() < 6) {
+            return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])
+                             ->with('message', 'There must be at least six instructors to assign peers!');
         }
     
         // Shuffle the instructors to randomize the order
-        $shuffledInstructors = $instructors->shuffle();
+        $shuffledInstructors = $instructors->shuffle()->values(); // Ensure shuffled list uses numeric keys
     
         // Create an array to store the assigned validators
         $assignedValidators = [];
     
-        foreach ($instructors as $instructor) {
-            $validatorIds = $shuffledInstructors->pluck('instructor_id')->diff([$instructor->instructor_id])->take(5)->toArray();
+        $totalInstructors = $shuffledInstructors->count();
+    
+        foreach ($shuffledInstructors as $index => $instructor) {
+            $validatorIds = [];
+    
+            // Assign the next 5 instructors in a circular fashion
+            for ($i = 1; $i <= 5; $i++) {
+                $nextIndex = ($index + $i) % $totalInstructors; // Wrap around the list using modulo
+                $validatorIds[] = $shuffledInstructors[$nextIndex]->instructor_id;
+            }
+    
+            // Assign the validators to the current instructor
             $assignedValidators[$instructor->instructor_id] = $validatorIds;
         }
-        
     
         // Insert the assigned validators into the database
         foreach ($assignedValidators as $instructorId => $validatorIds) {
-            $validatorIds = array_values($validatorIds);
             PeerToPeer::updateOrCreate(
                 ['instructor_id' => $instructorId],
                 [
@@ -520,8 +571,13 @@ public function Admin_dashboard($admin_id) {
             );
         }
     
-        return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])->with('message', 'Peer assigned successfully!');
+        // Redirect back with success message
+        return redirect()->route('admin.manageInstructor', ['admin_id' => session('admin_id')])
+                         ->with('message', 'Peers assigned successfully!');
     }
+    
+    
+    
 
 
 
@@ -699,8 +755,9 @@ public function Admin_dashboard($admin_id) {
         // Ensure average rating is accessible and formatted
         $instructors->each(function ($instructor) {
             if ($instructor->evaluations->isNotEmpty()) {
-                // Assign the formatted average rating to the instructor
-                $instructor->rating = number_format($instructor->evaluations->first()->average_rating, 1);
+                // Get the average rating and convert it to a percentage
+                $averageRating = $instructor->evaluations->first()->average_rating;
+                $instructor->rating = number_format(($averageRating / 70) * 100, 1);
             } else {
                 // Default to null if no evaluations
                 $instructor->rating = null;
@@ -729,8 +786,9 @@ public function Admin_dashboard($admin_id) {
         // Ensure average rating is accessible and formatted
         $instructors->each(function ($instructor) {
             if ($instructor->evaluations->isNotEmpty()) {
-                // Assign the formatted average rating to the instructor
-                $instructor->rating = number_format($instructor->evaluations->first()->average_rating, 1);
+                // Get the average rating and convert it to a percentage
+                $averageRating = $instructor->evaluations->first()->average_rating;
+                $instructor->rating = number_format(($averageRating / 70) * 100, 1);
             } else {
                 // Default to null if no evaluations
                 $instructor->rating = null;
@@ -759,13 +817,19 @@ public function Admin_dashboard($admin_id) {
         // Ensure average rating is accessible and formatted
         $instructors->each(function ($instructor) {
             if ($instructor->peerEvaluations->isNotEmpty()) {
-                // Assign the formatted average rating to the instructor
-                $instructor->rating = number_format($instructor->peerEvaluations->first()->average_rating, 1);
+                // Calculate the total score from all peer evaluations
+                $totalScore = $instructor->peerEvaluations->sum('average_rating');
+                // Count the number of peer evaluations
+                $evaluationCount = $instructor->peerEvaluations->count();
+                // Calculate the average score and convert it to a percentage (assuming max score of 90)
+                $averageRating = $totalScore / $evaluationCount;
+                $instructor->rating = number_format(($averageRating / 90) * 100, 1);
             } else {
                 // Default to null if no peer evaluations
                 $instructor->rating = null;
             }
         });
+        
     
         // Sort instructors by rating (descending) and then by lastname (ascending)
         $instructors = $instructors->sortByDesc('rating')->sortBy('lastname');
@@ -790,13 +854,19 @@ public function Admin_dashboard($admin_id) {
         // Ensure average rating is accessible and formatted
         $instructors->each(function ($instructor) {
             if ($instructor->peerEvaluations->isNotEmpty()) {
-                // Assign the formatted average rating to the instructor
-                $instructor->rating = number_format($instructor->peerEvaluations->first()->average_rating, 1);
+                // Calculate the total score from all peer evaluations
+                $totalScore = $instructor->peerEvaluations->sum('average_rating');
+                // Count the number of peer evaluations
+                $evaluationCount = $instructor->peerEvaluations->count();
+                // Calculate the average score and convert it to a percentage (assuming max score of 90)
+                $averageRating = $totalScore / $evaluationCount;
+                $instructor->rating = number_format(($averageRating / 90) * 100, 1);
             } else {
                 // Default to null if no peer evaluations
                 $instructor->rating = null;
             }
         });
+        
     
         // Sort instructors by rating (descending) and then by lastname (ascending)
         $instructors = $instructors->sortByDesc('rating');

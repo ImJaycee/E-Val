@@ -123,6 +123,28 @@ class StudentController extends Controller
 
     //evaluation side
     public function Student_evaluation($eval_token) {
+
+         if (!function_exists('getCurrentAcademicYear')) {
+            function getCurrentAcademicYear() {
+                $currentMonth = date('m');
+                $currentYear = date('Y');
+        
+                if ($currentMonth >= 2 && $currentMonth <= 6) {
+                    // If the current month is between February and June, it's the second semester of the academic year
+                    return ($currentYear - 1) . '-' . $currentYear;
+                } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                    // If the current month is between August and December, it's the first semester of the academic year
+                    return $currentYear . '-' . ($currentYear + 1);
+                } else {
+                    // For January and July, we assume the academic year spans two years
+                    // January is considered part of the second semester's academic year
+                    if ($currentMonth == 1 || $currentMonth == 7) {
+                        return ($currentYear - 1) . '-' . $currentYear;
+                    }
+                }
+            }
+        }
+        $academicYear = getCurrentAcademicYear();
         // Retrieve the student account using the eval_token
         $student = StudentsTokenAccounts::where('eval_token', $eval_token)->firstOrFail();
     
@@ -164,6 +186,7 @@ class StudentController extends Controller
                 $status = StudentEvaluation::where('instructor_id', $assignedInstructor->instructor_id)
                     ->where('eval_token', $student->eval_token)
                     ->where('subject_code',  $assignedInstructor->subject_code)
+                    ->where('A_Y',  $academicYear)
                     ->exists();
     
                 // Combine the subject and instructor data
@@ -226,7 +249,7 @@ class StudentController extends Controller
         // Translate the text
         $translatedComment = TranslateTextHelper::translate($comments);
 
-        $sentiment = $analyzer->getSentiment($translatedComment); // get the sentiment of the comments
+        $sentiment = $analyzer->getSentiment($translatedComment ); // get the sentiment of the comments
         $compound = $sentiment['compound']; // Get the compound score from the sentiment
 
         $threshold = 0; // Since you're focusing only on positive and negative, use 0 as the threshold
@@ -234,9 +257,35 @@ class StudentController extends Controller
                 // Sentiment classification based purely on positive or negative
                 if ($compound > $threshold) {
                     $sentimentLabel = 'Best'; // Positive sentiment
+                    
                 } else {
                     $sentimentLabel = 'Good'; // Negative sentiment
                 }
+
+                $keywords = [
+                    // Tagalog 
+                    'masipag', 'mabait', 'magaling', 'maasahan', 'mapagkakatiwalaan', 'maalalahanin', 
+                    'marespeto', 'maabilidad', 'matapat', 'mapagmalasakit', 'mapagbigay', 'matulungin', 
+                    'matyaga', 'maalaga', 'malikhain', 'masinop', 'maalam', 'maparaan', 'masikap',
+                    
+                    // English 
+                    'dedicated', 'hardworking', 'reliable', 'punctual', 'excellent', 'responsible', 
+                    'trustworthy', 'committed', 'proactive', 'focused', 'attentive', 'professional', 
+                    'outstanding', 'efficient', 'organized', 'diligent', 'innovative', 'dependable', 
+                    'supportive', 'empathetic', 'adaptable', 'motivated', 'conscientious', 
+                    'thorough', 'skilled', 'talented', 'resourceful', 'capable', 'goal-oriented', 
+                    'detail-oriented', 'loyal', 'visionary', 'collaborative', 'problem-solver', 
+                    'communicative', 'disciplined', 'enthusiastic', 'passionate', 'team player', 
+                    'leader', 'reputable', 'respected','approachable'
+                ];    
+
+                foreach ($keywords as $word) {
+                    if (strpos($comments, $word) !== false || strpos($translatedComment, $word) !== false) {
+                        $sentimentLabel = 'Best';
+                        break;  // Exit the loop once a match is found
+                    }
+                }
+
         $validated['sentiment'] = $sentimentLabel;
 
         $totalScore = $validated['I-1'] + $validated['I-2'] + $validated['I-3'] + $validated['II-1'] + $validated['II-2'] + $validated['II-3'] + $validated['II-4'] + $validated['III-1'] + $validated['III-2'] + $validated['IV-1'] + $validated['IV-2'] + $validated['V-1'] + $validated['V-2'] + $validated['V-3'];
