@@ -218,6 +218,40 @@ class InstructorController extends Controller
         ];
     
         $AllPeers = [];
+
+        if (!function_exists('getCurrentSemester')) {
+            function getCurrentSemester() {
+                $currentMonth = date('m');
+        
+                if ($currentMonth >= 8 && $currentMonth <= 12) {
+                    return '1st';
+                } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
+                    return '2nd';
+                } else {
+                    return 'semestral break'; // January is enrollment period, so no current semester
+                }
+            }
+        }
+
+        if (!function_exists('getCurrentAcademicYear')) {
+            function getCurrentAcademicYear() {
+                $currentMonth = date('m');
+                $currentYear = date('Y');
+        
+                if ($currentMonth >= 2 && $currentMonth <= 6) {
+                    return ($currentYear - 1) . '-' . $currentYear;
+                } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                    return $currentYear . '-' . ($currentYear + 1);
+                } else {
+                    if ($currentMonth == 1 || $currentMonth == 7) {
+                        return ($currentYear - 1) . '-' . $currentYear;
+                    }
+                }
+            }
+        }
+
+        $currentYear =getCurrentAcademicYear() ;
+        $currentSem = getCurrentSemester();
     
         // Iterate over the peer IDs and retrieve their details
         foreach ($peerIds as $peerId) {
@@ -225,6 +259,8 @@ class InstructorController extends Controller
             if ($peer) {
                 $peerEvalStatus = PeerEvaluation::where('instructor_id', $peer->instructor_id)
                 ->where('evaluator_id', $instructor_id)
+                ->where('A_Y', $currentYear)
+                ->where('semester',$currentSem)
                 ->exists();
 
                 $pfps = InstructorAccount::where('instructor_id', $peer->instructor_id)->first();
@@ -288,6 +324,30 @@ class InstructorController extends Controller
                 } else {
                     $sentimentLabel = 'Good'; // Negative sentiment
                 }
+
+                $keywords = [
+                    // Tagalog 
+                    'masipag', 'mabait', 'magaling', 'maasahan', 'mapagkakatiwalaan', 'maalalahanin', 
+                    'marespeto', 'maabilidad', 'matapat', 'mapagmalasakit', 'mapagbigay', 'matulungin', 
+                    'matyaga', 'maalaga', 'malikhain', 'masinop', 'maalam', 'maparaan', 'masikap', 'magalang',
+                    
+                    // English 
+                    'dedicated', 'hardworking', 'reliable', 'punctual', 'excellent', 'responsible', 'respectful',
+                    'trustworthy', 'committed', 'proactive', 'focused', 'attentive', 'professional', 
+                    'outstanding', 'efficient', 'organized', 'diligent', 'innovative', 'dependable', 
+                    'supportive', 'empathetic', 'adaptable', 'motivated', 'conscientious', 
+                    'thorough', 'skilled', 'talented', 'resourceful', 'capable', 'goal-oriented', 
+                    'detail-oriented', 'loyal', 'visionary', 'collaborative', 'problem-solver', 
+                    'communicative', 'disciplined', 'enthusiastic', 'passionate', 'team player', 
+                    'leader', 'reputable', 'respected','approachable',
+                ];    
+
+                foreach ($keywords as $word) {
+                    if (strpos($comments, $word) !== false || strpos($translatedComment, $word) !== false) {
+                        $sentimentLabel = 'Best';
+                        break;  // Exit the loop once a match is found
+                    }
+                }
                 
 
         // dd($comments,$translatedComment, $sentiment,$sentimentLabel);
@@ -312,6 +372,7 @@ class InstructorController extends Controller
         $peerEvaluationStatus = PeerEvaluation::where('instructor_id', $validated['instructor_id'])
         ->where('evaluator_id', $validated['evaluator_id'])
         ->where('A_Y', $validated['A_Y'])
+        ->where('semester', $validated['semester'])
         ->exists();
 
         if ($peerEvaluationStatus) {
@@ -450,7 +511,7 @@ class InstructorController extends Controller
             }
         
             $instructor->update($validated);
-            session(['student_id' => $instructor->instructor_id, 
+            session(['instructor_id' => $instructor->instructor_id, 
                      'pfp' => $instructor->pfp, ]);
             
                      return redirect()->route('instructor.profile', ['instructor_id' => $instructor_id])->with('message', 'Updated Successfully!')->with('reload', true);

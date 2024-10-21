@@ -416,8 +416,15 @@
                                     <!-- Comments -->
                                     <div class="mb-4">
                                         <label class="block text-sm font-semibold">Comments</label>
-                                        <textarea name="comments" class="w-full border border-gray-300 rounded-md p-2"></textarea>
+                                        <textarea id="comments" name="comments" class="w-full border border-gray-300 rounded-md p-2"></textarea>
                                     </div>
+                                    <script>
+                                        document.getElementById('comments').addEventListener('input', function(e) {
+                                            // Remove emoji
+                                            const emojiPattern = /([\u2700-\u27BF]|[\uE000-\uF8FF]|[\uD83C-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\u2300-\u23FF])/g;
+                                            this.value = this.value.replace(emojiPattern, '');
+                                        });  
+                                    </script>                                    
                                     
                                     <!-- Submit and close buttons -->
                                     <div class="flex justify-end">

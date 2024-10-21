@@ -28,6 +28,7 @@
                     <label for="academic_year" class="block text-sm font-semibold">Academic Year</label>
                     <select id="academic_year" name="academic_year" class="border border-gray-300 rounded-md p-1 text-sm">
                         <option value="">Select A.Y</option>
+                        <option value="2023-2024" {{ request()->input('academic_year') == '2023-2024' ? 'selected' : '' }}>2023-2024</option>
                         <option value="2024-2025" {{ request()->input('academic_year') == '2024-2025' ? 'selected' : '' }}>2024-2025</option>
                         <option value="2025-2026" {{ request()->input('academic_year') == '2025-2026' ? 'selected' : '' }}>2025-2026</option>
                     </select>
@@ -94,7 +95,7 @@
                             @endphp
                             @foreach($comments->take(100) as $comment)
                                 @php
-                                    $equivalent = round(($comment->overall_total / 70) * 100);
+                                    $equivalent = round(($comment->overall_total / 90) * 100);
                                     $totalEquivalent += $equivalent;
                                 @endphp
                                 <tr class="{{ $loop->iteration % 50 == 0 ? 'page-break' : '' }}">

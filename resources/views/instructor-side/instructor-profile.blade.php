@@ -61,7 +61,7 @@
 
         <div class="bg-white p-4 rounded-lg xs:mb-4 max-w-full max-h-80 shadow-md lg:w-[75%]">
             <h3 class="text-xl font-bold text-gray-700">
-                Assigned Instructors<i> A.Y. 2023-2024</i>
+                Assigned Instructors<i> A.Y. 2024-2025</i>
             </h3>
             @if (!empty($AllPeers)) 
                 <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-5 gap-3 mt-4 max-h-64 overflow-y-auto">
