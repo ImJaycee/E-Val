@@ -50,7 +50,7 @@
     <!-- Table -->
     <div class="bg-white rounded-lg p-4 shadow-md my-4 h-auto md:h-4/5">
         <div class="overflow-x-auto overflow-y-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+            {{-- <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
                 <!-- Upload Form -->
                 <form action="{{ route('admin.uploadStudent') }}" method="POST" enctype="multipart/form-data" class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
                     @csrf
@@ -79,7 +79,43 @@
                         </div>
                     </div>
                 </form>
+            </div> --}}
+
+            {{-- Testing upload student --}}
+
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+                <!-- Upload Form -->
+                <form action="{{ route('admin.uploadStudentRecord') }}" method="POST" enctype="multipart/form-data" class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
+                    @csrf
+                    <div class="flex flex-row items-center space-x-2 md:space-x-4 w-full md:w-auto">
+                        <div class="flex flex-col items-start">
+                            <label for="students_csv" class="text-gray-700 font-bold mb-1 text-sm md:text-base">Upload Students (.csv)</label>
+                            <input type="file" name="students_csv" accept=".csv" class="w-full md:w-auto border-2 border-gray-300 rounded-md p-1 md:p-2" required>
+                            @error('students_csv')
+                                <p class="text-red-500 text-sm text-end p-1">
+                                    {{$message}}
+                                </p>
+                            @enderror
+                        </div>
+                        <div>
+                            @if(session('eval_status') == 'close')
+                                <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6">
+                                    <i class="fas fa-upload"></i>
+                                    Upload
+                                </button>
+                            @else
+                                <button type="submit" class="bg-green-800 text-white px-3 py-2 rounded-md text-sm font-bold md:text-base mt-6" disabled>
+                                    <i class="fas fa-upload"></i>
+                                    Upload
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                </form>
             </div>
+
+            {{-- /////////////////////////////////////////////////////////// --}}
+
             <div class="flex flex-col items-center justify-center h-full mt-4">
                 <h2 class="text-xl font-bold text-gray-700 mb-4">Evaluation Progress</h2>
                 <div class="relative flex items-center justify-center">

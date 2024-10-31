@@ -22,8 +22,18 @@
     <div class="flex justify-end mb-1 no-print">
         <form method="GET" action="{{ route('admin.showComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="flex gap-4 items-center">
             <div class="flex gap-4 items-center">
-                <!-- Academic Year -->
+                {{-- Type of evaluation --}}
                 <a href="{{ route('admin.showPeerComments', ['admin_id' => $admin_id, 'instructor_id' => $instructor->instructor_id]) }}" class="bg-green-700 py-1 px-2 rounded text-sm text-gray-200">Instructors</a>
+                {{-- Sort best and good --}}
+                <div>
+                    <label for="sentiment" class="block text-sm font-semibold">Filter</label>
+                    <select id="sentiment" name="sentiment" class="border border-gray-300 rounded-md p-1 text-sm">
+                        <option value="">Select remark</option>
+                        <option value="Best" {{ request()->input('sentiment') == 'Best' ? 'selected' : '' }}>Best</option>
+                        <option value="Good" {{ request()->input('sentiment') == 'Good' ? 'selected' : '' }}>Good</option>
+                    </select>
+                </div>
+                <!-- Academic Year -->
                 <div>
                     <label for="academic_year" class="block text-sm font-semibold">Academic Year</label>
                     <select id="academic_year" name="academic_year" class="border border-gray-300 rounded-md p-1 text-sm">
@@ -85,6 +95,7 @@
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Equivalent</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider no-print">Remark</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -100,9 +111,12 @@
                                 <tr class="{{ $loop->iteration % 50 == 0 ? 'page-break' : '' }}">
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $loop->iteration }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $comment->total_score }}</td>
-                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>                      
                                     <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">
                                         {{ $comment->comments }} 
+                                       
+                                    </td>
+                                    <td class="no-print px-6 py-1 text-sm text-gray-800 text-center" style="word-wrap: break-word; white-space: normal;">
                                         <span class="no-print">
                                             @if ($comment->sentiment == 'Best')
                                                 <span style="color: green;">{{ $comment->sentiment }}</span>

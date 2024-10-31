@@ -20,6 +20,15 @@
     <div class="flex justify-end mb-1 no-print">
         <form method="GET" action="{{ route('instructor.comments', ['instructor_id' => $instructor->instructor_id]) }}" class="flex gap-4 items-center">
             <div class="flex gap-4 items-center">
+                {{-- Sort best and good --}}
+                <div>
+                    <label for="sentiment" class="block text-sm font-semibold">Filter</label>
+                    <select id="sentiment" name="sentiment" class="border border-gray-300 rounded-md p-1 text-sm">
+                        <option value="">Select remark</option>
+                        <option value="Best" {{ request()->input('sentiment') == 'Best' ? 'selected' : '' }}>Best</option>
+                        <option value="Good" {{ request()->input('sentiment') == 'Good' ? 'selected' : '' }}>Good</option>
+                    </select>
+                </div>
                 <!-- Academic Year -->
                 <div>
                     <label for="academic_year" class="block text-sm font-semibold">Academic Year</label>
@@ -82,6 +91,7 @@
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Equivalent</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider no-print">Remarks</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -100,8 +110,10 @@
                                     <td class="px-6 py-1 text-sm text-gray-800 text-center">{{ $equivalent }}</td>
                                     <td class="px-6 py-1 text-sm text-gray-800 text-left" style="word-wrap: break-word; white-space: normal;">
                                         {{ $comment->comments }} 
+                                    </td>
+                                    <td class="px-6 py-1 text-sm text-gray-800 text-center" style="word-wrap: break-word; white-space: normal;">
                                         <span class="no-print">
-                                            -
+                                            
                                             @if ($comment->sentiment == 'Best')
                                                 <span style="color: green;">{{ $comment->sentiment }}</span>
                                             @elseif ($comment->sentiment == 'Good')
