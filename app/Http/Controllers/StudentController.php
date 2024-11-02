@@ -33,6 +33,22 @@ class StudentController extends Controller
     
         // Attempt to find a student with the provided token
         $student = StudentsTokenAccounts::where('eval_token', $token)->first();
+
+        $tokenUseCount = 0;
+
+       for ($i = 1; $i <= 10; $i++) {
+            $subjectField = "subject{$i}"; // Dynamically generate field name
+                if (!empty($student->$subjectField)) { // Check if the field is not null or empty
+                    $tokenUseCount++;
+                }
+            }
+
+        $tokenStatus = StudentEvaluation::where('eval_token', $token)->count();
+
+        if ($tokenStatus === $tokenUseCount){
+            return back()->with('message', 'All evaluations have been submitted. Token has expired.');
+        }
+        
     
         if ($student) {
             // Manually log the student in
@@ -48,57 +64,14 @@ class StudentController extends Controller
                 'eval_status' => $evaluation_status->eval_status,
             ]);
     
-            // // Debugging: Check session data
-            // \Log::info('Student logged in: ' . $student->student_id);
-            // \Log::info('Session data: ' . print_r(session()->all(), true));
-    
             // Redirect or proceed with the rest of your logic
             return redirect()->route('student.evaluation', ['eval_token' => $student->eval_token])->with('message', 'Welcome!');
         } else {
-            // Log the failure for debugging
-            // \Log::info('Authentication failed for token: ' . $token);
-    
-            // Handle login failure
             return back()->withErrors([
                 'invalid' => 'Invalid Token.',
             ])->withInput();
         }
     }
-
-
-
-    // public function Student_loginprocess(Request $request){ // login process
-    //     $validated = $request->validate([
-    //         // "student_id" => ['required', 'min:9','numeric'],
-    //         // "password" => ['required', 'min:8'],
-    //         "eval_token" => ['required'],
-    //     ]);
-       
-    //     if(auth()->guard('students')->attempt($validated)){ //login successful
-    //         $request->session()->regenerate(); //create session
-            
-    //         $student = auth()->guard('students')->user();
-    //         $student_id = $student->student_id;
-    //         // session(['student_id' => $student->student_id, 'pfp' => $student->pfp]);
-    //         // session(['student_id' => $student->student_id, 
-    //         //          'firstname' => $student->firstname,
-    //         //          'pfp' => $student->pfp, ]);
-    //         session(['eval_token' => $student->eval_token, 
-    //                  'student_id' => $student->student_id,]);
-    //         dd(session());
-    //         return redirect()->route('student.evaluation', ['eval_token' => $student->eval_token])->with('message', 'Welcome!');//return redirect to dashboard
-        
-    //                 // return redirect()->route('student.dashboard', ['student_id' => $student_id])->with('message', 'Welcome back!');//return redirect to dashboard
-    //     }else {
-    //         // Log the input for debugging purposes
-    //         return redirect("/")->with('message', 'Invalid Credentials!');//return redirect to dashboard
-          
-    //     }   
-
-    //     return back()->withErrors([ //login failed
-    //         'student_id' => 'Invalid Credentials'
-    //     ])->withInput(); //return back to login page
-    // }
 
 
     public function logout(Request $request){//logout

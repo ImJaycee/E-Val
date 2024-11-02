@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\AdminAccount;
 use App\Models\InstructorAccount;
 use App\Models\StudentEvaluation;
-use App\Models\SubjectAssigned; // Add this line
-use App\Models\StudentsTokenAccounts; // Add this line
-use App\Models\StudentArchives; // Add this line
-use App\Models\InstructorArchives; // Add this line
+use App\Models\SubjectAssigned; 
+use App\Models\StudentsTokenAccounts; 
+use App\Models\StudentArchives; 
+use App\Models\InstructorArchives; 
 use App\Models\EvaluationStatus;
 use App\Models\PeerToPeer;
 use App\Models\DlcInstructors;
@@ -92,116 +92,111 @@ class AdminController extends Controller
     } // end login process
 
     public function logout(Request $request)
-{
-        auth()->guard('admins')->logout(); 
-        $request->session()->invalidate(); 
-        $request->session()->regenerateToken(); 
-        
-        return redirect('/admin/login')
-            ->with('message', 'Logged out')
-            ->with('reload', true)
-            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-            ->header('Pragma', 'no-cache');
-}
-
-
-public function Admin_dashboard($admin_id) {
-    // Fetch admin details
-    $admin = AdminAccount::where('admin_id', $admin_id)->first();
-
-    if (!function_exists('getCurrentSemester')) {
-        function getCurrentSemester() {
-            $currentMonth = date('m');
-    
-            if ($currentMonth >= 8 && $currentMonth <= 12) {
-                return '1st';
-            } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
-                return '2nd';
-            } else {
-                return 'semestral break'; // January is enrollment period, so no current semester
-            }
-        }
+    {
+            auth()->guard('admins')->logout(); 
+            $request->session()->invalidate(); 
+            $request->session()->regenerateToken(); 
+            
+            return redirect('/admin/login')
+                ->with('message', 'Logged out')
+                ->with('reload', true)
+                ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+                ->header('Pragma', 'no-cache');
     }
-    
-    if (!function_exists('getCurrentAcademicYear')) {
-        function getCurrentAcademicYear() {
-            $currentMonth = date('m');
-            $currentYear = date('Y');
-    
-            if ($currentMonth >= 2 && $currentMonth <= 6) {
-                // If the current month is between February and June, it's the second semester of the academic year
-                return ($currentYear - 1) . '-' . $currentYear;
-            } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
-                // If the current month is between August and December, it's the first semester of the academic year
-                return $currentYear . '-' . ($currentYear + 1);
-            } else {
-                // For January and July, we assume the academic year spans two years
-                // January is considered part of the second semester's academic year
-                if ($currentMonth == 1 || $currentMonth == 7) {
-                    return ($currentYear - 1) . '-' . $currentYear;
+
+
+    public function Admin_dashboard($admin_id) {
+        // Fetch admin details
+        $admin = AdminAccount::where('admin_id', $admin_id)->first();
+
+        if (!function_exists('getCurrentSemester')) {
+            function getCurrentSemester() {
+                $currentMonth = date('m');
+        
+                if ($currentMonth >= 8 && $currentMonth <= 12) {
+                    return '1st';
+                } elseif ($currentMonth >= 2 && $currentMonth <= 6) {
+                    return '2nd';
+                } else {
+                    return 'semestral break'; // January is enrollment period, so no current semester
                 }
             }
         }
-    }
-
-    // Get all instructors
-    $instructors = InstructorAccount::all();
-
-    $allInstructorsData = [];
-
-    // Loop through each instructor to gather the required information
-    foreach ($instructors as $instructor) {
-        // Get the subjects assigned to the instructor
-        $assignedSubjects = SubjectAssigned::where('instructor_id', $instructor->instructor_id)->get();
-
-        $totalEvaluators = 0;
-
-        foreach ($assignedSubjects as $subject) {
-            $subjectCode = $subject->subject_code . ' ' . $subject->section;
-            $studentsEnrolled = StudentsTokenAccounts::where('subject1', $subjectCode)
-                                                    ->orWhere('subject2', $subjectCode)
-                                                    ->orWhere('subject3', $subjectCode)
-                                                    ->orWhere('subject4', $subjectCode)
-                                                    ->orWhere('subject5', $subjectCode)
-                                                    ->orWhere('subject6', $subjectCode)
-                                                    ->orWhere('subject7', $subjectCode)
-                                                    ->orWhere('subject8', $subjectCode)
-                                                    ->orWhere('subject9', $subjectCode)
-                                                    ->orWhere('subject10', $subjectCode)
-                                                    ->count();
-
-            $totalEvaluators += $studentsEnrolled;
+        
+        if (!function_exists('getCurrentAcademicYear')) {
+            function getCurrentAcademicYear() {
+                $currentMonth = date('m');
+                $currentYear = date('Y');
+        
+                if ($currentMonth >= 2 && $currentMonth <= 6) {
+                    // If the current month is between February and June, it's the second semester of the academic year
+                    return ($currentYear - 1) . '-' . $currentYear;
+                } elseif ($currentMonth >= 8 && $currentMonth <= 12) {
+                    // If the current month is between August and December, it's the first semester of the academic year
+                    return $currentYear . '-' . ($currentYear + 1);
+                } else {
+                    // For January and July, we assume the academic year spans two years
+                    // January is considered part of the second semester's academic year
+                    if ($currentMonth == 1 || $currentMonth == 7) {
+                        return ($currentYear - 1) . '-' . $currentYear;
+                    }
+                }
+            }
         }
 
-        // Get the completed evaluations count for the instructor
-        $semester = getCurrentSemester();
-        $academicYear = getCurrentAcademicYear();
-        
-        $completedEvaluations = StudentEvaluation::where('instructor_id', $instructor->instructor_id)
-        ->where('semester',$semester)
-        ->where('A_Y',$academicYear)
-        ->count();
+        // Get all instructors
+        $instructors = InstructorAccount::all();
 
-        // Calculate percentages
-        $totalEvaluatorsPercent = ($totalEvaluators > 0) ? ($completedEvaluations / $totalEvaluators) * 100 : 0;
+        $allInstructorsData = [];
 
-        // Combine the instructor data
-        $allInstructorsData[] = [
-            'name' => $instructor->firstname . ' ' . $instructor->lastname,
-            'department' => $instructor->department,
-            'total_evaluators' => $totalEvaluators,
-            'total_evaluators_percent' => round($totalEvaluatorsPercent, 2), // Round to two decimal places
-            'completed_evaluations' => $completedEvaluations,
-        ];
+        // Loop through each instructor to gather the required information
+        foreach ($instructors as $instructor) {
+            // Get the subjects assigned to the instructor
+            $assignedSubjects = SubjectAssigned::where('instructor_id', $instructor->instructor_id)->get();
+
+            $totalEvaluators = 0;
+
+            foreach ($assignedSubjects as $subject) {
+                $subjectCode = $subject->subject_code . ' ' . $subject->section;
+                $studentsEnrolled = StudentsTokenAccounts::where('subject1', $subjectCode)
+                                                        ->orWhere('subject2', $subjectCode)
+                                                        ->orWhere('subject3', $subjectCode)
+                                                        ->orWhere('subject4', $subjectCode)
+                                                        ->orWhere('subject5', $subjectCode)
+                                                        ->orWhere('subject6', $subjectCode)
+                                                        ->orWhere('subject7', $subjectCode)
+                                                        ->orWhere('subject8', $subjectCode)
+                                                        ->orWhere('subject9', $subjectCode)
+                                                        ->orWhere('subject10', $subjectCode)
+                                                        ->count();
+
+                $totalEvaluators += $studentsEnrolled;
+            }
+
+            // Get the completed evaluations count for the instructor
+            $semester = getCurrentSemester();
+            $academicYear = getCurrentAcademicYear();
+            
+            $completedEvaluations = StudentEvaluation::where('instructor_id', $instructor->instructor_id)
+            ->where('semester',$semester)
+            ->where('A_Y',$academicYear)
+            ->count();
+
+            // Calculate percentages
+            $totalEvaluatorsPercent = ($totalEvaluators > 0) ? ($completedEvaluations / $totalEvaluators) * 100 : 0;
+
+            // Combine the instructor data
+            $allInstructorsData[] = [
+                'name' => $instructor->firstname . ' ' . $instructor->lastname,
+                'department' => $instructor->department,
+                'total_evaluators' => $totalEvaluators,
+                'total_evaluators_percent' => round($totalEvaluatorsPercent, 2), // Round to two decimal places
+                'completed_evaluations' => $completedEvaluations,
+            ];
+        }
+
+        return view('admin-side.admin-dashboard', compact('admin', 'allInstructorsData'));
     }
-
-    return view('admin-side.admin-dashboard', compact('admin', 'allInstructorsData'));
-}
-
-
-
-
-
 
     // Admin student management
     public function Admin_manageStudent($admin_id){
@@ -253,77 +248,6 @@ public function Admin_dashboard($admin_id) {
     }
     
 
-    //upload student
-    // public function uploadStudents(Request $request){
-    //     $request->validate([
-    //         'students_csv' => 'required|file|mimes:csv',
-    //     ]);
-        
-    //     $file = $request->file('students_csv');
-    //     $filePath = $file->getRealPath();
-        
-    //     $csvData = array_map('str_getcsv', file($filePath));
-        
-    //     // Set row 9 as the header (array index 8 since indexing starts at 0)
-    //     $headerRowIndex = 8; // This corresponds to the 9th row
-        
-    //     // Get the header from the specified row
-    //     $header = $csvData[$headerRowIndex];
-        
-    //     // Skip rows up to the specified header row
-    //     $csvData = array_slice($csvData, $headerRowIndex + 1);
-
-        
-    //    // Insert or update student records within a transaction
-    //     DB::transaction(function () use ($csvData, $header) {
-    //         foreach ($csvData as $row) {
-    //             $rowData = array_combine($header, $row);
-    //             //dd($rowData);
-    //             // Generate a random token
-
-                
-    //             $randomToken = bin2hex(random_bytes(5));
-
-    //             // Check if the token is unique
-    //             while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
-    //                 $randomToken = bin2hex(random_bytes(5));
-    //             }
-
-    //             // Insert or update student record
-    //             try {
-    //                 // Insert or update student record
-                   
-    //                 StudentsTokenAccounts::updateOrCreate(
-    //                     ['student_id' => $rowData['student_id']],
-    //                     [
-    //                         'email' => $rowData['email'], // Generate a random email address if email is empty
-    //                         'eval_token' => $randomToken, // Use the generated random token'test' => $rowData['email'],
-    //                         'subject1' => $rowData['subject1'] ?? null,
-    //                         'subject2' => $rowData['subject2'] ?? null,
-    //                         'subject3' => $rowData['subject3'] ?? null,
-    //                         'subject4' => $rowData['subject4'] ?? null,
-    //                         'subject5' => $rowData['subject5'] ?? null,
-    //                         'subject6' => $rowData['subject6'] ?? null,
-    //                         'subject7' => $rowData['subject7'] ?? null,
-    //                         'subject8' => $rowData['subject8'] ?? null,
-    //                         'subject9' => $rowData['subject9'] ?? null,
-    //                         'subject10' => $rowData['subject10'] ?? null,
-                            
-    //                     ]
-                     
-    //                 );
-                
-    //             } catch (\Exception $e) {
-    //                 dd($e->getMessage()); // Output any exception message
-    //             }
-    //         }
-    //     });
-
-
-    //     return redirect()->route('admin.manageStudent', ['admin_id' => session('admin_id')])->with('message', 'Record added successfuly!');
-    
-    // }
-
      //upload instructor
      public function uploadInstructors(Request $request){
         $request->validate([
@@ -349,16 +273,6 @@ public function Admin_dashboard($admin_id) {
         DB::transaction(function () use ($csvData, $header) {
             foreach ($csvData as $row) {
                 $rowData = array_combine($header, $row);
-                //dd($rowData);
-                // Generate a random token
-
-                
-                // $randomToken = bin2hex(random_bytes(5));
-
-                // // Check if the token is unique
-                // while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
-                //     $randomToken = bin2hex(random_bytes(5));
-                // }
 
                 // Insert or update student record
                 try {
@@ -1298,5 +1212,4 @@ public function Admin_dashboard($admin_id) {
     }
 
     
-
 }
