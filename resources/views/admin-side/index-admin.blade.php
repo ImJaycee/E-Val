@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="storage/images/dlc-logo1.png" type="image/png">
+    <link rel="icon" href="{{ asset('storage/images/dlc-logo-new.png') }}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
-     <link rel="icon" href="storage/image/dlc-logo1.png" type="image/png">
     <title>E-Val-Admin</title>
 </head>
 <style>
@@ -38,7 +37,7 @@
 </style>
 <body class="">
     <x-messages/>
-    <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
+    <img src="{{ asset('storage/images/dlc-logo-new.png') }}" alt="logo" class="w-32 mx-auto mt-10">
 
     <div class="max-w-md mx-auto py-10 px-4" id="AdminLogin">
         

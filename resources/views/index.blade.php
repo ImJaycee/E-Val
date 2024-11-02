@@ -39,7 +39,7 @@
 </style>
 <body class="">
     <x-messages/>
-    <img src="{{ asset('storage/images/dlc-logo1.png') }}" alt="logo" class="w-24 mx-auto mt-10">
+    <img src="{{ asset('storage/images/dlc-logo-new.png') }}" alt="logo" class="w-32 mx-auto mt-10">
     <div class="max-w-md mx-auto py-10 px-4 " id="StudentLogin">
         
         <form action="{{ route('Student_loginprocess')}}" method="POST" class="shadow-md rounded px-8 pt-6 pb-8 mb-4">

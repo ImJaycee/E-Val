@@ -18,7 +18,7 @@
 
         <!-- Logo -->
         <div class="ml-1 flex">
-            <img src="{{ asset('storage/images/dlc-logo-bg.jpg') }}" alt="logo" class="h-14 w-15 p-2 rounded-full">
+            <img src="{{ asset('storage/images/dlc-logo-new.png') }}" alt="logo" class="h-14 w-15 p-2 rounded-full">
             <h1 class="text-sm md:text-xl mt-4 md:mt-3 text-gray-200 font-bold">E-VAL</h1>
         </div>
 
