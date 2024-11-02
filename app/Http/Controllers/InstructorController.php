@@ -602,6 +602,8 @@ class InstructorController extends Controller
         // Retrieve the search parameters
         $academicYear = request()->input('academic_year');
         $semester = request()->input('semester');
+        $sentiment = request()->input('sentiment');
+
 
         if (!function_exists('getCurrentSemester')) {
             function getCurrentSemester() {
@@ -656,6 +658,11 @@ class InstructorController extends Controller
 
         // Query to retrieve comments based on filters
         $commentsQuery = StudentEvaluation::where('instructor_id', $instructor_id);
+
+        if ($sentiment){
+            $commentsQuery = StudentEvaluation::where('instructor_id', $instructor_id)
+            ->where('sentiment', $sentiment);
+        }
 
         // Apply academic year filter
         if ($academicYear) {

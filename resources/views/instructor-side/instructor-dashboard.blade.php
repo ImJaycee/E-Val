@@ -92,7 +92,7 @@
                                 <h2 class="text-sm font-bold text-gray-100"></h2>
                                 <p class="font-bold text-xs text-gray-200">{{ $subject['section'] }}</p>
                             </div>
-                            <div class="text-center">
+                            {{-- <div class="text-center">
                                 <form action="{{ route('instructor.removeSubject', ['instructor_id' => $instructor->instructor_id, 'subject_code' => $subject['subject_code'] ]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove?')">
                                     @csrf
                                     @method('DELETE')
@@ -100,17 +100,17 @@
                                         Remove <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 @endforeach
 
         
-                <div class="col-span-1 sm:col-span-3 md:col-span-4 text-center">
+                {{-- <div class="col-span-1 sm:col-span-3 md:col-span-4 text-center">
                     <button class="w-full md:w-60 py-1 bg-gray-700 text-white  border-gray-600 rounded mt-2" id="addSubjectButton">
                         <i class="fas fa-plus"></i> Add Subject
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
         

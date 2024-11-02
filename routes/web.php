@@ -167,6 +167,7 @@ Route::controller(AdminController::class)->group(function(){
 
         //upload student
         Route::post('/admin-upload-student', 'uploadStudents')->name('admin.uploadStudent');
+        Route::post('/admin-upload-students-record', 'uploadStudentRecord')->name('admin.uploadStudentRecord');
 
         //upload student
         Route::post('/admin-upload-instructor', 'uploadInstructors')->name('admin.uploadInstructor');

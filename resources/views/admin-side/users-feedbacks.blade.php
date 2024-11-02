@@ -32,6 +32,14 @@
                 <p class="text-sm text-gray-500">
                     We appreciate all the feedback from our users as it helps us improve our services. Your insights and suggestions are valuable to us.
                 </p>
+                <div class="mt-3">
+                    <p class="text-sm font-semibold text-gray-600">
+                        @for ($i = 0; $i < round($averageRating); $i++)
+                            <i class="fas fa-star text-yellow-400"></i>
+                        @endfor
+                    </p>
+                    <p class="text-sm font-semibold text-gray-600">Ratings: {{$averageRating}}</p>
+                </div>
             </div>
         </div>
     </div>
