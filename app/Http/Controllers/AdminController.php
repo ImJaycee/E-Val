@@ -967,9 +967,9 @@ class AdminController extends Controller
     public function AddInstructor(Request $request,$admin_id){ // add single instructor 
         $validated = $request->validate([
             "instructor_id" => ['required', 'numeric','min:3'],
-            "firstname" => ['required', 'min:4'],
+            "firstname" => ['required', 'min:2'],
             "middlename" => ['required', 'min:2'],
-            "lastname" => ['required', 'min:4'],
+            "lastname" => ['required', 'min:2'],
             "sex" => ['required'],
             "department" => ['required', 'min:4'],
         ]);
@@ -1158,6 +1158,11 @@ class AdminController extends Controller
                 while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
                     $randomToken = bin2hex(random_bytes(5));
                 }
+
+                // // prevent adding null rows after the last student
+                // if($rowData['StudentNo'] == null){
+                //     break;
+                // }
         
                 // Retrieve student record if exists
                 $studentAccount = StudentsTokenAccounts::where('student_id', $rowData['StudentNo'])->first();
