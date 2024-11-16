@@ -1150,6 +1150,11 @@ class AdminController extends Controller
         DB::transaction(function () use ($csvData, $header, $assigned_to) {
             foreach ($csvData as $row) {
                 $rowData = array_combine($header, $row);
+
+                 // Prevent processing rows with null StudentNo
+                if (empty($rowData['StudentNo'])) {
+                    continue; // Skip this row instead of breaking
+                }
                 
                 // Generate a random token
                 $randomToken = bin2hex(random_bytes(5));
@@ -1158,11 +1163,6 @@ class AdminController extends Controller
                 while (StudentsTokenAccounts::where('eval_token', $randomToken)->exists()) {
                     $randomToken = bin2hex(random_bytes(5));
                 }
-
-                // // prevent adding null rows after the last student
-                // if($rowData['StudentNo'] == null){
-                //     break;
-                // }
         
                 // Retrieve student record if exists
                 $studentAccount = StudentsTokenAccounts::where('student_id', $rowData['StudentNo'])->first();
