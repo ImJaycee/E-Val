@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('evaluation_status', function (Blueprint $table) {
             $table->id();
-            $table->string('eval_status')->default('closed');
-            $table->string('eval_status_p2p')->default('closed');
+            $table->string('eval_status')->default('close');
+            $table->string('eval_status_p2p')->default('close');
             $table->timestamps();
         });
     }

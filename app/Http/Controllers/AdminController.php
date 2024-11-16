@@ -967,9 +967,9 @@ class AdminController extends Controller
     public function AddInstructor(Request $request,$admin_id){ // add single instructor 
         $validated = $request->validate([
             "instructor_id" => ['required', 'numeric','min:3'],
-            "firstname" => ['required', 'min:4'],
+            "firstname" => ['required', 'min:2'],
             "middlename" => ['required', 'min:2'],
-            "lastname" => ['required', 'min:4'],
+            "lastname" => ['required', 'min:2'],
             "sex" => ['required'],
             "department" => ['required', 'min:4'],
         ]);
@@ -1150,6 +1150,11 @@ class AdminController extends Controller
         DB::transaction(function () use ($csvData, $header, $assigned_to) {
             foreach ($csvData as $row) {
                 $rowData = array_combine($header, $row);
+
+                 // Prevent processing rows with null StudentNo
+                if (empty($rowData['StudentNo'])) {
+                    continue; // Skip this row instead of breaking
+                }
                 
                 // Generate a random token
                 $randomToken = bin2hex(random_bytes(5));
