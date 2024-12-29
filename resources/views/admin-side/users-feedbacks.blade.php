@@ -38,7 +38,7 @@
                             <i class="fas fa-star text-yellow-400"></i>
                         @endfor
                     </p>
-                    <p class="text-sm font-semibold text-gray-600">Ratings: {{$averageRating}}</p>
+                    <p class="text-sm font-semibold text-gray-600">Ratings: {{round($averageRating, 2)}}</p>
                 </div>
             </div>
         </div>
