@@ -18,8 +18,7 @@ Laravel (PHP), MySQL, Vite, TailwindCSS, Axios
 
 1. **Clone & Install**
    ```bash
-   git clone [https://github.com/ImJaycee/E-Val.git](https://github.com/ImJaycee/E-Val.git)
-   cd E-Val && composer install && npm install
+   git clone https://github.com/ImJaycee/E-Val.git
    
 2. **Environment Setup**
     ```bash
