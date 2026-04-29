@@ -20,15 +20,20 @@ Laravel (PHP), MySQL, Vite, TailwindCSS, Axios
    ```bash
    git clone [https://github.com/ImJaycee/E-Val.git](https://github.com/ImJaycee/E-Val.git)
    cd E-Val && composer install && npm install
-Environment Setup
-
-cp .env.example .env
-php artisan key:generate
+   
+2. **Environment Setup**
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 Note: Update your .env file with your local database credentials.
 
-Database & Launch
-php artisan migrate
-
+3. **Database & Launch**
+    ```bash
+    php artisan migrate
+    ```
 # Run these in separate terminals:
-php artisan serve
-npm run dev
+ ```bash
+    php artisan serve
+    npm run dev
+ ```
